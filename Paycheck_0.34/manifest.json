@@ -1,0 +1,44 @@
+{
+    "name": "Paycheck_2020-PWA",
+    "scope": ".",
+	"display": "standalone",
+	"start_url": "Paycheck_0.34.htm",
+	"short_name": "Paycheck_2020",
+	"theme_color": "transparent",
+	"description": "Paycheck Calculator",
+	"orientation": "portrait",
+	"background_color": "transparent",
+	"related_applications": [],
+	"prefer_related_applications": false,
+	"icons": [
+        {
+        "src": "image002.png",
+        "type": "image/png", "sizes": "285x367"
+        },
+        {
+        "src": "image004.png",
+        "type": "image/png", "sizes": "180x180"
+        },
+        {
+        "src": "image006.png",
+        "type": "image/png", "sizes": "212x122"
+        },
+        {
+        "src": "image008.png",
+        "type": "image/png", "sizes": "192x142"      
+        },
+        {
+         "src": "image010.png",
+        "type": "image/png", "sizes": "301x180"         
+        },
+        {
+          "src": "image012.png",
+        "type": "image/png", "sizes": "223x223"              
+        },
+        {
+          "src": "image014.png",
+        "type": "image/png", "sizes": "241x129"                
+        }
+    ],
+	"url": ".",
+	"generated": "true"}
