@@ -2,7 +2,7 @@
     "name": "Paycheck_2020-PWA",
     "scope": ".",
 	"display": "standalone",
-	"start_url": "Paycheck_0.36.htm",
+	"start_url": "Paycheck_0.36_Win.htm",
 	"short_name": "Paycheck_2020",
 	"theme_color": "transparent",
 	"description": "Paycheck Calculator",
