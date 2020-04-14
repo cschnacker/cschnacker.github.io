@@ -34,14 +34,6 @@
         {
           "src": "image012.png",
         "type": "image/png", "sizes": "205x119"              
-        },
-        {
-          "src": "image014.png",
-        "type": "image/png", "sizes": "260x139"                
-        },
-        {
-          "src": "image016.png",
-        "type": "image/png", "sizes": "259x139"                
         }
     ],
 	"url": ".",
