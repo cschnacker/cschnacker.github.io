@@ -2,7 +2,7 @@
     "name": "Paycheck_2020-PWA",
     "scope": ".",
 	"display": "standalone",
-	"start_url": "Index.htm",
+	"start_url": "Index.html",
 	"short_name": "Paycheck_2020",
 	"theme_color": "transparent",
 	"description": "Paycheck Calculator",
