@@ -2,7 +2,7 @@
     "name": "Paycheck_2020-PWA",
     "scope": ".",
 	"display": "standalone",
-	"start_url": "Paycheck_0.35_Win.htm",
+	"start_url": "Index.htm",
 	"short_name": "Paycheck_2020",
 	"theme_color": "transparent",
 	"description": "Paycheck Calculator",
@@ -34,14 +34,6 @@
         {
           "src": "image012.png",
         "type": "image/png", "sizes": "205x119"              
-        },
-        {
-          "src": "image014.png",
-        "type": "image/png", "sizes": "260x139"                
-        },
-        {
-          "src": "image016.png",
-        "type": "image/png", "sizes": "259x139"                
         }
     ],
 	"url": ".",
