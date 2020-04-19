@@ -1,0 +1,2 @@
+#Redirect a single page:
+Redirect 301 /Paycheck_2020 https://cschnacker.github.io/Paycheck_2020/Index.html
