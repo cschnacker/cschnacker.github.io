@@ -13,19 +13,19 @@
 	"icons": [
         {
         "src": "image002.png",
-        "type": "image/png", "sizes": "285x367"
+        "type": "image/png", "sizes": "285x371"
         },
         {
         "src": "image004.png",
-        "type": "image/png", "sizes": "180x180"
-        },
-        {
-        "src": "image006.png",
         "type": "image/png", "sizes": "212x122"
         },
         {
+        "src": "image006.png",
+        "type": "image/png", "sizes": "192x143"
+        },
+        {
         "src": "image008.png",
-        "type": "image/png", "sizes": "192x142"      
+        "type": "image/png", "sizes": "223x223"      
         },
         {
          "src": "image010.png",
@@ -33,12 +33,8 @@
         },
         {
           "src": "image012.png",
-        "type": "image/png", "sizes": "223x223"              
-        },
-        {
-          "src": "image014.png",
-        "type": "image/png", "sizes": "241x129"                
+        "type": "image/png", "sizes": "205x119"              
         }
-    ],
+        ],
 	"url": ".",
 	"generated": "true"}
