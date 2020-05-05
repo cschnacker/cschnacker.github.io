@@ -2,7 +2,7 @@
     "name": "Paycheck2020M",
     "scope": ".",
 	"display": "standalone",
-	"start_url": "Index.htm",
+	"start_url": "index.htm",
 	"short_name": "Paycheck2020M",
 	"theme_color": "transparent",
 	"description": "Paycheck Calculator",
