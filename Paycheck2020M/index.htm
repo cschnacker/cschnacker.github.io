@@ -11,7 +11,7 @@
     <title>Paycheck_2020</title>
     <!-- Register Manifest-->
     <link rel="manifest" href="manifest.json" />
-<!-- Eliminate Favicon.ico error-->
+    <!-- Eliminate Favicon.ico error-->
     <link rel="icon" href="data:;base64,=" />
     <link rel='apple-touch-icon-precomposed' href='powered-by-spreadsheetconverter.png' />
     <link rel='icon' href='powered-by-spreadsheetconverter.png' />
@@ -1832,17 +1832,17 @@
                     </tr>
                     <tr style='height:20pt;'>
                         <td class='ee157'>
-                            <Label for='Details' style='color:inherit;'>Details</Label>
+                            <Label for='Details' style='color:inherit;'>Paycheck Details</Label>
                             <input type='checkbox' id='Details' name='Details' class='ee157' tabindex='111' onchange="recalc_onclick('Details')" />
                         </td>
-                        <td class='ee160'> Show pay details </td>
+                        <td class='ee160'> </td>
                     </tr>
                     <tr style='height:20pt;'>
                         <td class='ee157'>
-                            <Label for='Bonus1' style='color:inherit;'>Enter Label</Label>
+                            <Label for='Bonus1' style='color:inherit;'>Bonus Details</Label>
                             <input type='checkbox' id='Bonus1' name='Bonus1' class='ee157' tabindex='112' onchange="recalc_onclick('Bonus1')" />
                         </td>
-                        <td class='ee160'> Show bonus details </td>
+                        <td class='ee160'> </td>
                     </tr>
                     <tr style='height:18pt;'>
                         <td class='ee163'> Select Job </td>
@@ -2852,7 +2852,6 @@
             </article>
             <div data-role="footer" data-position="fixed" data-theme="a">
                 <a data-role="button" data-rel="back" style="float:left; margin:0.4em 10px 0.4em" data-icon="arrow-l" data-iconpos="left" href='#Sheet0'>Previous</a>
-
                 <h1>6/6</h1>
             </div>
         </section><!-- confirmation dialog for reset begin -->
@@ -2997,19 +2996,19 @@
         <section id='ssc-ls'></section><a class='poweredby-logo' href='http://schnackersoftwaresolutions.wordpress.com' target='_blank' tabindex='-1' title='Schnacker Software Solutions' alt='Schnacker Software Solutions'></a>
     </div>
 </body>
-    <script>
-if ("serviceWorker" in navigator) {
-  if (navigator.serviceWorker.controller) {
-    console.log("[PWA Builder] active service worker found, no need to register");
-  } else {
-    // Register the service worker
-    navigator.serviceWorker
-      .register("serviceworker.js", {
-        scope: "./"
-      })
-      .then(function (reg) {
-        console.log("[PWA Builder] Service worker has been registered for scope: " + reg.scope);
-      });
-  }
-}</script>
+<script>
+    if ("serviceWorker" in navigator) {
+        if (navigator.serviceWorker.controller) {
+            console.log("[PWA Builder] active service worker found, no need to register");
+        } else {
+            // Register the service worker
+            navigator.serviceWorker
+                .register("serviceworker.js", {
+                    scope: "./"
+                })
+                .then(function (reg) {
+                    console.log("[PWA Builder] Service worker has been registered for scope: " + reg.scope);
+                });
+        }
+    }</script>
 </html>
