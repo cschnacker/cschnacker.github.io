@@ -12,6 +12,8 @@
 	"prefer_related_applications": false,
 	"icons": [
         {
+       "src": "Mortgage-1024x1024.png",
+        "type": "image/png", "sizes": "1024x1024"
         }
     ],
 	"url": ".",
