@@ -1,5 +1,5 @@
 {
-    "name": "Payoff or Refi",
+    "name": "Payoff or Refi-Mortgage Analyzer",
     "scope": ".",
 	"display": "standalone",
 	"start_url": "MortgageW23.htm",
