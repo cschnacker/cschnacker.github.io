@@ -11,7 +11,7 @@
     <title>Mortgage</title>
     <!-- Register Manifest-->
     <link rel="manifest" href="manifest.json" />
-    <!-- Eliminate Favicon.ico error-->
+<!-- Eliminate Favicon.ico error-->
     <link rel="icon" href="data:;base64,=" />
     <link rel='apple-touch-icon-precomposed' href='powered-by-spreadsheetconverter.png' />
     <link rel='icon' href='powered-by-spreadsheetconverter.png' />
@@ -2172,6 +2172,11 @@
                     </table>
                 </div>
             </article>
+            <div data-role="footer" data-position="fixed" data-theme="a">
+                <div style="float: right; margin:0em 10px">
+                    <a data-role='button' data-iconpos="right" data-icon="forward" onclick="submit_click();">Finish</a>
+                </div>
+                <h1>1/1</h1>
             </div>
         </section><!-- confirmation dialog for reset begin -->
         <div data-role='popup' id='resetConfirmation' data-overlay-theme='a' data-theme='c' data-dismissible='false' style='max-width:300px;' class='ui-corner-all' data-history='false'>
@@ -2313,7 +2318,7 @@
     </form>
 
 </body>
-     <script>
+  <script>
 if ("serviceWorker" in navigator) {
   if (navigator.serviceWorker.controller) {
     console.log("[PWA Builder] active service worker found, no need to register");
@@ -2327,5 +2332,5 @@ if ("serviceWorker" in navigator) {
         console.log("[PWA Builder] Service worker has been registered for scope: " + reg.scope);
       });
   }
-}</script>
+}</script>   
 </html>
