@@ -2,7 +2,7 @@
     "name": "Payoff or Refi Mortgage Analyzer",
     "scope": ".",
 	"display": "standalone",
-	"start_url": "MortgageM23.htm",
+	"start_url": "index.htm",
 	"short_name": "Payoff or Refi Mortgage Analyzer",
 	"theme_color": "transparent",
 	"description": "Mortgage Analyzer",
@@ -12,7 +12,7 @@
 	"prefer_related_applications": false,
 	"icons": [
         {
-       "src": "MortgageM23/Mortgage1024x1024.png",
+       "src": "Mortgage1024x1024.png",
         "type": "image/png", "sizes": "1024x1024"
         }
     ],
