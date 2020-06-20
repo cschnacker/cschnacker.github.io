@@ -2,7 +2,7 @@
     "name": "Payoff or Refi Mortgage Analyzer",
     "scope": ".",
 	"display": "standalone",
-	"start_url": "index.htm",
+	"start_url": "MortgageW23/MortgageW23.htm",
 	"short_name": "Payoff or Refi Mortgage Analyzer",
 	"theme_color": "transparent",
 	"description": "Mortgage Analyzer",
