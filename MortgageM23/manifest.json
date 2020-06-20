@@ -12,7 +12,7 @@
 	"prefer_related_applications": false,
 	"icons": [
         {
-       "src": "Mortgage1024x1024.png",
+       "src": "../MortgageM23/Mortgage1024x1024.png",
         "type": "image/png", "sizes": "1024x1024"
         }
     ],
