@@ -1,0 +1,16 @@
+CACHE MANIFEST
+#created : 1/30/2021 12:49:45 PM
+
+#Explicitly cached entries
+CACHE:
+assets/css/sky-ssc-theme.css
+assets/css/app.min.css
+assets/js/app.min.js
+assets/fonts/glyphicons-halflings-regular.svg
+assets/fonts/glyphicons-halflings-regular.ttf
+assets/fonts/glyphicons-halflings-regular.woff
+
+
+#All Other resources (e.g. sites) require the user to be online
+NETWORK:
+*
