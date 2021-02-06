@@ -1,0 +1,5 @@
+[{
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target" : { "namespace": "android_app", "package_name": "io.github.cschnacker.cschnacker_test",
+                   "sha256_cert_fingerprints": ["E9:DE:D1:78:57:CB:F5:A4:8B:1B:1D:C4:E5:C6:0A:0D:78:9E:45:09:66:60:BC:59:57:F9:DC:8E:4D:76:48:1E"] }
+    }]
