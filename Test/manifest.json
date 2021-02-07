@@ -3,7 +3,7 @@
     "scope": ".",
 	"display": "standalone",
 	"start_url": ".",
-	"short_name": "test",
+	"short_name": "cschnacker_test",
 	"theme_color": "transparent",
 	"description": "Mortgage Analyzer",
 	"orientation": "portrait",
