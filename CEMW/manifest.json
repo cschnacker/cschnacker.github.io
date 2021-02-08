@@ -2,7 +2,7 @@
     "name": "Colorado Big Game Draw Elk Muzzleloader",
     "scope": ".",
 	"display": "standalone",
-	"start_url": "CEMW",
+	"start_url": "CEMW.html",
 	"short_name": "Colorado Big Game Draw Elk Muzzleloader",
 	"theme_color": "transparent",
 	"description": "Colorado Big Game Draw for Elk Muzzleloader",
