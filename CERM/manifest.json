@@ -2,7 +2,7 @@
     "name": "Colorado Big Game Selector Elk Rifle",
     "scope": ".",
 	"display": "standalone",
-	"start_url": ".\index.html",
+	"start_url": ".",
 	"short_name": "Colorado Big Game Selector Elk Rifle",
 	"theme_color": "transparent",
 	"description": "Colorado Big Game Selector Elk Rifle",
