@@ -1,0 +1,20 @@
+{
+    "name": "Colorado Big Game Draw Deer Rifle",
+    "scope": ".",
+	"display": "standalone",
+	"start_url": "CDRW.html",
+	"short_name": "Colorado Big Game Draw Deer Rifle",
+	"theme_color": "transparent",
+	"description": "Colorado Big Game Draw for Deer Rifle",
+	"orientation": "portrait",
+	"background_color": "transparent",
+	"related_applications": [],
+	"prefer_related_applications": false,
+	"icons": [
+        {
+        "src": "CDR.png",
+        "type": "image/png", "sizes": "540x540"            
+        }
+    ],
+	"url": ".",
+	"generated": "true"}
