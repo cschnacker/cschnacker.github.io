@@ -1,0 +1,20 @@
+{
+    "name": "Colorado Big Game Draw Deer Muzzleloader",
+    "scope": ".",
+	"display": "standalone",
+	"start_url": "CDMW.html",
+	"short_name": "Colorado Big Game Draw Deer Muzzleloader",
+	"theme_color": "transparent",
+	"description": "Colorado Big Game Draw for Deer Muzzleloader",
+	"orientation": "portrait",
+	"background_color": "transparent",
+	"related_applications": [],
+	"prefer_related_applications": false,
+	"icons": [
+        {
+        "src": "CDM.png",
+        "type": "image/png", "sizes": "540x540"            
+        }
+    ],
+	"url": ".",
+	"generated": "true"}
