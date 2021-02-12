@@ -2,7 +2,7 @@
     "name": "Colorado Big Game Draw Elk Muzzleloader",
     "scope": ".",
 	"display": "standalone",
-	"start_url": "Index.html",
+	"start_url": "index.html",
 	"short_name": "Colorado Big Game Draw Elk Muzzleloader",
 	"theme_color": "transparent",
 	"description": "Colorado Big Game Draw Elk Muzzleloader",
