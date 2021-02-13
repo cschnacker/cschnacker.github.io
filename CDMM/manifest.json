@@ -1,18 +1,18 @@
 {
-    "name": "Colorado Big Game Draw Elk Muzzleloader",
+    "name": "Colorado Big Game Draw Deer Muzzleloader",
     "scope": ".",
 	"display": "standalone",
 	"start_url": "index.html",
-	"short_name": "Colorado Big Game Draw Elk Muzzleloader",
+	"short_name": "Colorado Big Game Draw Deer Muzzleloader",
 	"theme_color": "transparent",
-	"description": "Colorado Big Game Draw Elk Muzzleloader",
+	"description": "Colorado Big Game Draw Deer Muzzleloader",
 	"orientation": "portrait",
 	"background_color": "transparent",
 	"related_applications": [],
 	"prefer_related_applications": false,
 	"icons": [
                 {
-        "src": "CEM.png",
+        "src": "CDM.png",
         "type": "image/png", "sizes": "550x550"
         }
     ],
