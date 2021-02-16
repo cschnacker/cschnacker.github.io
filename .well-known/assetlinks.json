@@ -28,6 +28,11 @@
       "target" : { "namespace": "android_app", "package_name": "com.cschnacker.CEMM",
                    "sha256_cert_fingerprints": ["62:C6:2E:47:4E:5E:7E:B8:A9:BE:2D:CF:16:00:D1:41:B2:B4:9C:1A:13:11:3A:AD:01:90:CB:3C:EE:52:C0:BA"] }
     },
+     {
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target" : { "namespace": "android_app", "package_name": "com.cschnacker.CDMM_b",
+                   "sha256_cert_fingerprints": ["27:B7:C3:95:6F:EA:AF:C5:CD:9D:F1:C8:05:85:9F:60:BD:30:23:A9:8C:6A:A3:37:51:7E:81:55:74:D1:DD:B9"] }
+    },
   {
       "relation": ["delegate_permission/common.handle_all_urls"],
       "target" : { "namespace": "android_app", "package_name": "com.cschnacker.Paycheck2020M",
