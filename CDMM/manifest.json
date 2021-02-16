@@ -1,7 +1,7 @@
 {
     "name": "Colorado Big Game Draw Deer Muzzleloader",
     "scope": ".",
-	"display": "standalone",
+	"display": "fullscreen",
 	"start_url": "index.html",
 	"short_name": "Colorado Big Game Draw Deer Muzzleloader",
 	"theme_color": "transparent",
