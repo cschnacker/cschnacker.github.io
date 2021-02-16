@@ -10,7 +10,37 @@
     },
  {
       "relation": ["delegate_permission/common.handle_all_urls"],
+      "target" : { "namespace": "android_app", "package_name": "com.cschnacker.CDRM",
+                   "sha256_cert_fingerprints": ["69:47:2F:96:D7:34:44:F2:7F:E8:5F:86:33:82:5A:D6:CD:59:87:66:2A:80:A8:E8:28:4E:93:F7:04:4F:47:67"] }
+    },
+  {
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target" : { "namespace": "android_app", "package_name": "com.SchnackerSoftwareSolutions.CERM",
+                   "sha256_cert_fingerprints": ["62:8F:7F:9F:8F:67:B6:FD:A4:23:A8:8A:E6:44:93:60:3E:BE:F1:23:E0:14:B1:B3:30:B1:BE:55:65:9D:6A:0D"] }
+    },
+   {
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target" : { "namespace": "android_app", "package_name": "com.cschnacker.CEAM",
+                   "sha256_cert_fingerprints": ["D3:81:C3:7F:EE:B9:2E:6D:88:E3:57:6B:34:9D:06:9B:EA:75:D4:1F:D3:06:10:CE:03:4D:BD:14:A1:13:F5:AA"] }
+    },
+    {
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target" : { "namespace": "android_app", "package_name": "com.cschnacker.CEMM",
+                   "sha256_cert_fingerprints": ["62:C6:2E:47:4E:5E:7E:B8:A9:BE:2D:CF:16:00:D1:41:B2:B4:9C:1A:13:11:3A:AD:01:90:CB:3C:EE:52:C0:BA"] }
+    },
+  {
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target" : { "namespace": "android_app", "package_name": "com.cschnacker.Paycheck2020M",
+                   "sha256_cert_fingerprints": ["65:A1:9D:5A:23:C6:73:F1:FD:62:0F:5F:76:1B:5D:2B:A9:1E:57:58:AD:A3:D9:24:29:41:AE:46:A8:1F:2B:2A"] }
+    },
+ {
+      "relation": ["delegate_permission/common.handle_all_urls"],
       "target" : { "namespace": "android_app", "package_name": "com.cschnacker.mortgage",
                    "sha256_cert_fingerprints": ["36:8D:E0:56:EE:F7:72:7F:A2:00:49:1B:4A:B6:BB:4B:E7:58:70:36:2C:BC:06:53:14:F7:BD:22:07:10:74:54"] }
+    },
+  {
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target" : { "namespace": "android_app", "package_name": "com.cschnacker.budget",
+                   "sha256_cert_fingerprints": ["36:46:4C:C1:84:F5:B9:C0:69:D9:27:43:58:EB:8B:EC:1D:D7:BD:B5:F5:89:DF:F0:E8:49:DA:BA:C4:BC:A0:E7"] }
     }
 ]
