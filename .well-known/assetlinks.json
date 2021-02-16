@@ -7,5 +7,10 @@
       "relation": ["delegate_permission/common.handle_all_urls"],
       "target" : { "namespace": "android_app", "package_name": "com.cschnacker.CDAM",
                    "sha256_cert_fingerprints": ["85:95:14:97:AF:E2:72:AE:0A:D8:6D:01:B5:8F:E0:9E:45:55:54:C6:72:50:96:BC:9F:7B:FD:F5:7A:AF:D6:CF"] }
+    },
+ {
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target" : { "namespace": "android_app", "package_name": "com.cschnacker.mortgage",
+                   "sha256_cert_fingerprints": ["36:8D:E0:56:EE:F7:72:7F:A2:00:49:1B:4A:B6:BB:4B:E7:58:70:36:2C:BC:06:53:14:F7:BD:22:07:10:74:54"] }
     }
 ]
