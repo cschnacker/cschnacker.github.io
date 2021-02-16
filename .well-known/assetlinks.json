@@ -2,4 +2,10 @@
       "relation": ["delegate_permission/common.handle_all_urls"],
       "target" : { "namespace": "android_app", "package_name": "io.github.cschnacker.cschnacker_test",
                    "sha256_cert_fingerprints": ["93:53:C1:69:39:FF:0C:CD:3F:2D:0B:6B:5A:96:35:26:8B:F7:8B:D8:C3:D7:51:FF:BB:A1:D9:9A:59:87:DF:B8"] }
-    }]
+    },
+ {
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target" : { "namespace": "android_app", "package_name": "com.cschnacker.CDAM",
+                   "sha256_cert_fingerprints": ["85:95:14:97:AF:E2:72:AE:0A:D8:6D:01:B5:8F:E0:9E:45:55:54:C6:72:50:96:BC:9F:7B:FD:F5:7A:AF:D6:CF"] }
+    }
+]
