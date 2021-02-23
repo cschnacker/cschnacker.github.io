@@ -1,18 +1,18 @@
 {
-    "name": "Yearly Budget Planner",
+    "name": "Paycheck W-4",
     "scope": ".",
 	"display": "standalone",
 	"start_url": "index.html",
-	"short_name": "Yearly Budget Planner",
+	"short_name": "Paycheck W-4",
 	"theme_color": "transparent",
-	"description": "Yearly Budget Planner",
+	"description": "Paycheck and W-4 Calculator",
 	"orientation": "portrait",
 	"background_color": "transparent",
 	"related_applications": [],
 	"prefer_related_applications": false,
 	"icons": [
                 {
-        "src": "Budget.png",
+        "src": "Paycheck550X550.png",
         "type": "image/png", "sizes": "550x550"
         }
     ],
