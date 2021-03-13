@@ -1,9 +1,9 @@
 {
-    "name": "Retirement Planner",
+    "name": "Retirement_Calculator",
     "scope": ".",
 	"display": "standalone",
 	"start_url": "index.html",
-	"short_name": "Retirement Planner",
+	"short_name": "Retirement_Calculator",
 	"theme_color": "transparent",
 	"description": "Yearly Retirement Planner",
 	"orientation": "portrait",
