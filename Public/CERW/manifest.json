@@ -1,0 +1,20 @@
+{
+    "name": "Colorado Big Game Selector Elk Rifle",
+    "scope": ".",
+	"display": "standalone",
+	"start_url": "CERW.htm",
+	"short_name": "Colorado Big Game Selector Elk Rifle",
+	"theme_color": "transparent",
+	"description": "Colorado Big Game Selector Elk Rifle",
+	"orientation": "portrait",
+	"background_color": "transparent",
+	"related_applications": [],
+	"prefer_related_applications": false,
+	"icons": [
+    {
+        "src": "CER.png",
+        "type": "image/png", "sizes": "550x550"
+        }
+    ],
+	"url": ".",
+	"generated": "true"}
