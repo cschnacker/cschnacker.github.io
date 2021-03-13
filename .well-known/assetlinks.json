@@ -52,5 +52,10 @@
       "relation": ["delegate_permission/common.handle_all_urls"],
       "target" : { "namespace": "android_app", "package_name": "com.cschnacker.Paycheck",
                    "sha256_cert_fingerprints": ["31:08:E7:0A:09:A2:F1:56:0E:E3:63:7D:92:F6:E4:8F:0B:FC:4C:B1:EC:5A:E4:51:3D:1E:01:E3:04:AF:40:0B"] }
+    },
+  {
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target" : { "namespace": "android_app", "package_name": "com.cschnacker.Retirement",
+                   "sha256_cert_fingerprints": ["CA:CC:B6:20:7C:02:20:0D:61:D4:A7:A6:86:49:A9:97:52:12:E2:D1:B4:DB:F8:E8:98:61:0E:15:25:C0:4C:7D"] }
     }
 ]
