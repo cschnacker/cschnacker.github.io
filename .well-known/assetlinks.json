@@ -57,5 +57,10 @@
       "relation": ["delegate_permission/common.handle_all_urls"],
       "target" : { "namespace": "android_app", "package_name": "com.cschnacker.Retirement",
                    "sha256_cert_fingerprints": ["CA:CC:B6:20:7C:02:20:0D:61:D4:A7:A6:86:49:A9:97:52:12:E2:D1:B4:DB:F8:E8:98:61:0E:15:25:C0:4C:7D"] }
+    },
+  {
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target" : { "namespace": "android_app", "package_name": "com.cschnacker.Income_and_Tax",
+                   "sha256_cert_fingerprints": ["07:FB:3E:6D:D6:E4:7A:36:58:B3:49:AB:DF:D6:5A:81:C2:DD:EA:00:89:94:A1:95:45:0C:C4:D5:A7:33:4A:3D"] }
     }
 ]
