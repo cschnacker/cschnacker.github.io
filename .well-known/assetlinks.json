@@ -62,5 +62,10 @@
       "relation": ["delegate_permission/common.handle_all_urls"],
       "target" : { "namespace": "android_app", "package_name": "com.cschnacker.Income_and_Tax",
                    "sha256_cert_fingerprints": ["07:FB:3E:6D:D6:E4:7A:36:58:B3:49:AB:DF:D6:5A:81:C2:DD:EA:00:89:94:A1:95:45:0C:C4:D5:A7:33:4A:3D"] }
+    },
+   {
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target" : { "namespace": "android_app", "package_name": "io.github.cschnacker.Wyoming_Antelope_Draw",
+                   "sha256_cert_fingerprints": ["FC:8D:4B:0E:B8:E4:20:DE:3F:38:C2:1D:F8:B3:0E:B3:FC:CB:F4:54:CD:86:A9:9D:A0:F6:D7:B8:AB:A4:E0:C7"] }
     }
 ]
