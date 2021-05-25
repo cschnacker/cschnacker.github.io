@@ -67,5 +67,10 @@
       "relation": ["delegate_permission/common.handle_all_urls"],
       "target" : { "namespace": "android_app", "package_name": "io.github.cschnacker.Wyoming_Antelope_Draw",
                    "sha256_cert_fingerprints": ["FC:8D:4B:0E:B8:E4:20:DE:3F:38:C2:1D:F8:B3:0E:B3:FC:CB:F4:54:CD:86:A9:9D:A0:F6:D7:B8:AB:A4:E0:C7"] }
+    },
+    {
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target" : { "namespace": "android_app", "package_name": "com.cschnacker.WyomingAntelope",
+                   "sha256_cert_fingerprints": ["F0:69:5C:87:F7:A9:62:26:15:E9:80:51:D5:24:CF:A1:36:DC:48:C0:D9:AA:EE:0F:48:CC:D3:AD:F0:EE:9D:E5"] }
     }
 ]
