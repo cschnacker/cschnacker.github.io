@@ -76,6 +76,6 @@
      {
       "relation": ["delegate_permission/common.handle_all_urls"],
       "target" : { "namespace": "android_app", "package_name": "com.cschnacker.TagIt_CO_Elk",
-                   "sha256_cert_fingerprints": ["DE:A4:52:35:46:CA:62:0F:87:17:5E:9D:F3:57:34:5A:89:8E:20:4C:9F:D8:EB:92:F3:E1:44:24:CD:55:9E:F5"] }
+                   "sha256_cert_fingerprints": ["98:2D:5E:3F:09:B7:BD:B0:34:2B:DC:D7:6D:80:A4:19:F0:98:AD:A3:42:74:2E:DF:78:69:8B:55:43:4C:CD:71"] }
     }
 ]
