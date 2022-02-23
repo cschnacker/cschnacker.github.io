@@ -77,5 +77,10 @@
       "relation": ["delegate_permission/common.handle_all_urls"],
       "target" : { "namespace": "android_app", "package_name": "com.cschnacker.TagIt_CO_Elk",
                    "sha256_cert_fingerprints": ["98:2D:5E:3F:09:B7:BD:B0:34:2B:DC:D7:6D:80:A4:19:F0:98:AD:A3:42:74:2E:DF:78:69:8B:55:43:4C:CD:71"] }
+    },
+     {
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target" : { "namespace": "android_app", "package_name": "com.cschnacker.TagIt_CO_Deer",
+                   "sha256_cert_fingerprints": ["B6:2F:D9:2C:48:99:8B:51:C5:7C:CB:00:F8:F3:74:A6:87:6B:7C:F2:DD:53:FF:A1:C6:DC:62:39:13:57:58:0B"] }
     }
 ]
