@@ -1,0 +1,20 @@
+{
+    "name": "Easy_W-4",
+    "scope": ".",
+	"display": "standalone",
+	"start_url": "Easy_W-4.htm",
+	"short_name": "Easy_W-4",
+	"theme_color": "transparent",
+	"description": "W-4 Calculator",
+	"orientation": "portrait",
+	"background_color": "transparent",
+	"related_applications": [],
+	"prefer_related_applications": false,
+	"icons": [
+        {
+        "src": "Easy_W-4.png",
+        "type": "image/png", "sizes": "550x550"
+        }        
+    ],
+	"url": ".",
+	"generated": "true"}
