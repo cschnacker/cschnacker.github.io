@@ -2,7 +2,7 @@
     "name": "Easy_W-4",
     "scope": ".",
 	"display": "standalone",
-	"start_url": "Easy_W-4.htm",
+	"start_url": "Easy_W-4.html",
 	"short_name": "Easy_W-4",
 	"theme_color": "transparent",
 	"description": "W-4 Calculator",
