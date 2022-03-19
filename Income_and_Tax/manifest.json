@@ -1,20 +1,20 @@
 {
-    "name": "Income_and_Tax",
+    "name": "Income and Tax Planner",
     "scope": ".",
 	"display": "standalone",
 	"start_url": "index.html",
-	"short_name": "Income_and_Tax",
+	"short_name": "Income and Tax Planner",
 	"theme_color": "transparent",
-	"description": "Yearly Income and Tax Planner",
+	"description": "Income and Tax Planner",
 	"orientation": "portrait",
 	"background_color": "transparent",
 	"related_applications": [],
 	"prefer_related_applications": false,
 	"icons": [
-                {
-        "src": "Income_and_Tax550X550.png",
+        {
+        "src": "Inc&Tax.png",
         "type": "image/png", "sizes": "550x550"
-        }
+        }        
     ],
 	"url": ".",
 	"generated": "true"}
