@@ -1,20 +1,20 @@
 {
-    "name": "Retirement_Calculator",
+    "name": "Retirement Planner",
     "scope": ".",
 	"display": "standalone",
 	"start_url": "index.html",
-	"short_name": "Retirement_Calculator",
+	"short_name": "Retirement Planner",
 	"theme_color": "transparent",
-	"description": "Yearly Retirement Planner",
+	"description": "Retirement Planner",
 	"orientation": "portrait",
 	"background_color": "transparent",
 	"related_applications": [],
 	"prefer_related_applications": false,
 	"icons": [
-                {
-        "src": "Retirement550X550.png",
+        {
+        "src": "Retire.png",
         "type": "image/png", "sizes": "550x550"
-        }
+        }        
     ],
 	"url": ".",
 	"generated": "true"}
