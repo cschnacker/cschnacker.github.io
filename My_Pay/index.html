@@ -1,0 +1,584 @@
+﻿<!doctype html>
+<!-- saved from url=(0013)about:internet -->
+<html>
+<head>
+    <!-- The parts of this webpage that is defined by the original spreadsheet have the same copyright as the original spreadsheet. -->
+    <!-- The generic Excel-related parts of this page is Copyright (C) 2002-2022 Framtidsforum I&M AB, Sweden. -->
+    <meta name='GENERATOR' content='SpreadsheetConverter to Mobile version 10.5.8092.0' />
+    <meta name='viewport' content='width=device-width, minimum-scale=1, maximum-scale=1, initial-scale=1'>
+    <meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
+    <!-- TITLE OF WEB PAGE -->
+    <title>My Pay</title>
+    <!-- Register Manifest-->
+    <link rel="manifest" href="manifest.json" />
+<!-- Eliminate Favicon.ico error-->
+    <link rel="icon" href="data:;base64,=" />
+    <link rel='apple-touch-icon-precomposed' href='powered-by-spreadsheetconverter.png' />
+    <link rel='icon' href='powered-by-spreadsheetconverter.png' />
+    <!-- EXTERNAL STYLE SHEET -->
+    <link type='text/css' rel='stylesheet' href='assets/css/app.min.css' />
+    <script>var ssc = ssc || {}; ssc.pendingUploads = 0; ssc.recalcSource = ''; ssc.APPNAME = 'Pay0.03'; ssc.asyncRecalc = true;</script>
+
+    <!-- EXTERNAL JAVASCRIPT -->
+    <script type='text/javascript' src='assets/js/app.min.js'></script>
+    <script type='text/javascript'>
+        $(document).bind('mobileinit', function () {
+            $.mobile.changePage.defaults.changeHash = false;
+            $.mobile.hashListeningEnabled = false;
+            $.mobile.pushStateEnabled = false;
+        });
+    </script>
+</head>
+<!-- BODY CONTENT -->
+<body onload='LoadFromQueryString();'>
+    <form id="formc" name="formc" method="post" action="" target="_top">
+        <input type='hidden' id='xl_spreadsheet' name='xl_spreadsheet' value='My Pay' /> <input type='hidden' id='xl_target2' name='xl_target2' value='c26d1S+vxKY6apIEABRcrEhTDQZ91bR3zQW5AgpvF5Yi4i1C6fRkep4jjJnIJRnnyo/Y5GYv9R2PkAvQD396sUjZEJ0MtM0dKs0VTjz5FABGb7Lhf8crdiAw8zxM5qt2R5qnBNXxh+j76DZTQMe0KA/Tkf56LImt2/K/O+apd/M=' /> <input type='hidden' id='xl_client' name='xl_client' value='x10.5.8092.0' />
+        <section id='home' data-url='home' data-role='page' swidth='381' class='cpc'>
+            <header data-role='header' data-theme='a'>
+                <h1>My Pay</h1>
+                <a href='#leftpanel' data-role='button' data-icon='bars' data-iconpos='notext'>leftpanel</a>
+            </header>
+            <article data-role="content" class="scrollable has-scroll" style='padding:0px;'>
+                <div>
+                    <table width='381' cellspacing='0' cellpadding='0' style='border-collapse:collapse; margin-bottom:10px;' id='Sheet1-table'>
+                        <tr style="height:1px;">
+                            <td width='191'></td>
+                            <td width='95'></td>
+                            <td width='95'></td>
+                        </tr>
+                        <tr style='height:20pt;'>
+                            <td class='ee100'> Your Pay </td>
+                            <td class='ee100'> </td>
+                            <td class='ee103'> </td>
+                        </tr>
+                        <tr style='height:14pt;'>
+                            <td class='ee106'> Pay Frequency/Year </td>
+                            <td class='ee109'>
+                                <fieldset id="fs_XLEW_1_5_3" style="border:0;padding:0;">
+                                    <select name='XLEW_1_5_3' id='XLEW_1_5_3' class='ee111 no-bg' style=' width:100% ' tabindex='1' size='1' onchange="recalc_onclick('XLEW_1_5_3')"><option data-value="s:Weekly" selected='selected'>Weekly</option><option data-value="s:Bi-Weekly">Bi-Weekly</option><option data-value="s:Twice a Month">Twice a Month</option><option data-value="s:Monthly">Monthly</option><option data-value="s:Quarterly">Quarterly</option><option data-value="s:Yearly">Yearly</option></select>
+                                </fieldset>
+                            </td>
+                            <td class='ee103'> </td>
+                        </tr>
+                        <tr style='height:13pt;'>
+                            <td class='ee106'> Primary Salary/Yr </td>
+                            <td class='ee112 tooth-fill'>
+                                <div class='ui-input-text ui-body-inherit ui-corner-all'>
+                                    <input type='number' id='XLEW_1_7_3' name='XLEW_1_7_3' class='ee112' style=' width:100% ' tabindex='2' data-enhanced='true' onchange="this.value=eedisplayFloatNDV(eeparseFloatV(this.value),2);recalc_onclick('XLEW_1_7_3')" placeholder="" />
+                                </div>
+                            </td>
+                            <td class='ee103'> </td>
+                        </tr>
+                        <tr style='height:13pt;'>
+                            <td class='ee106'> Bonus/Yr </td>
+                            <td class='ee112 tooth-fill'>
+                                <div class='ui-input-text ui-body-inherit ui-corner-all'>
+                                    <input type='number' id='XLEW_1_8_3' name='XLEW_1_8_3' class='ee112' style=' width:100% ' tabindex='3' data-enhanced='true' onchange="this.value=eedisplayFloatND(eeparseFloat(this.value),2);recalc_onclick('XLEW_1_8_3')" placeholder="" />
+                                </div>
+                            </td>
+                            <td class='ee103'> </td>
+                        </tr>
+                        <tr style='height:13pt;'>
+                            <td class='ee106'> Flexible /HSA Spend PreTax/Yr </td>
+                            <td class='ee112 tooth-fill'>
+                                <div class='ui-input-text ui-body-inherit ui-corner-all'>
+                                    <input type='number' id='XLEW_1_9_3' name='XLEW_1_9_3' class='ee112' style=' width:100% ' tabindex='4' data-enhanced='true' onchange="this.value=eedisplayFloatND(eeparseFloat(this.value),2);recalc_onclick('XLEW_1_9_3')" placeholder="" />
+                                </div>
+                            </td>
+                            <td class='ee103'> </td>
+                        </tr>
+                        <tr style='height:13pt;'>
+                            <td class='ee106'> Health Ins Pretax/Yr </td>
+                            <td class='ee112 tooth-fill'>
+                                <div class='ui-input-text ui-body-inherit ui-corner-all'>
+                                    <input type='number' id='XLEW_1_10_3' name='XLEW_1_10_3' class='ee112' style=' width:100% ' tabindex='5' data-enhanced='true' onchange="this.value=eedisplayFloatND(eeparseFloat(this.value),2);recalc_onclick('XLEW_1_10_3')" placeholder="" />
+                                </div>
+                            </td>
+                            <td class='ee103'> </td>
+                        </tr>
+                        <tr style='height:13pt;'>
+                            <td class='ee106'> Other Tax Credits/Yr </td>
+                            <td class='ee112 tooth-fill'>
+                                <div class='ui-input-text ui-body-inherit ui-corner-all'>
+                                    <input type='number' id='xlew_1_11_3' name='xlew_1_11_3' class='ee112' style=' width:100% ' tabindex='6' data-enhanced='true' onchange="this.value=eedisplayFloatNDV(eeparseFloatV(this.value),2);recalc_onclick('xlew_1_11_3')" placeholder="" />
+                                </div>
+                            </td>
+                            <td class='ee103'> </td>
+                        </tr>
+                        <tr style='height:13pt;'>
+                            <td class='ee113'> 401K % Deducted from Pay </td>
+                            <td class='ee114 tooth-fill'>
+                                <div class='ui-input-text ui-body-inherit ui-corner-all'>
+                                    <input type='number' id='XLEW_1_12_3' name='XLEW_1_12_3' class='ee114' style=' width:100% ' tabindex='7' data-enhanced='true' onchange="this.value=eedisplayFloat(eeparseFloat(this.value));recalc_onclick('XLEW_1_12_3')" placeholder="" />
+                                </div>
+                            </td>
+                            <td class='ee103'> </td>
+                        </tr>
+                        <tr style='height:13pt;'>
+                            <td class='ee113'> 401K $ Deducted From Pay </td>
+                            <td class='ee115 tooth-fill'>
+                                <div class='ui-input-text ui-body-inherit ui-corner-all'>
+                                    <input type='number' id='XLEW_1_13_3' name='XLEW_1_13_3' class='ee115' style=' width:100% ' tabindex='8' data-enhanced='true' onchange="this.value=eedisplayFloatND(eeparseFloat(this.value),2);recalc_onclick('XLEW_1_13_3')" placeholder="" />
+                                </div>
+                            </td>
+                            <td class='ee103'> </td>
+                        </tr>
+                        <tr style='height:11pt;'>
+                            <td class='ee113'> Roth IRA % Deducted from Pay </td>
+                            <td class='ee114 tooth-fill'>
+                                <div class='ui-input-text ui-body-inherit ui-corner-all'>
+                                    <input type='number' id='XLEW_1_15_3' name='XLEW_1_15_3' class='ee114' style=' width:100% ' tabindex='9' data-enhanced='true' onchange="this.value=eedisplayFloat(eeparseFloat(this.value));recalc_onclick('XLEW_1_15_3')" placeholder="" />
+                                </div>
+                            </td>
+                            <td class='ee103'> </td>
+                        </tr>
+                        <tr style='height:13pt;'>
+                            <td class='ee113'> Roth $ Deducted from Pay </td>
+                            <td class='ee118'>
+<textarea id='XLEW_1_16_3' name='XLEW_1_16_3' class='ee120' style=' width:100% ;height: 100%' tabindex='10' rows='1' wrap='soft' onchange="this.value=eedisplayFloatND(eeparseFloat(this.value),2);recalc_onclick('XLEW_1_16_3') " data-autogrow='false'></textarea>
+                            </td>
+                            <td class='ee103'> </td>
+                        </tr>
+                        <tr style='height:14pt;'>
+                            <td class='ee113'> Other After Tax Deductions/Yr </td>
+                            <td class='ee121 tooth-fill'>
+                                <div class='ui-input-text ui-body-inherit ui-corner-all'>
+                                    <input type='number' id='XLEW_1_18_3' name='XLEW_1_18_3' class='ee121' style=' width:100% ' tabindex='11' data-enhanced='true' onchange="this.value=eedisplayFloatND(eeparseFloat(this.value),2);recalc_onclick('XLEW_1_18_3')" placeholder="" />
+                                </div>
+                            </td>
+                            <td class='ee103'> </td>
+                        </tr>
+                        <tr style='height:23pt;'>
+                            <td class='ee122' colspan='2'> W-4 </td>
+                            <td class='ee103'> </td>
+                        </tr>
+                        <tr style='height:14pt;'>
+                            <td class='ee113'> Tax filing status on 1040 </td>
+                            <td class='ee126'>
+                                <fieldset id="fs_XLEW_1_25_3" style="border:0;padding:0;">
+                                    <select name='XLEW_1_25_3' id='XLEW_1_25_3' class='ee117 no-bg' style=' width:100% ' tabindex='12' size='1' onchange="recalc_onclick('XLEW_1_25_3')"><option data-value="s:Single">Single</option><option data-value="s:Joint" selected='selected'>Joint</option><option data-value="s:Separate">Separate</option><option data-value="s:HOH">HOH</option></select>
+                                </fieldset>
+                            </td>
+                            <td class='ee103'> </td>
+                        </tr>
+                        <tr style='height:13pt;'>
+                            <td class='ee113'> Tax filing state </td>
+                            <td class='ee115'>
+                                <fieldset id="fs_XLEW_1_26_3" style="border:0;padding:0;">
+                                    <select name='XLEW_1_26_3' id='XLEW_1_26_3' class='ee117 no-bg' style=' width:100% ' tabindex='13' size='1' onchange="recalc_onclick('XLEW_1_26_3')"><option data-value="s:Alabama">Alabama</option><option data-value="s:Alaska">Alaska</option><option data-value="s:Arizona">Arizona</option><option data-value="s:Arkansas">Arkansas</option><option data-value="s:California" selected='selected'>California</option><option data-value="s:Colorado">Colorado</option><option data-value="s:Connecticut">Connecticut</option><option data-value="s:Delaware">Delaware</option><option data-value="s:Florida">Florida</option><option data-value="s:Georgia">Georgia</option><option data-value="s:Hawaii">Hawaii</option><option data-value="s:Idaho">Idaho</option><option data-value="s:Illinois">Illinois</option><option data-value="s:Indiana">Indiana</option><option data-value="s:Iowa">Iowa</option><option data-value="s:Kansas">Kansas</option><option data-value="s:Kentucky">Kentucky</option><option data-value="s:Louisiana">Louisiana</option><option data-value="s:Maine">Maine</option><option data-value="s:Maryland">Maryland</option><option data-value="s:Massachusetts">Massachusetts</option><option data-value="s:Michigan">Michigan</option><option data-value="s:Minnesota">Minnesota</option><option data-value="s:Mississippi">Mississippi</option><option data-value="s:Missouri">Missouri</option><option data-value="s:Montana">Montana</option><option data-value="s:Nebraska">Nebraska</option><option data-value="s:Nevada">Nevada</option><option data-value="s:New Hampshire">New Hampshire</option><option data-value="s:New Jersey">New Jersey</option><option data-value="s:New Mexica">New Mexica</option><option data-value="s:New York">New York</option><option data-value="s:North Carolina">North Carolina</option><option data-value="s:North Dakota">North Dakota</option><option data-value="s:Ohio">Ohio</option><option data-value="s:Oklahoma">Oklahoma</option><option data-value="s:Oregon">Oregon</option><option data-value="s:Pennsylvania">Pennsylvania</option><option data-value="s:Rhode Island">Rhode Island</option><option data-value="s:South Carolina">South Carolina</option><option data-value="s:South Dakota">South Dakota</option><option data-value="s:Tennessee">Tennessee</option><option data-value="s:Texas">Texas</option><option data-value="s:Utah">Utah</option><option data-value="s:Vermont">Vermont</option><option data-value="s:Virginia">Virginia</option><option data-value="s:Washington">Washington</option><option data-value="s:West Virginia">West Virginia</option><option data-value="s:Wisconsin">Wisconsin</option><option data-value="s:Wyoming">Wyoming</option><option data-value="s:D.C.">D.C.</option></select>
+                                </fieldset>
+                            </td>
+                            <td class='ee103'> </td>
+                        </tr>
+                        <tr style='height:13pt;'>
+                            <td class='ee113'> Multiple Jobs box checked? </td>
+                            <td class='ee118'>
+                                <fieldset id="fs_XLEW_1_29_3" style="border:0;padding:0;">
+                                    <select name='XLEW_1_29_3' id='XLEW_1_29_3' class='ee120 no-bg' style=' width:100% ' tabindex='14' size='1' onchange="recalc_onclick('XLEW_1_29_3')"><option data-value="s:Yes">Yes</option><option data-value="s:No" selected='selected'>No</option></select>
+                                </fieldset>
+                            </td>
+                            <td class='ee103'> </td>
+                        </tr>
+                        <tr style='height:14pt;'>
+                            <td class='ee113'> Children to claim </td>
+                            <td class='ee115 tooth-fill'>
+                                <div class='ui-input-text ui-body-inherit ui-corner-all'>
+                                    <input type='number' id='XLEW_1_31_3' name='XLEW_1_31_3' class='ee115' style=' width:100% ' value='0' tabindex='15' data-enhanced='true' onchange="this.value=eedisplayFloat(eeparseFloat(this.value));recalc_onclick('XLEW_1_31_3')" placeholder="" />
+                                </div>
+                            </td>
+                            <td class='ee103'> </td>
+                        </tr>
+                        <tr style='height:16pt;'>
+                            <td class='ee113'> Other depend to claim </td>
+                            <td class='ee115 tooth-fill'>
+                                <div class='ui-input-text ui-body-inherit ui-corner-all'>
+                                    <input type='number' id='XLEW_1_34_3' name='XLEW_1_34_3' class='ee115' style=' width:100% ' value='0' tabindex='16' data-enhanced='true' onchange="this.value=eedisplayFloat(eeparseFloat(this.value));recalc_onclick('XLEW_1_34_3')" placeholder="" />
+                                </div>
+                            </td>
+                            <td class='ee103'> </td>
+                        </tr>
+                        <tr style='height:14pt;'>
+                            <td class='ee113'> Other Income to claim </td>
+                            <td class='ee115 tooth-fill'>
+                                <div class='ui-input-text ui-body-inherit ui-corner-all'>
+                                    <input type='number' id='XLEW_1_37_3' name='XLEW_1_37_3' class='ee115' style=' width:100% ' value='0.00' tabindex='17' data-enhanced='true' onchange="this.value=eedisplayFloatND(eeparseFloat(this.value),2);recalc_onclick('XLEW_1_37_3')" placeholder="" />
+                                </div>
+                            </td>
+                            <td class='ee103'> </td>
+                        </tr>
+                        <tr style='height:13pt;'>
+                            <td class='ee113'> Add'l Deductions to claim per year </td>
+                            <td class='ee115 tooth-fill'>
+                                <div class='ui-input-text ui-body-inherit ui-corner-all'>
+                                    <input type='number' id='XLEW_1_39_3' name='XLEW_1_39_3' class='ee115' style=' width:100% ' value='0.00' tabindex='18' data-enhanced='true' onchange="this.value=eedisplayFloatND(eeparseFloat(this.value),2);recalc_onclick('XLEW_1_39_3')" placeholder="" />
+                                </div>
+                            </td>
+                            <td class='ee103'> </td>
+                        </tr>
+                        <tr style='height:14pt;'>
+                            <td class='ee113'> 4c-Extra Withholding to add per paycheck </td>
+                            <td class='ee121 tooth-fill'>
+                                <div class='ui-input-text ui-body-inherit ui-corner-all'>
+                                    <input type='number' id='XLEW_1_40_3' name='XLEW_1_40_3' class='ee121' style=' width:100% ' value='0.00' tabindex='19' data-enhanced='true' onchange="this.value=eedisplayFloatND(eeparseFloat(this.value),2);recalc_onclick('XLEW_1_40_3')" placeholder="" />
+                                </div>
+                            </td>
+                            <td class='ee103'> </td>
+                        </tr>
+                        <tr style='height:21pt;'>
+                            <td class='ee127' colspan='2'> Paycheck </td>
+                            <td class='ee128'> </td>
+                        </tr>
+                        <tr style='height:14pt;'>
+                            <td class='ee131'> Year </td>
+                            <td class='ee126'>
+                                <div>
+                                    <input type='text' id='XLEW_1_51_3' name='XLEW_1_51_3' class='ee126' style='overflow:hidden; border:0px solid #000000; width:100% ;box-shadow:none;-moz-box-shadow:none;-webkit-box-shadow:none;background:transparent;text-shadow: none;font-family:inherit;' value='0' tabindex='-1' data-enhanced='true' readonly onchange="" placeholder="" data-theme='none' />
+                                </div>
+                            </td>
+                            <td class='ee103'> </td>
+                        </tr>
+                        <tr style='height:11pt;'>
+                            <td class='ee131'> Pay Frequency/yr </td>
+                            <td class='ee115'>
+                                <div>
+                                    <input type='text' id='XLEW_1_52_3' name='XLEW_1_52_3' class='ee115' style='overflow:hidden; border:0px solid #000000; width:100% ;box-shadow:none;-moz-box-shadow:none;-webkit-box-shadow:none;background:transparent;text-shadow: none;font-family:inherit;' value='0' tabindex='-1' data-enhanced='true' readonly onchange="" placeholder="" data-theme='none' />
+                                </div>
+                            </td>
+                            <td class='ee103'> </td>
+                        </tr>
+                        <tr style='height:13pt;'>
+                            <td class='ee131'> Gross pay </td>
+                            <td class='ee115'>
+                                <div>
+                                    <input type='text' id='XLEW_1_53_3' name='XLEW_1_53_3' class='ee115' style='overflow:hidden; border:0px solid #000000; width:100% ;box-shadow:none;-moz-box-shadow:none;-webkit-box-shadow:none;background:transparent;text-shadow: none;font-family:inherit;' value='-' tabindex='-1' data-enhanced='true' readonly onchange="" placeholder="" data-theme='none' />
+                                </div>
+                            </td>
+                            <td class='ee103'> </td>
+                        </tr>
+                        <tr style='height:13pt;'>
+                            <td class='ee131'> 401K-IRA pre-tax </td>
+                            <td class='ee115'>
+                                <div>
+                                    <input type='text' id='XLEW_1_54_3' name='XLEW_1_54_3' class='ee115' style='overflow:hidden; border:0px solid #000000; width:100% ;box-shadow:none;-moz-box-shadow:none;-webkit-box-shadow:none;background:transparent;text-shadow: none;font-family:inherit;' value='-' tabindex='-1' data-enhanced='true' readonly onchange="" placeholder="" data-theme='none' />
+                                </div>
+                            </td>
+                            <td class='ee103'> </td>
+                        </tr>
+                        <tr style='height:13pt;'>
+                            <td class='ee131'> Medical insurance deduction </td>
+                            <td class='ee115'>
+                                <div>
+                                    <input type='text' id='XLEW_1_55_3' name='XLEW_1_55_3' class='ee115' style='overflow:hidden; border:0px solid #000000; width:100% ;box-shadow:none;-moz-box-shadow:none;-webkit-box-shadow:none;background:transparent;text-shadow: none;font-family:inherit;' value='-' tabindex='-1' data-enhanced='true' readonly onchange="" placeholder="" data-theme='none' />
+                                </div>
+                            </td>
+                            <td class='ee103'> </td>
+                        </tr>
+                        <tr style='height:26pt;'>
+                            <td class='ee131'> Pretax reimbersement deduction </td>
+                            <td class='ee115'>
+                                <div>
+                                    <input type='text' id='XLEW_1_56_3' name='XLEW_1_56_3' class='ee115' style='overflow:hidden; border:0px solid #000000; width:100% ;box-shadow:none;-moz-box-shadow:none;-webkit-box-shadow:none;background:transparent;text-shadow: none;font-family:inherit;' value='-' tabindex='-1' data-enhanced='true' readonly onchange="" placeholder="" data-theme='none' />
+                                </div>
+                            </td>
+                            <td class='ee103'> </td>
+                        </tr>
+                        <tr style='height:13pt;'>
+                            <td class='ee131'> Federal tax </td>
+                            <td class='ee115'>
+                                <div>
+                                    <input type='text' id='XLEW_1_62_3' name='XLEW_1_62_3' class='ee115' style='overflow:hidden; border:0px solid #000000; width:100% ;box-shadow:none;-moz-box-shadow:none;-webkit-box-shadow:none;background:transparent;text-shadow: none;font-family:inherit;' value='-' tabindex='-1' data-enhanced='true' readonly onchange="" placeholder="" data-theme='none' />
+                                </div>
+                            </td>
+                            <td class='ee103'> </td>
+                        </tr>
+                        <tr style='height:13pt;'>
+                            <td class='ee131'> State tax </td>
+                            <td class='ee115'>
+                                <div>
+                                    <input type='text' id='XLEW_1_63_3' name='XLEW_1_63_3' class='ee115' style='overflow:hidden; border:0px solid #000000; width:100% ;box-shadow:none;-moz-box-shadow:none;-webkit-box-shadow:none;background:transparent;text-shadow: none;font-family:inherit;' value='-' tabindex='-1' data-enhanced='true' readonly onchange="" placeholder="" data-theme='none' />
+                                </div>
+                            </td>
+                            <td class='ee103'> </td>
+                        </tr>
+                        <tr style='height:13pt;'>
+                            <td class='ee131'> Social security tax </td>
+                            <td class='ee115'>
+                                <div>
+                                    <input type='text' id='XLEW_1_64_3' name='XLEW_1_64_3' class='ee115' style='overflow:hidden; border:0px solid #000000; width:100% ;box-shadow:none;-moz-box-shadow:none;-webkit-box-shadow:none;background:transparent;text-shadow: none;font-family:inherit;' value='-' tabindex='-1' data-enhanced='true' readonly onchange="" placeholder="" data-theme='none' />
+                                </div>
+                            </td>
+                            <td class='ee103'> </td>
+                        </tr>
+                        <tr style='height:13pt;'>
+                            <td class='ee131'> Medicare tax </td>
+                            <td class='ee115'>
+                                <div>
+                                    <input type='text' id='XLEW_1_65_3' name='XLEW_1_65_3' class='ee115' style='overflow:hidden; border:0px solid #000000; width:100% ;box-shadow:none;-moz-box-shadow:none;-webkit-box-shadow:none;background:transparent;text-shadow: none;font-family:inherit;' value='-' tabindex='-1' data-enhanced='true' readonly onchange="" placeholder="" data-theme='none' />
+                                </div>
+                            </td>
+                            <td class='ee103'> </td>
+                        </tr>
+                        <tr style='height:13pt;'>
+                            <td class='ee131'> Roth-IRA after tax deduction </td>
+                            <td class='ee115'>
+                                <div>
+                                    <input type='text' id='XLEW_1_66_3' name='XLEW_1_66_3' class='ee115' style='overflow:hidden; border:0px solid #000000; width:100% ;box-shadow:none;-moz-box-shadow:none;-webkit-box-shadow:none;background:transparent;text-shadow: none;font-family:inherit;' value='-' tabindex='-1' data-enhanced='true' readonly onchange="" placeholder="" data-theme='none' />
+                                </div>
+                            </td>
+                            <td class='ee103'> </td>
+                        </tr>
+                        <tr style='height:13pt;'>
+                            <td class='ee131'> After tax deductions </td>
+                            <td class='ee115'>
+                                <div>
+                                    <input type='text' id='XLEW_1_67_3' name='XLEW_1_67_3' class='ee115' style='overflow:hidden; border:0px solid #000000; width:100% ;box-shadow:none;-moz-box-shadow:none;-webkit-box-shadow:none;background:transparent;text-shadow: none;font-family:inherit;' value='-' tabindex='-1' data-enhanced='true' readonly onchange="" placeholder="" data-theme='none' />
+                                </div>
+                            </td>
+                            <td class='ee103'> </td>
+                        </tr>
+                        <tr style='height:13pt;'>
+                            <td class='ee131'> Take home pay </td>
+                            <td class='ee115'>
+                                <div>
+                                    <input type='text' id='XLEW_1_68_3' name='XLEW_1_68_3' class='ee115' style='overflow:hidden; border:0px solid #000000; width:100% ;box-shadow:none;-moz-box-shadow:none;-webkit-box-shadow:none;background:transparent;text-shadow: none;font-family:inherit;' value='-' tabindex='-1' data-enhanced='true' readonly onchange="" placeholder="" data-theme='none' />
+                                </div>
+                            </td>
+                            <td class='ee103'> </td>
+                        </tr>
+                        <tr style='height:13pt;'>
+                            <td class='ee131'> Federal effective rate </td>
+                            <td class='ee115'>
+                                <div>
+                                    <input type='text' id='XLEW_1_69_3' name='XLEW_1_69_3' class='ee115' style='overflow:hidden; border:0px solid #000000; width:100% ;box-shadow:none;-moz-box-shadow:none;-webkit-box-shadow:none;background:transparent;text-shadow: none;font-family:inherit;' value='0' tabindex='-1' data-enhanced='true' readonly onchange="" placeholder="" data-theme='none' />
+                                </div>
+                            </td>
+                            <td class='ee103'> </td>
+                        </tr>
+                        <tr style='height:13pt;'>
+                            <td class='ee131'> State effective rate </td>
+                            <td class='ee115'>
+                                <div>
+                                    <input type='text' id='XLEW_1_70_3' name='XLEW_1_70_3' class='ee115' style='overflow:hidden; border:0px solid #000000; width:100% ;box-shadow:none;-moz-box-shadow:none;-webkit-box-shadow:none;background:transparent;text-shadow: none;font-family:inherit;' value='0' tabindex='-1' data-enhanced='true' readonly onchange="" placeholder="" data-theme='none' />
+                                </div>
+                            </td>
+                            <td class='ee103'> </td>
+                        </tr>
+                        <tr style='height:13pt;'>
+                            <td class='ee131'> Bonus gross pay </td>
+                            <td class='ee115'>
+                                <div>
+                                    <input type='text' id='XLEW_1_71_3' name='XLEW_1_71_3' class='ee115' style='overflow:hidden; border:0px solid #000000; width:100% ;box-shadow:none;-moz-box-shadow:none;-webkit-box-shadow:none;background:transparent;text-shadow: none;font-family:inherit;' value='-' tabindex='-1' data-enhanced='true' readonly onchange="" placeholder="" data-theme='none' />
+                                </div>
+                            </td>
+                            <td class='ee103'> </td>
+                        </tr>
+                        <tr style='height:26pt;'>
+                            <td class='ee131'> Bonus 401K-IRA pre-tax deduction </td>
+                            <td class='ee115'>
+                                <div>
+                                    <input type='text' id='XLEW_1_72_3' name='XLEW_1_72_3' class='ee115' style='overflow:hidden; border:0px solid #000000; width:100% ;box-shadow:none;-moz-box-shadow:none;-webkit-box-shadow:none;background:transparent;text-shadow: none;font-family:inherit;' value='-' tabindex='-1' data-enhanced='true' readonly onchange="" placeholder="" data-theme='none' />
+                                </div>
+                            </td>
+                            <td class='ee103'> </td>
+                        </tr>
+                        <tr style='height:13pt;'>
+                            <td class='ee131'> Bonus federal tax </td>
+                            <td class='ee115'>
+                                <div>
+                                    <input type='text' id='XLEW_1_73_3' name='XLEW_1_73_3' class='ee115' style='overflow:hidden; border:0px solid #000000; width:100% ;box-shadow:none;-moz-box-shadow:none;-webkit-box-shadow:none;background:transparent;text-shadow: none;font-family:inherit;' value='-' tabindex='-1' data-enhanced='true' readonly onchange="" placeholder="" data-theme='none' />
+                                </div>
+                            </td>
+                            <td class='ee103'> </td>
+                        </tr>
+                        <tr style='height:13pt;'>
+                            <td class='ee131'> Bonus state Tax </td>
+                            <td class='ee115'>
+                                <div>
+                                    <input type='text' id='XLEW_1_74_3' name='XLEW_1_74_3' class='ee115' style='overflow:hidden; border:0px solid #000000; width:100% ;box-shadow:none;-moz-box-shadow:none;-webkit-box-shadow:none;background:transparent;text-shadow: none;font-family:inherit;' value='-' tabindex='-1' data-enhanced='true' readonly onchange="" placeholder="" data-theme='none' />
+                                </div>
+                            </td>
+                            <td class='ee103'> </td>
+                        </tr>
+                        <tr style='height:13pt;'>
+                            <td class='ee131'> Bonus social security Tax </td>
+                            <td class='ee115'>
+                                <div>
+                                    <input type='text' id='XLEW_1_75_3' name='XLEW_1_75_3' class='ee115' style='overflow:hidden; border:0px solid #000000; width:100% ;box-shadow:none;-moz-box-shadow:none;-webkit-box-shadow:none;background:transparent;text-shadow: none;font-family:inherit;' value='-' tabindex='-1' data-enhanced='true' readonly onchange="" placeholder="" data-theme='none' />
+                                </div>
+                            </td>
+                            <td class='ee103'> </td>
+                        </tr>
+                        <tr style='height:13pt;'>
+                            <td class='ee131'> Bonus medicare tax </td>
+                            <td class='ee115'>
+                                <div>
+                                    <input type='text' id='XLEW_1_76_3' name='XLEW_1_76_3' class='ee115' style='overflow:hidden; border:0px solid #000000; width:100% ;box-shadow:none;-moz-box-shadow:none;-webkit-box-shadow:none;background:transparent;text-shadow: none;font-family:inherit;' value='-' tabindex='-1' data-enhanced='true' readonly onchange="" placeholder="" data-theme='none' />
+                                </div>
+                            </td>
+                            <td class='ee103'> </td>
+                        </tr>
+                        <tr style='height:14pt;'>
+                            <td class='ee131'> Bonus net pay </td>
+                            <td class='ee121'>
+                                <div>
+                                    <input type='text' id='XLEW_1_77_3' name='XLEW_1_77_3' class='ee121' style='overflow:hidden; border:0px solid #000000; width:100% ;box-shadow:none;-moz-box-shadow:none;-webkit-box-shadow:none;background:transparent;text-shadow: none;font-family:inherit;' value='-' tabindex='-1' data-enhanced='true' readonly onchange="" placeholder="" data-theme='none' />
+                                </div>
+                            </td>
+                            <td class='ee103'> </td>
+                        </tr>
+                        <tr style='height:14pt;'>
+                            <td class='ee103'> </td>
+                            <td class='ee103'> </td>
+                            <td class='ee103'> </td>
+                        </tr>
+                    </table>
+                </div>
+            </article>
+        </section><!-- confirmation dialog for reset begin -->
+        <div data-role='popup' id='resetConfirmation' data-overlay-theme='a' data-theme='c' data-dismissible='false' style='max-width:300px;' class='ui-corner-all' data-history='false'>
+            <section role='main' data-role='ui-content'>
+                <div class='dialog-content'>
+                    <b>Ready to reset</b>
+                    <div style='text-align:center;'>
+                        <div style='padding-left:15px;padding-right:15px;'>
+                            <span style='display:block;padding-top:8px;padding-bottom:16px;'> Are you sure to reset the Form's values? </span>
+                        </div>
+                    </div>
+                </div>
+                <div class='ui-grid-a dialog-button-panel'>
+                    <button class='ui-block-a dialog-left-button low-emphasis' onclick="$('#resetConfirmation').popup('close');">Cancel</button>
+                    <button id='about_done' class='ui-block-b dialog-right-button high-emphasis' onclick="reset_onclick(this);">OK</button>
+                </div>
+            </section>
+        </div><!-- confirmation dialog for reset end --><!-- dialog for submit click begin -->
+        <div data-role='popup' id='submitClickPopUp' data-overlay-theme='a' data-theme='c' data-dismissible='false' style='max-width:300px;' class='ui-corner-all' data-history='false'>
+            <section role='main' data-role='ui-content'>
+                <div class='dialog-content'>
+                    <b>Submit cannot initiate</b>
+                    <div style='text-align:center;'>
+                        <div style='padding-left:15px;padding-right:15px;'>
+                            <span style='display:block;padding-top:8px;padding-bottom:16px;'> Cannot submit right now, please browse to last page!! </span>
+                        </div>
+                    </div>
+                </div>
+                <div class='dialog-button-panel'>
+                    <button class='dialog-center-button high-emphasis one-button' onclick="$('#submitClickPopUp').popup('close');">OK</button>
+                </div>
+            </section>
+        </div><!-- dialog for submit click begin -->
+        <div data-role='panel' id='leftpanel' data-theme='a'>
+            <div class='ui-panel-inner' style='padding: 0px;'>
+                <div id='buttons' class='ui-grid-b' style='background: #f6f6f6'>
+                    <!-- submit button begin --> <!-- submit button end --> <!-- reset button begin -->
+                    <section class='ui-block-c'>
+                        <a href='#' class='ui-btn ui-icon-refresh ui-btn-icon-top' onclick="showpopup($('#resetConfirmation'));"> Reset </a>
+                    </section> <!-- reset button end --> <!-- update button begin -->
+                    <section class='ui-block-c'>
+                        <a href='#' class='ui-btn ui-icon-check ui-btn-icon-top' onclick="recalc_onclick('');$('#leftpanel').panel('close');"> Update </a>
+                    </section> <!-- update button end -->
+                </div>
+                <a href='#' id='btn_offlinesubmit' class='ui-btn ui-icon-carat-r btn-has-left-svg' style='text-align: left;margin: 0px;'> <svg version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' width='32px' height='32px' viewBox='0 0 193 198' enable-background='new 0 0 193 198' xml:space='preserve' class='ui-li-icon ui-corner-none ui-li-thumb list-item-icon'> <g id='Page-1' stroke='none' stroke-width='1' fill='none' fill-rule='evenodd'> <g id='offlineStorage' fill='#8B8B8B'> <path id='Rectangle-1' d='M175,81.4609571 C173.72473,81.1741355 172.398175,81.0227757 171.036254,81.0227757 L156.676167,81.0227757 C149.712457,64.8907373 133.661956,53.5998833 114.974335,53.5998833 C89.9005405,53.5998833 69.5742135,73.9262102 69.5742135,99.0000052 C69.5742135,124.0738 89.9005405,144.400127 114.974335,144.400127 C133.661956,144.400127 149.712457,133.109273 156.676167,116.977235 L156.676167,116.977235 L171.036254,116.977235 C172.397949,116.977235 173.724534,116.825639 175,116.538392 L175,81.4609571 Z M143.375522,81.0227757 C137.395195,71.850704 127.045144,65.7878354 115.279034,65.7878354 C96.7681789,65.7878354 81.7621657,80.7938486 81.7621657,99.304704 C81.7621657,117.815559 96.7681789,132.821573 115.279034,132.821573 C127.303812,132.821573 137.849585,126.4892 143.763572,116.977235 L116.195792,116.977235 C106.265773,116.977235 98.2159012,108.930738 98.2159012,99.0000052 C98.2159012,89.0714555 106.273817,81.0227757 116.195792,81.0227757 L143.375522,81.0227757 L143.375522,81.0227757 Z M162.812048,91.3825351 L117.718911,91.3825351 C113.669016,91.3825351 110.403853,94.6565743 110.403853,98.6953064 C110.403853,102.72582 113.678916,106.008078 117.718911,106.008078 L162.812048,106.008078 L162.812048,91.3825351 Z M64.2960759,0.718619708 L180.278138,16.386849 C187.304228,17.3360165 193,24.6229724 193,32.659096 L193,165.340904 C193,173.37865 187.30281,180.664175 180.278138,181.613151 L64.2960759,197.28138 C57.2699853,198.230548 51.5742135,190.943209 51.5742135,181.009133 L51.5742135,16.9908667 C51.5742135,7.05478539 57.2714038,-0.230356117 64.2960759,0.718619708 Z'></path> <path d='M16.0883002,18.714477 L10.2889229,17.8867905 C4.76618758,17.0985863 0.287106752,23.1495087 0.287106752,31.4022595 L0.287106752,167.633218 C0.287106752,175.884303 4.76507235,181.93705 10.2889229,181.148687 L16.0882191,180.321012 C14.7258013,176.294078 13.9871066,171.979255 13.9871066,167.491301 L13.9871066,31.5441846 C13.9871066,27.0566858 14.7257784,22.7417715 16.0883002,18.714477 Z' id='Rectangle-2'></path> <path d='M41.1570655,8.67506273 L36.2889229,7.89524144 C30.7661876,7.01056181 26.2871068,13.8021113 26.2871068,23.0649907 L26.2871068,175.970486 C26.2871068,185.231495 30.7650724,192.025093 36.2889229,191.140235 L41.1579443,190.360273 C40.3929951,187.272285 39.9871066,184.042899 39.9871066,180.71897 L39.9871066,18.3165158 C39.9871066,14.9923754 40.3926634,11.7629627 41.1570655,8.67506273 Z' id='Rectangle-4'></path> </g> </g> </svg> Offline Forms <span id='saved_forms_count' class='ui-li-count ui-btn-up-c ui-btn-corner-all' style='right: 3.2em;'>0</span> </a>
+            </div>
+            <div data-role='popup' id='about' data-overlay-theme='a' data-theme='c' data-dismissible='false' style='max-width:300px;' class='ui-corner-all' data-history='false'>
+                <section role='main' data-role='ui-content'>
+                    <!-- captcha begin -->
+                    <div class='dialog-content'>
+                        <b>Ready to submit</b>
+                        <div style='text-align:center;'>
+                            <div style='padding-left:15px;padding-right:15px;'>
+                                <span style='display:block;padding-top:8px;padding-bottom:16px;'> This form is complete and has passed all validation tests.</span>
+                                <span> Do you want to submit now?</span>
+                            </div>
+                        </div>
+                    </div> <!-- captcha end -->
+                    <div class='ui-grid-a dialog-button-panel'>
+                        <button class='ui-block-a dialog-left-button low-emphasis' onclick="$('#about').popup('close')">Cancel</button>
+                        <button id='about_done' class='ui-block-b dialog-right-button high-emphasis' onclick="check_captcha(this);">Submit</button>
+                    </div>
+                </section>
+            </div>
+        </div>
+        <section id='realtimesync' data-url='realtimesync' data-role='page'>
+            <header data-role='header' data-add-back-btn='true' data-theme='a'>
+                <h1>Real-time Sync</h1>
+                <a data-rel='back' data-icon='carat-l' href='#home' class='ui-btn ui-icon-carat-l ui-btn-icon-notext ui-corner-all'>Back</a>
+            </header>
+            <footer data-role='footer' data-position='fixed' data-tap-toggle='false' data-theme='a'>
+                <nav data-role='navbar'>
+                    <ul>
+                        <li>
+                            <a href='#realtimesync' data-icon='gear' data-iconpos='notext' class='ui-btn-active' data-history='false'></a>
+                        </li>
+                        <li>
+                            <a href='#realtimesync_userlistpage' data-icon='user' data-iconpos='notext' data-history='false'>
+                                <div>
+                                    <span class='liveuserscount badge badge-footer'>0</span>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </footer>
+            <article role='main' class='ui-content'>
+                <div id='setting' class='ui-body-d'>
+                    <div id='pnlWsError' style='color:rgb(205, 10, 10);text-align:center;font-size:small;'></div>
+                    <label for='txtWsSecretkey'>Secret Key:</label>
+                    <input type='text' id='txtWsSecretkey' placeholder='unique min 7 char name'>
+                    <button type='button' id='btnWsConnect'>Connect</button>
+                    <label for='txtWsEmail'>Share your name/email :</label>
+                    <input type='text' id='txtWsEmail' placeholder='name or email'>
+                    <span id='labelShareStatus' class='page-label' style='color: green'></span>
+                    <button type='button' id='btnWsEmailShare'>Share</button>
+                    <div id='dataShareUrl' style='display:none; margin-bottom:8px; width:100%;'>
+                        <input type='text' id='txtDataShareUrl'>
+                    </div>
+                </div>
+            </article>
+        </section>
+        <section id='realtimesync_userlistpage' data-url='realtimesync_userlistpage' data-role='page'>
+            <header data-role='header' data-add-back-btn='true'>
+                <h1>participant list</h1>
+                <a data-rel='back' data-icon='carat-l' href='#home' class='ui-btn ui-icon-carat-l ui-btn-icon-notext ui-corner-all'>Back</a>
+            </header>
+            <footer data-role='footer' data-theme='a' data-position='fixed' data-tap-toggle='false'>
+                <nav data-role='navbar'>
+                    <ul>
+                        <li>
+                            <a href='#realtimesync' data-icon='gear' data-iconpos='notext' data-history='false'></a>
+                        </li>
+                        <li>
+                            <a href='#realtimesync_userlistpage' data-icon='user' data-iconpos='notext' class='ui-btn-active' data-history='false'>
+                                <div>
+                                    <span class='liveuserscount badge badge-footer'>0</span>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </footer>
+            <article role='main' class='ui-content'>
+                <ul id='liveuserslist' data-role='listview'>
+                    <li>&nbsp;&nbsp;No one is connected.</li>
+                </ul>
+            </article>
+        </section>
+        <input name='cx__css4a4e' id='cx__css4a4e' type='text' style='display:none' /><input name='cx__css2f36' id='cx__css2f36' type='text' style='display:none' />
+    </form>
+
+</body>
+     <script>
+if ("serviceWorker" in navigator) {
+  if (navigator.serviceWorker.controller) {
+    console.log("[PWA Builder] active service worker found, no need to register");
+  } else {
+    // Register the service worker
+    navigator.serviceWorker
+      .register("serviceworker.js", {
+        scope: "./"
+      })
+      .then(function (reg) {
+        console.log("[PWA Builder] Service worker has been registered for scope: " + reg.scope);
+      });
+  }
+}</script>
+</html>
