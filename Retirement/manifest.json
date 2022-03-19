@@ -1,9 +1,9 @@
 {
-    "name": "Retirement Planner",
+    "name": "Retirement_Planner",
     "scope": ".",
 	"display": "standalone",
 	"start_url": "index.html",
-	"short_name": "Retirement Planner",
+	"short_name": "Retirement_Planner",
 	"theme_color": "transparent",
 	"description": "Retirement Planner",
 	"orientation": "portrait",
