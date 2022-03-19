@@ -102,5 +102,10 @@
       "relation": ["delegate_permission/common.handle_all_urls"],
       "target" : { "namespace": "android_app", "package_name": "com.cschnacker.Business_Finance_Planner",
                    "sha256_cert_fingerprints": ["A8:5B:83:57:90:A1:45:81:76:19:3A:9B:BA:6B:27:DB:2F:26:4D:6B:F4:67:85:69:CE:A4:DE:A0:AC:0B:00:7A"] }
+       },
+        {
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target" : { "namespace": "android_app", "package_name": "com.cschnacker.College_Expense_Planner",
+                   "sha256_cert_fingerprints": ["FA:C5:CA:E9:A8:8C:40:74:B8:86:0E:93:C0:1D:1E:A7:BA:51:44:06:A0:6E:F7:79:3E:B0:47:06:F6:33:2C:90"] }
        }
 ]
