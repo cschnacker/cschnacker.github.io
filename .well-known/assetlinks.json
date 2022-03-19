@@ -97,5 +97,13 @@
       "relation": ["delegate_permission/common.handle_all_urls"],
       "target" : { "namespace": "android_app", "package_name": "com.cschnacker.My_Pay",
                    "sha256_cert_fingerprints": ["7E:0E:20:25:27:B9:AA:D1:9C:F0:4C:E8:CF:07:E0:87:E6:EC:E5:20:C8:DA:22:C0:05:0F:60:DE:5E:C8:66:7B"] }
-     }
+      },
+       {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.cschnacker.Business_Finance_Planner",
+      "sha256_cert_fingerprints":
+        ["A8:5B:83:57:90:A1:45:81:76:19:3A:9B:BA:6B:27:DB:2F:26:4D:6B:F4:67:85:69:CE:A4:DE:A0:AC:0B:00:7A"] }
+       }
 ]
