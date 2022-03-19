@@ -87,5 +87,10 @@
       "relation": ["delegate_permission/common.handle_all_urls"],
       "target" : { "namespace": "android_app", "package_name": "com.cschnacker.Easy_W4",
                    "sha256_cert_fingerprints": ["87:75:FD:69:1D:CB:E9:B5:A2:9B:71:88:A3:24:31:AD:93:8F:54:B2:CE:79:96:AF:0D:A4:F8:5D:F2:3C:96:49"] }
+     },
+      {
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target" : { "namespace": "android_app", "package_name": "com.cschnacker.Retirement_Investment_Planner",
+                   "sha256_cert_fingerprints": ["83:39:39:74:CD:A0:82:BD:91:0E:A1:F1:92:6D:40:B9:97:05:63:7B:3F:EC:A8:74:5F:BB:2D:84:01:D7:F3:C8"] }
      }
 ]
