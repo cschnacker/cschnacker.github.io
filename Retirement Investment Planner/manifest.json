@@ -1,0 +1,20 @@
+{
+    "name": "Retirement Investment Planner",
+    "scope": ".",
+	"display": "standalone",
+	"start_url": "index.html",
+	"short_name": "Retirement Investment Planner",
+	"theme_color": "transparent",
+	"description": "Analyzes your retirement expenses versus your investment income",
+	"orientation": "portrait",
+	"background_color": "transparent",
+	"related_applications": [],
+	"prefer_related_applications": false,
+	"icons": [
+        {
+        "src": "Investment550x550.png",
+        "type": "image/png", "sizes": "550x550"
+        }        
+    ],
+	"url": ".",
+	"generated": "true"}
