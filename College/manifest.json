@@ -1,0 +1,20 @@
+{
+    "name": "College Expense Planner",
+    "scope": ".",
+	"display": "standalone",
+	"start_url": "index.html",
+	"short_name": "College Planner",
+	"theme_color": "transparent",
+	"description": "College Expense Planner",
+	"orientation": "portrait",
+	"background_color": "transparent",
+	"related_applications": [],
+	"prefer_related_applications": false,
+	"icons": [
+        {
+        "src": "college550x550.png",
+        "type": "image/png", "sizes": "550x550"
+        }        
+    ],
+	"url": ".",
+	"generated": "true"}
