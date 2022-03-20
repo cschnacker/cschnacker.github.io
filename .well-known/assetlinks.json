@@ -107,5 +107,10 @@
       "relation": ["delegate_permission/common.handle_all_urls"],
       "target" : { "namespace": "android_app", "package_name": "com.cschnacker.College_Expense_Planner",
                    "sha256_cert_fingerprints": ["FA:C5:CA:E9:A8:8C:40:74:B8:86:0E:93:C0:1D:1E:A7:BA:51:44:06:A0:6E:F7:79:3E:B0:47:06:F6:33:2C:90"] }
+       },
+         {
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target" : { "namespace": "android_app", "package_name": "com.cschnacker.Credit_Card",
+                   "sha256_cert_fingerprints": ["41:2B:94:F9:DD:34:70:68:12:55:31:92:4F:9D:25:1C:4E:A4:BA:B7:9B:A6:FE:21:47:94:1F:2B:5D:37:E2:5B"] }
        }
 ]
