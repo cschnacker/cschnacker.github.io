@@ -12,7 +12,7 @@
 	"prefer_related_applications": false,
 	"icons": [
         {
-        "src": "Credit550x550.png",
+        "src": "credit550x550.png",
         "type": "image/png", "sizes": "550x550"
         }        
     ],
