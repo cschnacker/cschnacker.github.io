@@ -112,5 +112,10 @@
       "relation": ["delegate_permission/common.handle_all_urls"],
       "target" : { "namespace": "android_app", "package_name": "com.cschnacker.Credit_Card",
                    "sha256_cert_fingerprints": ["41:2B:94:F9:DD:34:70:68:12:55:31:92:4F:9D:25:1C:4E:A4:BA:B7:9B:A6:FE:21:47:94:1F:2B:5D:37:E2:5B"] }
+       },
+          {
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target" : { "namespace": "android_app", "package_name": "com.cschnacker.Eff_Tax_Rates_Federal_State",
+                   "sha256_cert_fingerprints": ["F0:CD:68:D2:88:74:59:C9:A0:B4:61:6A:AA:E5:EA:24:86:C9:B9:70:26:8D:E2:BE:8E:2C:0B:2B:D6:08:AA:9E"] }
        }
 ]
