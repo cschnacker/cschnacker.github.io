@@ -1,9 +1,9 @@
 {
-    "name": "Paycheck",
+    "name": "W4 Multiple Paychecks",
     "scope": ".",
 	"display": "standalone",
 	"start_url": "index.html",
-	"short_name": "Paycheck",
+	"short_name": "W4 Multiple Paychecks",
 	"theme_color": "transparent",
 	"description": "Paycheck and W-4 Calculator",
 	"orientation": "portrait",
