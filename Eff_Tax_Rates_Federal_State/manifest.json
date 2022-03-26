@@ -1,9 +1,9 @@
 {
-    "name": "Effective Tax Rate Federal State Calculator",
+    "name": "Effective Tax Rate Fed/State",
     "scope": ".",
 	"display": "standalone",
 	"start_url": "index.html",
-	"short_name": "Effective Tax Rate Federal State Calculator",
+	"short_name": "Effective Tax Rate Fed/State",
 	"theme_color": "transparent",
 	"description": "Calculates your effective tax rate for federal and state",
 	"orientation": "portrait",
