@@ -122,5 +122,10 @@
       "relation": ["delegate_permission/common.handle_all_urls"],
       "target" : { "namespace": "android_app", "package_name": "com.cschnacker.Home_Equity",
                    "sha256_cert_fingerprints": ["57:45:25:4C:A7:B0:BF:48:5B:1E:4B:5A:A2:84:61:02:DE:4C:4A:B1:A8:E1:A6:39:E6:0A:15:8F:AD:EC:17:F4"] }
+       },
+ {
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target" : { "namespace": "android_app", "package_name": "com.cschnacker.Annuity",
+                   "sha256_cert_fingerprints": ["DC:32:65:18:C6:EC:E7:45:10:AA:92:4C:7A:DF:81:30:A5:2B:BE:FF:AE:38:D5:E8:68:A4:91:CE:6E:3E:9D:5C"] }
        }
 ]
