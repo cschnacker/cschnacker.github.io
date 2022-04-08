@@ -117,5 +117,10 @@
       "relation": ["delegate_permission/common.handle_all_urls"],
       "target" : { "namespace": "android_app", "package_name": "com.cschnacker.Eff_Tax_Rates_Federal_State",
                    "sha256_cert_fingerprints": ["F0:CD:68:D2:88:74:59:C9:A0:B4:61:6A:AA:E5:EA:24:86:C9:B9:70:26:8D:E2:BE:8E:2C:0B:2B:D6:08:AA:9E"] }
+       },
+           {
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target" : { "namespace": "android_app", "package_name": "com.cschnacker.Home_Equity",
+                   "sha256_cert_fingerprints": ["57:45:25:4C:A7:B0:BF:48:5B:1E:4B:5A:A2:84:61:02:DE:4C:4A:B1:A8:E1:A6:39:E6:0A:15:8F:AD:EC:17:F4"] }
        }
 ]
