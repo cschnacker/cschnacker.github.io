@@ -1,0 +1,20 @@
+{
+    "name": "Annuity Planner",
+    "scope": ".",
+	"display": "standalone",
+	"start_url": "index.html",
+	"short_name": "Annuity Planner",
+	"theme_color": "transparent",
+	"description": "Calculates the payments and interest paid out of annuities",
+	"orientation": "portrait",
+	"background_color": "transparent",
+	"related_applications": [],
+	"prefer_related_applications": false,
+	"icons": [
+        {
+        "src": "benefit550x550.png",
+        "type": "image/png", "sizes": "550x550"
+        }        
+    ],
+	"url": ".",
+	"generated": "true"}
