@@ -126,6 +126,6 @@
  {
       "relation": ["delegate_permission/common.handle_all_urls"],
       "target" : { "namespace": "android_app", "package_name": "com.cschnacker.Annuity",
-                   "sha256_cert_fingerprints": ["DC:32:65:18:C6:EC:E7:45:10:AA:92:4C:7A:DF:81:30:A5:2B:BE:FF:AE:38:D5:E8:68:A4:91:CE:6E:3E:9D:5C"] }
+                   "sha256_cert_fingerprints": ["62:60:12:84:78:D5:B0:C0:54:03:35:88:A8:9C:FE:F3:A7:29:BB:15:FF:FB:81:02:8E:74:AF:98:96:49:68:A4"] }
        }
 ]
