@@ -123,9 +123,9 @@
       "target" : { "namespace": "android_app", "package_name": "com.cschnacker.Home_Equity",
                    "sha256_cert_fingerprints": ["57:45:25:4C:A7:B0:BF:48:5B:1E:4B:5A:A2:84:61:02:DE:4C:4A:B1:A8:E1:A6:39:E6:0A:15:8F:AD:EC:17:F4"] }
        },
- {
+           {
       "relation": ["delegate_permission/common.handle_all_urls"],
       "target" : { "namespace": "android_app", "package_name": "com.cschnacker.Annuity",
-                   "sha256_cert_fingerprints": ["62:60:12:84:78:D5:B0:C0:54:03:35:88:A8:9C:FE:F3:A7:29:BB:15:FF:FB:81:02:8E:74:AF:98:96:49:68:A4"] }
+                   "sha256_cert_fingerprints":  ["62:60:12:84:78:D5:B0:C0:54:03:35:88:A8:9C:FE:F3:A7:29:BB:15:FF:FB:81:02:8E:74:AF:98:96:49:68:A4"] }
        }
 ]
