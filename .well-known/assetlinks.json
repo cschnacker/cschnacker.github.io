@@ -127,5 +127,10 @@
       "relation": ["delegate_permission/common.handle_all_urls"],
       "target" : { "namespace": "android_app", "package_name": "com.cschnacker.Annuity",
                    "sha256_cert_fingerprints":  ["62:60:12:84:78:D5:B0:C0:54:03:35:88:A8:9C:FE:F3:A7:29:BB:15:FF:FB:81:02:8E:74:AF:98:96:49:68:A4"] }
+       },
+            {
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target" : { "namespace": "android_app", "package_name": "com.cschnacker.Bonds",
+                   "sha256_cert_fingerprints":  ["32:17:1D:65:7C:27:9C:98:C4:4C:11:5C:FA:D0:DD:13:60:CE:A9:95:EC:D7:AE:B9:1D:8A:C8:6C:20:2F:DE:88"] }
        }
 ]
