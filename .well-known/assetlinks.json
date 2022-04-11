@@ -132,5 +132,10 @@
       "relation": ["delegate_permission/common.handle_all_urls"],
       "target" : { "namespace": "android_app", "package_name": "com.cschnacker.Bonds",
                    "sha256_cert_fingerprints":  ["32:17:1D:65:7C:27:9C:98:C4:4C:11:5C:FA:D0:DD:13:60:CE:A9:95:EC:D7:AE:B9:1D:8A:C8:6C:20:2F:DE:88"] }
+       },
+             {
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target" : { "namespace": "android_app", "package_name": "com.cschnacker.Stocks",
+                   "sha256_cert_fingerprints":  ["0D:4A:34:C1:7F:F3:23:15:1B:1F:53:7C:15:5C:D7:A0:09:5F:B9:05:DA:C9:1A:58:02:EF:3A:8F:6F:68:AC:EA"] }
        }
 ]
