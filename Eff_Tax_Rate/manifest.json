@@ -5,14 +5,14 @@
 	"start_url": "index.html",
 	"short_name": "Effective Tax Rate",
 	"theme_color": "transparent",
-	"description": "Calculates customer effective tax rate",
+	"description": "Calculates your custom effective tax rate",
 	"orientation": "portrait",
 	"background_color": "transparent",
 	"related_applications": [],
 	"prefer_related_applications": false,
 	"icons": [
         {
-        "src": "Tax550x550.png",
+        "src": "tax550x550.png",
         "type": "image/png", "sizes": "550x550"
         }        
     ],
