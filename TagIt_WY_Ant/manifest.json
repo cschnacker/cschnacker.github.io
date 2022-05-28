@@ -1,0 +1,20 @@
+{
+    "name": "TagIt WY Antelope",
+    "scope": ".",
+	"display": "standalone",
+	"start_url": "index.html",
+	"short_name": "TagIt WY Antelope",
+	"theme_color": "transparent",
+	"description": "Wyoming Antelope Draw App",
+	"orientation": "portrait",
+	"background_color": "transparent",
+	"related_applications": [],
+	"prefer_related_applications": false,
+	"icons": [
+        {
+        "src": "WY_Antelope_550x550.png",
+        "type": "image/png", "sizes": "550x550"
+        }        
+    ],
+	"url": ".",
+	"generated": "true"}
