@@ -152,5 +152,10 @@
       "relation": ["delegate_permission/common.handle_all_urls"],
       "target" : { "namespace": "android_app", "package_name": "com.cschnacker.Eff_Tax_Rate",
                    "sha256_cert_fingerprints":  ["FD:55:C6:DB:FE:A7:03:D3:19:AB:1E:ED:3F:32:9D:2F:F1:FF:AE:EA:8F:4C:29:C3:85:62:CA:B0:90:21:59:64"] }
+       },
+  {
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target" : { "namespace": "android_app", "package_name": "com.cschnacker.TagIt_WY_Ant",
+                   "sha256_cert_fingerprints":  ["3B:99:A6:54:DB:32:DA:4A:D9:26:2C:32:9A:41:6B:A7:5A:4B:B1:2C:9C:30:6B:20:84:00:2A:9C:EB:CC:E9:E5"] }
        }
 ]
