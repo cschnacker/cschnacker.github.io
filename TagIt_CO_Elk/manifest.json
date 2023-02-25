@@ -13,7 +13,9 @@
 	"icons": [
                 {
         "src": "Elk.png",
-        "type": "image/png", "sizes": "550x550"
+        "type": "image/png", 
+        "sizes": "550x550",
+        "purpose": "any"
         }
     ],
 	"url": ".",
