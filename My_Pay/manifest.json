@@ -4,16 +4,18 @@
 	"display": "standalone",
 	"start_url": "index.html",
 	"short_name": "My Pay",
-	"theme_color": "transparent",
+	"theme_color": "#A9C9DE",
 	"description": "Calculates components of your paycheck",
 	"orientation": "portrait",
-	"background_color": "transparent",
+	"background_color": "#E7E8E8",
 	"related_applications": [],
 	"prefer_related_applications": false,
 	"icons": [
         {
         "src": "Pay550x550.png",
-        "type": "image/png", "sizes": "550x550"
+        "type": "image/png",
+        "sizes": "550x550",
+        "purpose": "any"
         }        
     ],
 	"url": ".",
