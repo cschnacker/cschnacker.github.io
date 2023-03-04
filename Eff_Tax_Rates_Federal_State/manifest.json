@@ -5,7 +5,7 @@
 	"start_url": "index.html",
 	"short_name": "Effective Tax Rate Fed/State",
 	"theme_color": "#A9C9DE",
-	"description": "Calculates your custom effective tax rate",
+	"description": "Calculates effective tax rate for federal and state taxes",
 	"orientation": "portrait",
 	"background_color": "#E7E8E8",
 	"related_applications": [],
