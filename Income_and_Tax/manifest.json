@@ -4,16 +4,18 @@
 	"display": "standalone",
 	"start_url": "index.html",
 	"short_name": "Income and Tax Planner",
-	"theme_color": "transparent",
+	"theme_color": "#A9C9DE",
 	"description": "Income and Tax Planner",
 	"orientation": "portrait",
-	"background_color": "transparent",
+	"background_color": "#E7E8E8",
 	"related_applications": [],
 	"prefer_related_applications": false,
 	"icons": [
         {
         "src": "Inc&Tax.png",
-        "type": "image/png", "sizes": "550x550"
+        "type": "image/png", 
+        "sizes": "550x550",
+        "purpose": "any"
         }        
     ],
 	"url": ".",
