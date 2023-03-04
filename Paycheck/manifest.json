@@ -1,0 +1,22 @@
+{
+    "name": "W4 Multiple Paychecks",
+    "scope": ".",
+	"display": "standalone",
+	"start_url": "index.html",
+	"short_name": "W4 Multiple Paychecks",
+	"theme_color": "#A9C9DE",
+	"description": "Paycheck and W-4 Calculator",
+	"orientation": "portrait",
+	"background_color": "#E7E8E8",
+	"related_applications": [],
+	"prefer_related_applications": false,
+	"icons": [
+                {
+        "src": "Paycheck550X550.png",
+        "type": "image/png", 
+        "sizes": "550x550",
+        "purpose": "any"
+        }
+    ],
+	"url": ".",
+	"generated": "true"}
