@@ -1,0 +1,22 @@
+{
+    "name": "Effective Tax Rate Fed/State",
+    "scope": ".",
+	"display": "standalone",
+	"start_url": "index.html",
+	"short_name": "Effective Tax Rate Fed/State",
+	"theme_color": "#A9C9DE",
+	"description": "Calculates effective tax rate for federal and state taxes",
+	"orientation": "portrait",
+	"background_color": "#E7E8E8",
+	"related_applications": [],
+	"prefer_related_applications": false,
+	"icons": [
+        {
+        "src": "tax550x550.png",
+        "type": "image/png", 
+        "sizes": "550x550",
+        "purpose": "any"
+        }        
+    ],
+	"url": ".",
+	"generated": "true"}
