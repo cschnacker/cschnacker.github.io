@@ -1,6 +1,6 @@
 ﻿<!doctype html>
 <!-- saved from url=(0013)about:internet -->
-<html>
+<html manifest='offline.appcache'>
 <head>
     <!-- The parts of this webpage that is defined by the original spreadsheet have the same copyright as the original spreadsheet. -->
     <!-- The generic Excel-related parts of this page is Copyright (C) 2002-2023 Framtidsforum I&M AB, Sweden. -->
@@ -8,10 +8,10 @@
     <meta name='viewport' content='width=device-width, minimum-scale=1, maximum-scale=1, initial-scale=1'>
     <meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
     <!-- TITLE OF WEB PAGE -->
-    <title>Meat Grinder Ratio Calculator</title>
+    <title>Game Meat Guide</title>
     <!-- Register Manifest-->
     <link rel="manifest" href="manifest.json" />
-<!-- Eliminate Favicon.ico error-->
+    <!-- Eliminate Favicon.ico error-->
     <link rel="icon" href="data:;base64,=" />
     <link rel='apple-touch-icon-precomposed' href='powered-by-spreadsheetconverter.png' />
     <link rel='icon' href='powered-by-spreadsheetconverter.png' />
@@ -32,10 +32,10 @@
 <!-- BODY CONTENT -->
 <body onload='LoadFromQueryString();'>
     <form id="formc" name="formc" method="post" action="" target="_top">
-        <input type='hidden' id='xl_spreadsheet' name='xl_spreadsheet' value='Meat Grinder Ratio Calculator' /> <input type='hidden' id='xl_target' name='xl_target' /> <input type='hidden' id='xl_client' name='xl_client' value='x10.5.8092.0' />
+        <input type='hidden' id='xl_spreadsheet' name='xl_spreadsheet' value='Game Meat Guide' /> <input type='hidden' id='xl_target' name='xl_target' /> <input type='hidden' id='xl_client' name='xl_client' value='x10.5.8092.0' />
         <section id='home' data-url='home' data-role='page' swidth='530' class='cpc'>
             <header data-role='header' data-theme='a'>
-                <h1>Sheet1</h1>
+                <h1>Game Meat Guide</h1>
                 <a href='#leftpanel' data-role='button' data-icon='bars' data-iconpos='notext'>leftpanel</a>
                 <a href='#realtimesync_userlistpage' data-iconpos='notext' data-role='button' data-icon='user' class='ui-btn ui-btn-right ui-icon-user ui-corner-all ui-btn-icon-right ui-btn-icon-notext' style='overflow: visible'>
                     <div>
@@ -233,19 +233,19 @@
     </form>
 
 </body>
-     <script>
-if ("serviceWorker" in navigator) {
-  if (navigator.serviceWorker.controller) {
-    console.log("[PWA Builder] active service worker found, no need to register");
-  } else {
-    // Register the service worker
-    navigator.serviceWorker
-      .register("serviceworker.js", {
-        scope: "./"
-      })
-      .then(function (reg) {
-        console.log("[PWA Builder] Service worker has been registered for scope: " + reg.scope);
-      });
-  }
-}</script>
+<script>
+    if ("serviceWorker" in navigator) {
+        if (navigator.serviceWorker.controller) {
+            console.log("[PWA Builder] active service worker found, no need to register");
+        } else {
+            // Register the service worker
+            navigator.serviceWorker
+                .register("serviceworker.js", {
+                    scope: "./"
+                })
+                .then(function (reg) {
+                    console.log("[PWA Builder] Service worker has been registered for scope: " + reg.scope);
+                });
+        }
+    }</script>
 </html>
