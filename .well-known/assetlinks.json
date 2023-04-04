@@ -163,8 +163,7 @@
     "target": {
       "namespace": "android_app",
       "package_name": "com.cschnacker.Game_Meat_Guide",
-      "sha256_cert_fingerprints":
-        ["54:A4:D7:7A:2A:A5:49:36:EF:97:A3:59:76:2D:C7:A8:99:AB:9B:BC:C1:9F:5F:AE:FA:D2:6F:89:31:25:5C:16"]
+      "sha256_cert_fingerprints":        ["54:A4:D7:7A:2A:A5:49:36:EF:97:A3:59:76:2D:C7:A8:99:AB:9B:BC:C1:9F:5F:AE:FA:D2:6F:89:31:25:5C:16"]
     }
   }
 ]
