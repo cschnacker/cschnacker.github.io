@@ -157,5 +157,14 @@
       "relation": ["delegate_permission/common.handle_all_urls"],
       "target" : { "namespace": "android_app", "package_name": "com.cschnacker.TagIt_WY_Ant",
                    "sha256_cert_fingerprints":  ["3B:99:A6:54:DB:32:DA:4A:D9:26:2C:32:9A:41:6B:A7:5A:4B:B1:2C:9C:30:6B:20:84:00:2A:9C:EB:CC:E9:E5"] }
-       }
+       },
+   {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.cschnacker.Game_Meat_Guide",
+      "sha256_cert_fingerprints":
+        ["54:A4:D7:7A:2A:A5:49:36:EF:97:A3:59:76:2D:C7:A8:99:AB:9B:BC:C1:9F:5F:AE:FA:D2:6F:89:31:25:5C:16"]
+    }
+  }
 ]
