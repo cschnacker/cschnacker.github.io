@@ -1,0 +1,251 @@
+﻿<!doctype html>
+<!-- saved from url=(0013)about:internet -->
+<html>
+<head>
+    <!-- The parts of this webpage that is defined by the original spreadsheet have the same copyright as the original spreadsheet. -->
+    <!-- The generic Excel-related parts of this page is Copyright (C) 2002-2023 Framtidsforum I&M AB, Sweden. -->
+    <meta name='GENERATOR' content='SpreadsheetConverter to Mobile version 10.5.8092.0' />
+    <meta name='viewport' content='width=device-width, minimum-scale=1, maximum-scale=1, initial-scale=1'>
+    <meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
+    <!-- TITLE OF WEB PAGE -->
+    <title>Meat Grinder Ratio Calculator</title>
+    <!-- Register Manifest-->
+    <link rel="manifest" href="manifest.json" />
+<!-- Eliminate Favicon.ico error-->
+    <link rel="icon" href="data:;base64,=" />
+    <link rel='apple-touch-icon-precomposed' href='powered-by-spreadsheetconverter.png' />
+    <link rel='icon' href='powered-by-spreadsheetconverter.png' />
+    <!-- EXTERNAL STYLE SHEET -->
+    <link type='text/css' rel='stylesheet' href='assets/css/app.min.css' />
+    <script>var ssc = ssc || {}; ssc.pendingUploads = 0; ssc.recalcSource = ''; ssc.APPNAME = 'FattoMeatRatio'; ssc.asyncRecalc = true;</script>
+
+    <!-- EXTERNAL JAVASCRIPT -->
+    <script type='text/javascript' src='assets/js/app.min.js'></script>
+    <script type='text/javascript'>
+        $(document).bind('mobileinit', function () {
+            $.mobile.changePage.defaults.changeHash = false;
+            $.mobile.hashListeningEnabled = false;
+            $.mobile.pushStateEnabled = false;
+        });
+    </script>
+</head>
+<!-- BODY CONTENT -->
+<body onload='LoadFromQueryString();'>
+    <form id="formc" name="formc" method="post" action="" target="_top">
+        <input type='hidden' id='xl_spreadsheet' name='xl_spreadsheet' value='Meat Grinder Ratio Calculator' /> <input type='hidden' id='xl_target' name='xl_target' /> <input type='hidden' id='xl_client' name='xl_client' value='x10.5.8092.0' />
+        <section id='home' data-url='home' data-role='page' swidth='530' class='cpc'>
+            <header data-role='header' data-theme='a'>
+                <h1>Sheet1</h1>
+                <a href='#leftpanel' data-role='button' data-icon='bars' data-iconpos='notext'>leftpanel</a>
+                <a href='#realtimesync_userlistpage' data-iconpos='notext' data-role='button' data-icon='user' class='ui-btn ui-btn-right ui-icon-user ui-corner-all ui-btn-icon-right ui-btn-icon-notext' style='overflow: visible'>
+                    <div>
+                        <span class='liveuserscount badge badge-header'>0</span>
+                    </div>
+                </a>
+            </header>
+            <article data-role="content" class="scrollable has-scroll" style='padding:0px;'>
+                <div>
+                    <table width='530' cellspacing='0' cellpadding='0' style='border-collapse:collapse; margin-bottom:10px;' id='Sheet1-table'>
+                        <tr style="height:1px;">
+                            <td width='140'></td>
+                            <td width='70'></td>
+                            <td width='64'></td>
+                            <td width='64'></td>
+                            <td width='64'></td>
+                            <td width='64'></td>
+                            <td width='64'></td>
+                        </tr>
+                        <tr style='height:15pt;'>
+                            <td class='ee100'> meat weight/volume </td>
+                            <td class='ee103 tooth-fill'>
+                                <div class='ui-input-text ui-body-inherit ui-corner-all'>
+                                    <input type='number' id='XLEW_1_1_3' name='XLEW_1_1_3' class='ee103' style=' width:100% ' value='8.10' tabindex='1' data-enhanced='true' onchange="this.value=eedisplayFloatND(eeparseFloat(this.value),2);recalc_onclick('XLEW_1_1_3')" placeholder="" />
+                                </div>
+                            </td>
+                            <td class='ee100' colspan='5'> enter weight meat per volume(e.g. grams) </td>
+                        </tr>
+                        <tr style='height:15pt;'>
+                            <td class='ee100'> fat weight/volume </td>
+                            <td class='ee103 tooth-fill'>
+                                <div class='ui-input-text ui-body-inherit ui-corner-all'>
+                                    <input type='number' id='XLEW_1_2_3' name='XLEW_1_2_3' class='ee103' style=' width:100% ' value='4.70' tabindex='2' data-enhanced='true' onchange="this.value=eedisplayFloatND(eeparseFloat(this.value),2);recalc_onclick('XLEW_1_2_3')" placeholder="" />
+                                </div>
+                            </td>
+                            <td class='ee100' colspan='4'> enter weight fat per volume(e.g. grams) </td>
+                            <td class='ee100'> </td>
+                        </tr>
+                        <tr style='height:15pt;'>
+                            <td class='ee100'> </td>
+                            <td class='ee100'> </td>
+                            <td class='ee100' colspan='5'> </td>
+                        </tr>
+                        <tr style='height:15pt;'>
+                            <td class='ee100'> Desired lean meat % </td>
+                            <td class='ee103 tooth-fill'>
+                                <div class='ui-input-text ui-body-inherit ui-corner-all'>
+                                    <input type='number' id='XLEW_1_4_3' name='XLEW_1_4_3' class='ee103' style=' width:100% ' value='90' tabindex='3' data-enhanced='true' onchange="this.value=eedisplayFloat(eeparseFloat(this.value));recalc_onclick('XLEW_1_4_3')" placeholder="" />
+                                </div>
+                            </td>
+                            <td class='ee100' colspan='5'>
+                                %
+                                <span> </span>enter weight ratio for Percent Lean Meat
+                            </td>
+                        </tr>
+                        <tr style='height:15pt;'>
+                            <td class='ee100'> </td>
+                            <td class='ee100'> </td>
+                            <td class='ee100' colspan='5'> </td>
+                        </tr>
+                        <tr style='height:15pt;'>
+                            <td class='ee100'> meat volume </td>
+                            <td class='ee103 tooth-fill'>
+                                <div class='ui-input-text ui-body-inherit ui-corner-all'>
+                                    <input type='number' id='XLEW_1_6_3' name='XLEW_1_6_3' class='ee103' style=' width:100% ' value='5.00' tabindex='4' data-enhanced='true' onchange="this.value=eedisplayFloatND(eeparseFloat(this.value),2);recalc_onclick('XLEW_1_6_3')" placeholder="" />
+                                </div>
+                            </td>
+                            <td class='ee100' colspan='3'> enter meat volume(e.g. cups) </td>
+                            <td class='ee100' colspan='2'> </td>
+                        </tr>
+                        <tr style='height:15pt;'>
+                            <td class='ee100'> fat volume </td>
+                            <td class='ee109'>
+                                <div>
+                                    <input type='text' id='XLEW_1_7_3' name='XLEW_1_7_3' class='ee109' style='overflow:hidden; border:0px solid #000000; width:100% ;box-shadow:none;-moz-box-shadow:none;-webkit-box-shadow:none;background:transparent;text-shadow: none;font-family:inherit;' value='0' tabindex='-1' data-enhanced='true' readonly onchange="" placeholder="" data-theme='none' />
+                                </div>
+                            </td>
+                            <td class='ee100' colspan='4'> calculated fat volume(e.g. cups) </td>
+                            <td class='ee100'> </td>
+                        </tr>
+                    </table>
+                </div>
+            </article>
+        </section><!-- confirmation dialog for reset begin -->
+        <div data-role='popup' id='resetConfirmation' data-overlay-theme='a' data-theme='c' data-dismissible='false' style='max-width:300px;' class='ui-corner-all' data-history='false'>
+            <section role='main' data-role='ui-content'>
+                <div class='dialog-content'>
+                    <b>Ready to reset</b>
+                    <div style='text-align:center;'>
+                        <div style='padding-left:15px;padding-right:15px;'>
+                            <span style='display:block;padding-top:8px;padding-bottom:16px;'> Are you sure to reset the Form's values? </span>
+                        </div>
+                    </div>
+                </div>
+                <div class='ui-grid-a dialog-button-panel'>
+                    <button class='ui-block-a dialog-left-button low-emphasis' onclick="$('#resetConfirmation').popup('close');">Cancel</button>
+                    <button id='about_done' class='ui-block-b dialog-right-button high-emphasis' onclick="reset_onclick(this);">OK</button>
+                </div>
+            </section>
+        </div><!-- confirmation dialog for reset end -->
+        <div data-role='panel' id='leftpanel' data-theme='a'>
+            <div class='ui-panel-inner' style='padding: 0px;'>
+                <div id='buttons' class='ui-grid-b' style='background: #f6f6f6'>
+                    <!-- submit button begin --> <!-- submit button end --> <!-- reset button begin -->
+                    <section class='ui-block-c'>
+                        <a href='#' class='ui-btn ui-icon-refresh ui-btn-icon-top' onclick="showpopup($('#resetConfirmation'));"> Reset </a>
+                    </section> <!-- reset button end --> <!-- update button begin --> <!-- update button end -->
+                </div>
+                <a href='#realtimesync' class='ui-btn ui-btn-icon-right ui-icon-carat-r btn-has-left-svg' style='border-width: 1px 0px 1px 0px!important;text-align: left;margin: 0px;' data-transition='slide'> <svg version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' width='32px' height='32px' viewBox='0 0 347 248' enable-background='new 0 0 347 248' xml:space='preserve' class='ui-li-icon ui-corner-none ui-li-thumb list-item-icon'> <g id='Page-1' stroke='none' stroke-width='1' fill='none' fill-rule='evenodd'> <g id='RealtimeSync' transform='translate(-154.000000, -773.000000)' fill='#8B8B8B'> <path id='cloud-arrow-people' d='M287.548259,871.616279 L266.250424,871.616279 L304.980128,826.879279 L343.709832,871.616279 L321.988355,871.616279 L321.988355,959.558857 L287.548259,959.558857 L287.548259,871.616279 Z M234.775357,975.582413 L213.477522,975.582413 L252.207226,1020.31941 L290.936929,975.582413 L269.215452,975.582413 L269.215452,887.639835 L234.775357,887.639835 L234.775357,975.582413 L234.775357,975.582413 Z M217.328779,956.889412 L217.308942,956.889412 C182.293495,956.889412 154.3565,928.953093 154.3565,894.612941 C154.3565,866.650285 172.967657,842.529388 199.029355,834.874233 C206.359018,809.889632 232.648966,795.244488 257.734861,801.93397 C272.753444,784.174361 294.722848,773.852462 318.424386,773.852462 C353.881544,773.852462 384.279382,797.146444 394.419205,829.741365 L394.419205,829.741365 C385.401669,832.168456 376.931496,835.905381 369.231497,840.732212 C362.129362,813.25726 339.96632,800.863626 318.424386,800.863626 C284.451596,800.863626 270.495929,826.578897 267.013428,836.426063 C253.163107,816.449457 215.571406,831.531518 223.36162,858.270537 C200.039598,854.041834 181.367664,871.59953 181.367664,894.612266 C181.367664,914.057414 197.187823,929.876898 217.308267,929.876898 L217.328779,929.876898 L217.328779,956.889412 L217.328779,956.889412 Z M419.342982,1000.75191 C464.097663,1000.75191 500.3785,965.529266 500.3785,922.07993 C500.3785,878.630594 464.097663,843.407948 419.342982,843.407948 C374.588301,843.407948 338.307464,878.630594 338.307464,922.07993 C338.307464,965.529266 374.588301,1000.75191 419.342982,1000.75191 Z M483.852298,968.62415 L450.526333,968.62415 C450.524665,929.446983 432.395227,948.067823 432.395227,913.736578 C432.395227,901.3437 439.906566,894.618132 449.55078,894.618132 C463.800937,894.618132 473.718223,909.31441 460.22391,936.795347 C455.790565,945.823865 464.944502,947.968752 474.778823,950.419408 C484.608559,952.868262 483.852298,958.466673 483.852298,968.62415 Z M429.716209,945.725695 C417.346701,942.642787 405.832261,939.944453 411.408753,928.588668 C428.382954,894.021004 415.907969,875.535261 397.983647,875.535261 C379.705792,875.535261 367.538481,894.730262 384.558958,928.588668 C390.302212,940.013803 378.354193,942.709434 366.250668,945.725695 C353.886163,948.805902 354.837119,955.847597 354.837119,968.6246 L441.129759,968.6246 C441.129759,955.847146 442.081131,948.805902 429.716209,945.725695 Z'></path> </g> </g> </svg> Real-time Sync <span id='liveuserscountx' class='liveuserscount ui-li-count ui-btn-up-c ui-btn-corner-all' style='right: 3.2em;'>0</span> </a>
+                <a href='#' id='btn_offlinesubmit' class='ui-btn ui-icon-carat-r btn-has-left-svg' style='border-width: 0px 0px 1px 0px!important;text-align: left;margin: 0px;'> <svg version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' width='32px' height='32px' viewBox='0 0 193 198' enable-background='new 0 0 193 198' xml:space='preserve' class='ui-li-icon ui-corner-none ui-li-thumb list-item-icon'> <g id='Page-1' stroke='none' stroke-width='1' fill='none' fill-rule='evenodd'> <g id='offlineStorage' fill='#8B8B8B'> <path id='Rectangle-1' d='M175,81.4609571 C173.72473,81.1741355 172.398175,81.0227757 171.036254,81.0227757 L156.676167,81.0227757 C149.712457,64.8907373 133.661956,53.5998833 114.974335,53.5998833 C89.9005405,53.5998833 69.5742135,73.9262102 69.5742135,99.0000052 C69.5742135,124.0738 89.9005405,144.400127 114.974335,144.400127 C133.661956,144.400127 149.712457,133.109273 156.676167,116.977235 L156.676167,116.977235 L171.036254,116.977235 C172.397949,116.977235 173.724534,116.825639 175,116.538392 L175,81.4609571 Z M143.375522,81.0227757 C137.395195,71.850704 127.045144,65.7878354 115.279034,65.7878354 C96.7681789,65.7878354 81.7621657,80.7938486 81.7621657,99.304704 C81.7621657,117.815559 96.7681789,132.821573 115.279034,132.821573 C127.303812,132.821573 137.849585,126.4892 143.763572,116.977235 L116.195792,116.977235 C106.265773,116.977235 98.2159012,108.930738 98.2159012,99.0000052 C98.2159012,89.0714555 106.273817,81.0227757 116.195792,81.0227757 L143.375522,81.0227757 L143.375522,81.0227757 Z M162.812048,91.3825351 L117.718911,91.3825351 C113.669016,91.3825351 110.403853,94.6565743 110.403853,98.6953064 C110.403853,102.72582 113.678916,106.008078 117.718911,106.008078 L162.812048,106.008078 L162.812048,91.3825351 Z M64.2960759,0.718619708 L180.278138,16.386849 C187.304228,17.3360165 193,24.6229724 193,32.659096 L193,165.340904 C193,173.37865 187.30281,180.664175 180.278138,181.613151 L64.2960759,197.28138 C57.2699853,198.230548 51.5742135,190.943209 51.5742135,181.009133 L51.5742135,16.9908667 C51.5742135,7.05478539 57.2714038,-0.230356117 64.2960759,0.718619708 Z'></path> <path d='M16.0883002,18.714477 L10.2889229,17.8867905 C4.76618758,17.0985863 0.287106752,23.1495087 0.287106752,31.4022595 L0.287106752,167.633218 C0.287106752,175.884303 4.76507235,181.93705 10.2889229,181.148687 L16.0882191,180.321012 C14.7258013,176.294078 13.9871066,171.979255 13.9871066,167.491301 L13.9871066,31.5441846 C13.9871066,27.0566858 14.7257784,22.7417715 16.0883002,18.714477 Z' id='Rectangle-2'></path> <path d='M41.1570655,8.67506273 L36.2889229,7.89524144 C30.7661876,7.01056181 26.2871068,13.8021113 26.2871068,23.0649907 L26.2871068,175.970486 C26.2871068,185.231495 30.7650724,192.025093 36.2889229,191.140235 L41.1579443,190.360273 C40.3929951,187.272285 39.9871066,184.042899 39.9871066,180.71897 L39.9871066,18.3165158 C39.9871066,14.9923754 40.3926634,11.7629627 41.1570655,8.67506273 Z' id='Rectangle-4'></path> </g> </g> </svg> Offline Forms <span id='saved_forms_count' class='ui-li-count ui-btn-up-c ui-btn-corner-all' style='right: 3.2em;'>0</span> </a>
+            </div>
+            <div data-role='popup' id='about' data-overlay-theme='a' data-theme='c' data-dismissible='false' style='max-width:300px;' class='ui-corner-all' data-history='false'>
+                <section role='main' data-role='ui-content'>
+                    <!-- captcha begin -->
+                    <div class='dialog-content'>
+                        <b>Ready to submit</b>
+                        <div style='text-align:center;'>
+                            <div style='padding-left:15px;padding-right:15px;'>
+                                <span style='display:block;padding-top:8px;padding-bottom:16px;'> This form is complete and has passed all validation tests.</span>
+                                <span> Do you want to submit now?</span>
+                            </div>
+                        </div>
+                    </div> <!-- captcha end -->
+                    <div class='ui-grid-a dialog-button-panel'>
+                        <button class='ui-block-a dialog-left-button low-emphasis' onclick="$('#about').popup('close')">Cancel</button>
+                        <button id='about_done' class='ui-block-b dialog-right-button high-emphasis' onclick="check_captcha(this);">Submit</button>
+                    </div>
+                </section>
+            </div>
+        </div>
+        <section id='realtimesync' data-url='realtimesync' data-role='page'>
+            <header data-role='header' data-add-back-btn='true' data-theme='a'>
+                <h1>Real-time Sync</h1>
+                <a data-rel='back' data-icon='carat-l' href='#home' class='ui-btn ui-icon-carat-l ui-btn-icon-notext ui-corner-all'>Back</a>
+            </header>
+            <footer data-role='footer' data-position='fixed' data-tap-toggle='false' data-theme='a'>
+                <nav data-role='navbar'>
+                    <ul>
+                        <li>
+                            <a href='#realtimesync' data-icon='gear' data-iconpos='notext' class='ui-btn-active' data-history='false'></a>
+                        </li>
+                        <li>
+                            <a href='#realtimesync_userlistpage' data-icon='user' data-iconpos='notext' data-history='false'>
+                                <div>
+                                    <span class='liveuserscount badge badge-footer'>0</span>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </footer>
+            <article role='main' class='ui-content'>
+                <div id='setting' class='ui-body-d'>
+                    <div id='pnlWsError' style='color:rgb(205, 10, 10);text-align:center;font-size:small;'></div>
+                    <label for='txtWsSecretkey'>Secret Key:</label>
+                    <input type='text' id='txtWsSecretkey' placeholder='unique min 7 char name'>
+                    <button type='button' id='btnWsConnect'>Connect</button>
+                    <label for='txtWsEmail'>Share your name/email :</label>
+                    <input type='text' id='txtWsEmail' placeholder='name or email'>
+                    <span id='labelShareStatus' class='page-label' style='color: green'></span>
+                    <button type='button' id='btnWsEmailShare'>Share</button>
+                    <div id='dataShareUrl' style='display:none; margin-bottom:8px; width:100%;'>
+                        <input type='text' id='txtDataShareUrl'>
+                    </div>
+                </div>
+            </article>
+        </section>
+        <section id='realtimesync_userlistpage' data-url='realtimesync_userlistpage' data-role='page'>
+            <header data-role='header' data-add-back-btn='true'>
+                <h1>participant list</h1>
+                <a data-rel='back' data-icon='carat-l' href='#home' class='ui-btn ui-icon-carat-l ui-btn-icon-notext ui-corner-all'>Back</a>
+            </header>
+            <footer data-role='footer' data-theme='a' data-position='fixed' data-tap-toggle='false'>
+                <nav data-role='navbar'>
+                    <ul>
+                        <li>
+                            <a href='#realtimesync' data-icon='gear' data-iconpos='notext' data-history='false'></a>
+                        </li>
+                        <li>
+                            <a href='#realtimesync_userlistpage' data-icon='user' data-iconpos='notext' class='ui-btn-active' data-history='false'>
+                                <div>
+                                    <span class='liveuserscount badge badge-footer'>0</span>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </footer>
+            <article role='main' class='ui-content'>
+                <ul id='liveuserslist' data-role='listview'>
+                    <li>&nbsp;&nbsp;No one is connected.</li>
+                </ul>
+            </article>
+        </section>
+    </form>
+
+</body>
+     <script>
+if ("serviceWorker" in navigator) {
+  if (navigator.serviceWorker.controller) {
+    console.log("[PWA Builder] active service worker found, no need to register");
+  } else {
+    // Register the service worker
+    navigator.serviceWorker
+      .register("serviceworker.js", {
+        scope: "./"
+      })
+      .then(function (reg) {
+        console.log("[PWA Builder] Service worker has been registered for scope: " + reg.scope);
+      });
+  }
+}</script>
+</html>
