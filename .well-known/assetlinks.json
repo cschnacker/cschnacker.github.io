@@ -170,7 +170,7 @@
     "relation": ["delegate_permission/common.handle_all_urls"],
     "target": {
       "namespace": "android_app",
-      "package_name": "om.cschnacker.SSOptimizer",
+      "package_name": "om.cschnacker.SSOpt",
       "sha256_cert_fingerprints":
         ["0C:BD:96:DA:C3:68:FF:EA:22:5C:D8:BC:70:C8:54:E2:49:5A:7E:5E:44:B3:B2:53:6F:C5:8C:74:F9:B3:81:30"]
     }
