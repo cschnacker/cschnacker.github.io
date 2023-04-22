@@ -1,0 +1,22 @@
+{
+    "name": "Social Security Optimizer",
+    "scope": ".",
+	"display": "standalone",
+	"start_url": "index.html",
+	"short_name": "Social Security Optimizer",
+	"theme_color": "#A9C9DE",
+	"description": "Calculates Optimal SS Start Dates",
+	"orientation": "portrait",
+	"background_color": "#E7E8E8",
+	"related_applications": [],
+	"prefer_related_applications": false,
+	"icons": [
+        {
+        "src": "old-couple 550x550.png",
+        "type": "image/png", 
+        "sizes": "550x550",
+        "purpose": "any"
+        }        
+    ],
+	"url": ".",
+	"generated": "true"}
