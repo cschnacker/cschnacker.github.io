@@ -4,10 +4,10 @@
 	"display": "standalone",
 	"start_url": "index.html",
 	"short_name": "Credit Card Planner",
-	"theme_color": "transparent",
+	"theme_color": "#83c1de",
 	"description": "Credit Card Planner",
 	"orientation": "portrait",
-	"background_color": "transparent",
+	"background_color": "#65c5cf",
 	"related_applications": [],
 	"prefer_related_applications": false,
 	"icons": [
