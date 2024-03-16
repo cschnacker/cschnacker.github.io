@@ -4,16 +4,16 @@
 	"display": "standalone",
 	"start_url": "index.html",
 	"short_name": "Home Equity Calculator",
-	"theme_color": "transparent",
+	"theme_color": "#A9C9DE",
 	"description": "Calculates mortgage amortization and equity",
 	"orientation": "portrait",
-	"background_color": "transparent",
+	"background_color": "#A9C9DE",
 	"related_applications": [],
 	"prefer_related_applications": false,
 	"icons": [
         {
         "src": "home-investment550x550.png",
-        "type": "image/png", "sizes": "550x550"
+        "type": "image/png", "sizes": "550x550","purpose": "any"
         }        
     ],
 	"url": ".",
