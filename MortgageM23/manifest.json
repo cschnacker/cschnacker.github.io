@@ -4,16 +4,16 @@
 	"display": "standalone",
 	"start_url": "index.html",
 	"short_name": "Mortgage Payoff Analyzer",
-	"theme_color": "transparent",
+	"theme_color": "#A9C9DE",
 	"description": "Mortgage Payoff Analyzer",
 	"orientation": "portrait",
-	"background_color": "transparent",
+	"background_color": "#E7E8E8",
 	"related_applications": [],
 	"prefer_related_applications": false,
 	"icons": [
         {
        "src": "Mortgage540X540.png",
-        "type": "image/png", "sizes": "1024x1024"
+        "type": "image/png", "sizes": "1024x1024","purpose": "any"
         }
     ],
 	"url": ".",
