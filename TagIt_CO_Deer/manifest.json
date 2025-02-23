@@ -16,6 +16,12 @@
         "type": "image/png", 
         "sizes": "550x550",
         "purpose": "any"
+        },
+                        {
+        "src": "GMU.png",
+        "type": "image/png", 
+        "sizes": "973x722",
+        "purpose": "any"
         }
     ],
 	"url": ".",
