@@ -16,37 +16,6 @@
         "type": "image/png", 
         "sizes": "550x550",
         "purpose": "any"
-        },
-         {
-        "src": "image002.png",
-        "type": "image/png", "sizes": "285x371",
-        "form_factor": "wide",
-        "purpose": "any"
-        },
-        {
-        "src": "image004.png",
-        "type": "image/png", "sizes": "212x122",
-        "purpose": "any"
-        },
-        {
-        "src": "image006.png",
-        "type": "image/png", "sizes": "192x142",
-        "purpose": "any"
-        },
-        {
-        "src": "image008.png",
-        "type": "image/png", "sizes": "223x223",
-        "purpose": "any"     
-        },
-        {
-         "src": "image010.png",
-        "type": "image/png", "sizes": "301x180",
-        "purpose": "any"         
-        },
-        {
-          "src": "image012.png",
-        "type": "image/png", "sizes": "205x119",
-        "purpose": "any"              
         }
     ],
 	"url": ".",
