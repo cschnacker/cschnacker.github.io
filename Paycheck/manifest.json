@@ -18,8 +18,9 @@
         "purpose": "any"
         },
          {
-        "src": "image002.png",
-        "type": "image/png", "sizes": "285x371",
+        "src": "image002.jpg",
+        "type": "image/jpg", "sizes": "285x371",
+        "form_factor": "wide",
         "purpose": "any"
         },
         {
