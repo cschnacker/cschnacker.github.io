@@ -16,7 +16,13 @@
         "type": "image/png", 
         "sizes": "550x550",
         "purpose": "any"
-        }        
+        },
+                {
+        "src": "image002.png",
+        "type": "image/png", 
+        "sizes": "652x502",
+        "purpose": "any"
+        }   
     ],
 	"url": ".",
 	"generated": "true"}
