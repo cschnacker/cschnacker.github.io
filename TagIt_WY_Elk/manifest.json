@@ -12,7 +12,7 @@
 	"prefer_related_applications": false,
 	"icons": [
         {
-        "src": "Tagit WY Elk 428x501.png",
+        "src": "Tagit WY Elk 512x512.png",
         "type": "image/png", 
         "sizes": "428x501",
         "purpose": "any"
