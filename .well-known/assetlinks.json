@@ -170,9 +170,17 @@
     "relation": ["delegate_permission/common.handle_all_urls"],
     "target": {
       "namespace": "android_app",
-      "package_name": "om.cschnacker.SSOpt",
+      "package_name": "com.cschnacker.SSOpt",
       "sha256_cert_fingerprints":
         ["0C:BD:96:DA:C3:68:FF:EA:22:5C:D8:BC:70:C8:54:E2:49:5A:7E:5E:44:B3:B2:53:6F:C5:8C:74:F9:B3:81:30"]
     }
-  }
+  },
+ {
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target": {
+        "namespace": "android_app",
+        "package_name": "com.cschnacker.TagIt_WY_Elk",
+        "sha256_cert_fingerprints": ["9C:CD:9A:C0:C2:CD:4B:68:B6:BB:5F:1E:82:9E:66:BF:31:DE:2F:A9:CF:02:BC:A4:81:2E:30:61:33:08:DF:AF"]
+      }
+    }
 ]
