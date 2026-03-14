@@ -1,8 +1,9 @@
 {
     "name": "TagIt_CO_Elk",
-    "scope": ".",
+    "scope": "https://cschnacker.github.io/TagIt_CO_Elk/",
 	"display": "standalone",
 	"start_url": "https://cschnacker.github.io/TagIt_CO_Elk/index.html",
+    "id": "https://cschnacker.github.io/TagIt_CO_Elk/",
 	"short_name": "TagIt CO Elk",
 	"theme_color": "#A9C9DE",
 	"description": "TagIt CO Elk",
@@ -12,17 +13,16 @@
 	"prefer_related_applications": false,
 	"icons": [
                 {
-        "src": "Elk.png",
+        "src": "https://cschnacker.github.io/TagIt_CO_Elk/Elk.png",
         "type": "image/png", 
         "sizes": "550x550",
         "purpose": "any"
         },
                         {
-        "src": "image002.png",
+        "src": "https://cschnacker.github.io/TagIt_CO_Elk/image002.png",
         "type": "image/png", 
         "sizes": "973x722",
         "purpose": "any"
         }
     ],
-	"url": ".",
 	"generated": "true"}
