@@ -3,7 +3,7 @@
       <Extensions>
          <uap3:Extension Category="windows.appUriHandler">
           <uap3:AppUriHandler>
-            <uap3:Host Name="https://cschnacker.github.io/TagIt_CO_Elk/index.html" />
+            <uap3:Host Name="cschnacker.github.io" />
           </uap3:AppUriHandler>
         </uap3:Extension>
       </Extensions>
