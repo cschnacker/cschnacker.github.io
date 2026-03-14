@@ -2,7 +2,7 @@
     "name": "TagIt_CO_Elk",
     "scope": ".",
 	"display": "standalone",
-	"start_url": "index.html",
+	"start_url": "/TagIt_CO_Elk/index.html",
 	"short_name": "TagIt CO Elk",
 	"theme_color": "#A9C9DE",
 	"description": "TagIt CO Elk",
