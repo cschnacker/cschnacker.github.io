@@ -1,6 +1,6 @@
 ﻿<!doctype html>
 <!-- saved from url=(0013)about:internet -->
-<html manifest='offline.appcache'>
+<html>
 <head>
     <!-- The parts of this webpage that is defined by the original spreadsheet have the same copyright as the original spreadsheet. -->
     <!-- The generic Excel-related parts of this page is Copyright (C) 2002-2026 Framtidsforum I&M AB, Sweden. -->
@@ -9,6 +9,13 @@
     <meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
     <!-- TITLE OF WEB PAGE -->
     <title>Colorado Big Game Deer</title>
+    <!-- Register Manifest-->
+    <link rel="manifest" href="manifest.json" />
+<!-- Eliminate Favicon.ico error-->
+    <link rel="icon" href="data:;base64,=" />
+    <link rel="stylesheet" href="assets/css/sky-ssc-theme.css" id="ssc-theme"/>
+    <link rel="stylesheet" href="assets/css/app.min.css" />
+    </head>
     <link rel='apple-touch-icon-precomposed' href='powered-by-spreadsheetconverter.png' />
     <link rel='icon' href='powered-by-spreadsheetconverter.png' />
     <!-- EXTERNAL STYLE SHEET -->
@@ -2026,4 +2033,19 @@
     </form>
 
 </body>
+     <script>
+if ("serviceWorker" in navigator) {
+  if (navigator.serviceWorker.controller) {
+    console.log("[PWA Builder] active service worker found, no need to register");
+  } else {
+    // Register the service worker
+    navigator.serviceWorker
+      .register("serviceworker.js", {
+        scope: "./"
+      })
+      .then(function (reg) {
+        console.log("[PWA Builder] Service worker has been registered for scope: " + reg.scope);
+      });
+  }
+}</script>
 </html>
