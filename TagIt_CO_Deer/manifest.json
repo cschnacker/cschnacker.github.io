@@ -1,8 +1,9 @@
 {
     "name": "TagIt_CO_Deer",
-    "scope": ".",
+    "scope": "https://cschnacker.github.io/TagIt_CO_Deer/",
 	"display": "standalone",
-	"start_url": "https://cschnacker.github.io/TagIt_CO_Deer/#home",
+	"start_url": "https://cschnacker.github.io/TagIt_CO_Deer/index.html",
+    "id": "https://cschnacker.github.io/TagIt_CO_Deer/",
 	"short_name": "TagIt CO Deer",
 	"theme_color": "#A9C9DE",
 	"description": "TagIt CO Deer",
@@ -12,17 +13,16 @@
 	"prefer_related_applications": false,
 	"icons": [
                 {
-        "src": "Deer.png",
+        "src": "https://cschnacker.github.io/TagIt_CO_Deer/Deer.png",
         "type": "image/png", 
         "sizes": "550x550",
         "purpose": "any"
         },
                         {
-        "src": "image002.png",
+        "src": "https://cschnacker.github.io/TagIt_CO_Deer/image002.png",
         "type": "image/png", 
         "sizes": "973x722",
         "purpose": "any"
         }
     ],
-	"url": ".",
 	"generated": "true"}
