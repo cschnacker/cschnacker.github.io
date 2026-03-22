@@ -1,0 +1,11 @@
+<Applications>
+  <Application Id="39053SchnackerSoftwareSol.TagItCOElk">
+      <Extensions>
+         <uap3:Extension Category="windows.appUriHandler">
+          <uap3:AppUriHandler>
+            <uap3:Host Name="https://cschnacker.github.io/Public/TagIt_WY_Ant/index.html" />
+          </uap3:AppUriHandler>
+        </uap3:Extension>
+      </Extensions>
+  </Application>
+</Applications>
