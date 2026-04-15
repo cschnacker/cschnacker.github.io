@@ -1,8 +1,9 @@
 {
     "name": "Effective Tax Rate Fed/State",
-    "scope": ".",
+    "scope": "https://cschnacker.github.io/Eff_Tax_Rates_Federal_State/",
 	"display": "standalone",
-	"start_url": "index.html",
+	"start_url": "https://cschnacker.github.io/Eff_Tax_Rates_Federal_State/index.html",
+    "id": "https://cschnacker.github.io/Eff_Tax_Rates_Federal_State/",
 	"short_name": "Effective Tax Rate Fed/State",
 	"theme_color": "#A9C9DE",
 	"description": "Calculates effective tax rate for federal and state taxes",
@@ -12,7 +13,7 @@
 	"prefer_related_applications": false,
 	"icons": [
         {
-        "src": "tax-day550x550.png",
+        "src": "https://cschnacker.github.io/Eff_Tax_Rates_Federal_State/tax-day550x550.png",
         "type": "image/png", 
         "sizes": "550x550",
         "purpose": "any"
