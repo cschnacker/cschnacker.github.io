@@ -1,6 +1,6 @@
 <!doctype html>
 <!-- saved from url=(0013)about:internet -->
-<html manifest="offline.appcache">
+<html>
     <head>
         <!-- The parts of this webpage that is defined by the original spreadsheet have the same copyright as the original spreadsheet. -->
         <!-- The generic Excel-related parts of this page is Copyright (C) 2002-2026 Framtidsforum I&M AB, Sweden. -->
@@ -9,6 +9,13 @@
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <!-- TITLE OF WEB PAGE -->
         <title>Easy W-4</title>
+        <!-- Register Manifest-->
+    <link rel="manifest" href="manifest.json" />
+<!-- Eliminate Favicon.ico error-->
+    <link rel="icon" href="data:;base64,=" />
+    <link rel="stylesheet" href="assets/css/sky-ssc-theme.css" id="ssc-theme"/>
+    <link rel="stylesheet" href="assets/css/app.min.css" />
+    </head>
         <link rel="apple-touch-icon-precomposed" href="powered-by-spreadsheetconverter.png" />
         <link rel="icon" href="powered-by-spreadsheetconverter.png" />
         <!-- EXTERNAL STYLE SHEET -->
@@ -2913,14 +2920,6 @@
                         </table>
                     </div>
                 </article>
-                <div data-role="footer" data-position="fixed" data-theme="a">
-                    <div style="float: right; margin: 0em 10px">
-                        <a data-role="button" data-iconpos="right" data-icon="forward" onclick="submit_click();"
-                            >Finish</a
-                        >
-                    </div>
-                    <h1>1/1</h1>
-                </div>
             </section>
             <!-- confirmation dialog for reset begin -->
             <div
@@ -3066,40 +3065,6 @@
                             >0</span
                         >
                     </a>
-                    <div
-                        style="
-                            position: absolute;
-                            bottom: 0;
-                            width: 100%;
-                            margin: 0;
-                            font:
-                                9px Helvetica,
-                                Arial,
-                                Verdana,
-                                Trebuchet MS;
-                        "
-                    >
-                        <a href="http://www.spreadsheetconverter.com/" target="_blank"
-                            ><div class="poweredby-logo" style="padding-right: 5px"></div
-                        ></a>
-                        created with<br />
-                        <a
-                            href="http://www.spreadsheetconverter.com/"
-                            target="_blank"
-                            style="
-                                text-decoration: none;
-                                color: #4d8bff !important;
-                                font:
-                                    11px Helvetica,
-                                    Arial,
-                                    Verdana,
-                                    Trebuchet MS;
-                                font-style: italic;
-                            "
-                        >
-                            SpreadsheetConverter</a
-                        >
-                    </div>
                 </div>
                 <div
                     data-role="popup"
@@ -3195,24 +3160,6 @@
                         <div id="dataShareUrl" style="display: none; margin-bottom: 8px; width: 100%">
                             <input type="text" id="txtDataShareUrl" />
                         </div>
-                        <div style="width: 100%">
-                            <a
-                                href="http://www.spreadsheetconverter.com/support/online-help/real-time-sync-in-mobile/"
-                                class="slick-url-label ui-link"
-                                target="_blank"
-                                style="float: left"
-                                >learn more about Real-time Sync</a
-                            >
-                            <a
-                                id="btnShareUrl"
-                                type="button"
-                                class="slick-url-label ui-link"
-                                href="#"
-                                target="_blank"
-                                style="float: right"
-                                >Share The Link</a
-                            >
-                        </div>
                     </div>
                 </article>
             </section>
@@ -3261,4 +3208,19 @@
             />
         </form>
     </body>
+     <script>
+if ("serviceWorker" in navigator) {
+  if (navigator.serviceWorker.controller) {
+    console.log("[PWA Builder] active service worker found, no need to register");
+  } else {
+    // Register the service worker
+    navigator.serviceWorker
+      .register("serviceworker.js", {
+        scope: "./"
+      })
+      .then(function (reg) {
+        console.log("[PWA Builder] Service worker has been registered for scope: " + reg.scope);
+      });
+  }
+}</script>
 </html>
