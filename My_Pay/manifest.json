@@ -3,7 +3,7 @@
     "scope": "https://cschnacker.github.io/My_Pay/",
 	"display": "standalone",
 	"start_url": "https://cschnacker.github.io/My_Pay/index.html",
-    "id": "https://cschnacker.github.io/My_Pay/"
+    "id": "https://cschnacker.github.io/My_Pay/",
 	"short_name": "My Pay",
 	"theme_color": "#A9C9DE",
 	"description": "Calculates components of your paycheck",
