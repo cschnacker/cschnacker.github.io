@@ -1,8 +1,9 @@
 {
     "name": "Retirement_Planner",
-    "scope": ".",
+    "scope": "https://cschnacker.github.io/Retirement/",
 	"display": "standalone",
-	"start_url": "index.html",
+	"start_url": "https://cschnacker.github.io/Retirement/index.html",
+    "id": "https://cschnacker.github.io/Retirement/"
 	"short_name": "Retirement_Planner",
 	"theme_color": "#A9C9DE",
 	"description": "Retirement Planner",
@@ -12,11 +13,10 @@
 	"prefer_related_applications": false,
 	"icons": [
         {
-        "src": "Retire.png",
+        "src": "https://cschnacker.github.io/Retirement/Retire.png",
         "type": "image/png",
         "sizes": "550x550",
         "purpose": "any"
         }        
     ],
-	"url": ".",
 	"generated": "true"}
