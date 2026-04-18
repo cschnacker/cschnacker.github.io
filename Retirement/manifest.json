@@ -3,7 +3,7 @@
     "scope": "https://cschnacker.github.io/Retirement/",
 	"display": "standalone",
 	"start_url": "https://cschnacker.github.io/Retirement/index.html",
-    "id": "https://cschnacker.github.io/Retirement/"
+    "id": "https://cschnacker.github.io/Retirement/",
 	"short_name": "Retirement_Planner",
 	"theme_color": "#A9C9DE",
 	"description": "Retirement Planner",
