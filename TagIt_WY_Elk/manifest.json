@@ -3,6 +3,7 @@
     "scope": "https://cschnacker.github.io/TagIt_WY_Elk/",
 	"display": "standalone",
 	"start_url": "https://cschnacker.github.io/TagIt_WY_Elk/index.html",
+    "id": "https://cschnacker.github.io/TagIt_WY_Elk/",
 	"short_name": "TagIt WY Elk",
 	"theme_color": "#A9C9DE",
 	"description": "Wyoming Elk Draw App",
