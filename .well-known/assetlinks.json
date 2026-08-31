@@ -188,7 +188,7 @@
       "target": {
         "namespace": "android_app",
         "package_name": "com.cschnacker.TagIt_WY_Deer",
-        "sha256_cert_fingerprints": ["1A:4E:9D:8D:B4:26:60:7B:4B:89:26:2D:C8:44:D7:A3:AB:C5:8A:B9:3F:E6:9B:4E:8A:52:D3:CD:DE:70:8F:80"]
+        "sha256_cert_fingerprints": ["1A:4E:9D:8D:B4:26:60:7B:4B:89:26:2D:C8:44:D7:A3:AB:C5:8A:B9:3F:E6:9B:4E:8A:52:D3:CD:DE:70:8F:80","6A:9F:EC:5F:DC:27:44:B2:20:F9:E4:73:CC:BE:12:77:AD:65:2F:A5:1F:FD:29:7F:A3:37:C8:8A:DF:D8:2F:2E"]
       }
     }
 ]
