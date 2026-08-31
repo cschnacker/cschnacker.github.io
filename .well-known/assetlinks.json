@@ -180,7 +180,7 @@
       "target": {
         "namespace": "android_app",
         "package_name": "com.cschnacker.TagIt_WY_Elk",
-        "sha256_cert_fingerprints": ["9C:CD:9A:C0:C2:CD:4B:68:B6:BB:5F:1E:82:9E:66:BF:31:DE:2F:A9:CF:02:BC:A4:81:2E:30:61:33:08:DF:AF"]
+        "sha256_cert_fingerprints": ["9C:CD:9A:C0:C2:CD:4B:68:B6:BB:5F:1E:82:9E:66:BF:31:DE:2F:A9:CF:02:BC:A4:81:2E:30:61:33:08:DF:AF","6A:9F:EC:5F:DC:27:44:B2:20:F9:E4:73:CC:BE:12:77:AD:65:2F:A5:1F:FD:29:7F:A3:37:C8:8A:DF:D8:2F:2E"]
       }
     },
  {
@@ -188,7 +188,7 @@
       "target": {
         "namespace": "android_app",
         "package_name": "com.cschnacker.TagIt_WY_Deer",
-        "sha256_cert_fingerprints": ["1A:4E:9D:8D:B4:26:60:7B:4B:89:26:2D:C8:44:D7:A3:AB:C5:8A:B9:3F:E6:9B:4E:8A:52:D3:CD:DE:70:8F:80","6A:9F:EC:5F:DC:27:44:B2:20:F9:E4:73:CC:BE:12:77:AD:65:2F:A5:1F:FD:29:7F:A3:37:C8:8A:DF:D8:2F:2E"]
+        "sha256_cert_fingerprints": ["1A:4E:9D:8D:B4:26:60:7B:4B:89:26:2D:C8:44:D7:A3:AB:C5:8A:B9:3F:E6:9B:4E:8A:52:D3:CD:DE:70:8F:80"]
       }
     }
 ]
