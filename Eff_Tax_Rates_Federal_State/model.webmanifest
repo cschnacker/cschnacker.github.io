@@ -1,0 +1,17 @@
+{
+    "name":  "Effective Tax",
+    "short_name":  "Effective Tax",
+    "start_url":  "./index.html",
+    "scope":  "./",
+    "display":  "standalone",
+    "theme_color":  "#165d9c",
+    "background_color":  "#f4f7fb",
+    "icons":  [
+                  {
+                      "purpose":  "any",
+                      "type":  "image/png",
+                      "sizes":  "512x512",
+                      "src":  "tax-day512x512.png"
+                  }
+              ]
+}
