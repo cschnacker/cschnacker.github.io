@@ -38,12 +38,37 @@
 <div class="table-wrap"><table><caption id="bracket-caption">2026 Federal brackets · Single</caption><thead><tr><th scope="col">Taxable income range</th><th scope="col">Rate</th><th scope="col">Your income<br>in bracket</th><th scope="col">Tax</th></tr></thead><tbody id="brackets"></tbody><tfoot><tr><th colspan="3" scope="row">Total tax</th><td id="breakdown-total">—</td></tr></tfoot></table></div>
 </details>
 <aside class="notes"><p>Estimates ordinary income tax using taxable income. Excludes deductions and credits.</p><p id="state-note" hidden>State estimates use joint brackets for married filing jointly and single brackets for other filing statuses. State rates have not been independently verified as current.</p></aside>
+<section class="calculator-guide" aria-labelledby="guide-title">
+<h2 id="guide-title">Understand your tax estimate</h2>
+<p>This calculator shows how taxable income is divided among brackets. Use it to explore the calculation and compare scenarios, rather than prepare a return or determine a payment.</p>
+<h3>How to use the calculator</h3>
+<ol><li>Choose Federal or State. For a state estimate, select the state.</li><li>Select your filing status.</li><li>Enter annual taxable income in dollars, after applicable deductions. The calculator does not subtract deductions for you.</li><li>Review the total and bracket breakdown. Change one input at a time to compare scenarios.</li></ol>
+<p>Taxable income is not necessarily your salary or take-home pay. Federal and state taxable income can differ. Use the amount appropriate to the jurisdiction you select.</p>
+<h3>What does effective tax rate mean here?</h3>
+<p>The displayed rate is estimated ordinary income tax divided by the taxable income you entered, multiplied by 100. It is not a percentage of gross income, and it does not include every kind of tax.</p>
+<p>Each bracket rate applies only to the portion of income within that bracket. Total tax is the sum of those amounts. Rows with tax that rounds to zero cents are omitted; rounding may cause small differences when adding displayed amounts.</p>
+<details><summary>A worked example: $75,000 of taxable income</summary>
+<p>For a single filer using the first three 2026 federal brackets:</p>
+<div class="table-wrap"><table><caption>Illustration for taxable ordinary income, before credits</caption><thead><tr><th scope="col">Portion of income</th><th scope="col">Rate</th><th scope="col">Tax</th></tr></thead><tbody><tr><td>First $12,400</td><td>10%</td><td>$1,240</td></tr><tr><td>Next $38,000</td><td>12%</td><td>$4,560</td></tr><tr><td>Remaining $24,600</td><td>22%</td><td>$5,412</td></tr></tbody><tfoot><tr><th scope="row" colspan="2">Estimated tax</th><td>$11,212</td></tr></tfoot></table></div>
+<p>The effective rate is $11,212 ÷ $75,000 × 100 = <strong>14.95%</strong>. Only the income above $50,400 in this example is taxed at 22%. This example starts with taxable income, not a $75,000 salary.</p></details>
+<details><summary>Data sources and calculation limits</summary>
+<p>The current tables were carried forward from the earlier calculator. The displayed year does not establish that every state schedule is current. The federal reference is IRS Publication 505. The stored schedules still require a complete comparison with official sources before they can be described as fully verified.</p>
+<p>State rates have not been independently verified as current. State estimates use joint brackets for married filing jointly and single brackets for the other available statuses. This does not reproduce every state's filing rules. If a stored schedule does not cover an income amount, the calculator reports an error.</p>
+<p>The calculator does not determine deductions, credits, special capital-gains or qualified-dividend tax, alternative minimum tax, payroll or self-employment taxes, local taxes, residency allocation, or special state adjustments and recapture rules. Federal and state results are separate estimates.</p>
+<p>Use the results to understand bracket arithmetic. Confirm the applicable rules with the tax authority or a qualified tax professional before making filing or payment decisions.</p></details>
+<details><summary>Common questions</summary>
+<h3>Is this my refund or the amount I still owe?</h3><p>No. The calculator does not account for withholding, estimated payments, or credits. Those amounts, along with the rest of a return, affect a refund or balance due.</p>
+<h3>Why does my tax software show a different result?</h3><p>Tax software may apply deductions, credits, special rules, tax-table rounding, or different state schedules. Compare the year, taxable income, filing status, and included taxes first.</p>
+<h3>Can I combine federal and state results?</h3><p>They are not a coordinated return calculation. Federal and state taxable income can differ, and the state tables have the limitations described above.</p>
+<h3>Can I use it offline?</h3><p>After an online visit, calculation may remain available while application files are retained in the browser cache. First loading, updates, advertisements, and external links require a connection. Clearing browser storage may remove offline files.</p></details>
+<h3>About this tool</h3><p>Maintained by Schnacker Software Solutions, LLC. This tool makes the calculation steps visible so you can understand how an estimate is produced. To report an issue, use Contact below and include the tax year, selections, and a hypothetical income example. Do not send tax returns, Social Security numbers, or account information.</p>
+</section>
 <aside id="calculator-ad" class="calculator-ad" aria-label="Advertisement" hidden>
 <div class="calculator-ad-label">Advertisement</div>
 <ins class="adsbygoogle" style="display:block" data-ad-format="auto" data-full-width-responsive="false"></ins>
 </aside>
 </main>
-
+<footer class="site-footer"><span>Schnacker Software Solutions, LLC</span><a href="https://schnackersoftwaresolutions.wordpress.com/privacy-policy/" target="_blank" rel="noopener noreferrer">Privacy Policy <span class="sr-only">(opens in browser)</span></a><span>Contact: cris.schnacker@gmail.com</span></footer>
 </div>
 <script>
 if ('serviceWorker' in navigator && /^https?:$/.test(location.protocol)) {
