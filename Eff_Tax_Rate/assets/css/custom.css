@@ -1,0 +1,9 @@
+.inputs{grid-row:auto;min-width:0}.result{position:sticky;top:20px}.bracket-row{border:1px solid var(--line);border-radius:12px;margin:12px 0;padding:14px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px}.bracket-row legend{font-weight:600;font-size:.9rem}.bracket-row label{font-size:.875rem}.bracket-row .range{grid-column:1/-1;font-size:.8rem;color:var(--muted);overflow-wrap:anywhere}.bracket-row button{grid-column:1/-1;justify-self:end;padding:4px 12px;font-size:.875rem}.secondary{background:var(--tint);color:var(--accent)}.primary{background:#165d9c;color:white}.actions{display:flex;gap:12px;flex-wrap:wrap}.remember{display:flex;align-items:center;font-size:.875rem}.remember input{width:20px;min-height:20px;height:20px;flex-shrink:0}input[aria-invalid=true]{border-color:#c13d3d}button:disabled{opacity:.5;cursor:default}#storage-status:empty,#offline-status:empty{display:none}.breakdown{min-width:0}.result{min-width:0}@media(max-width:680px){.result{position:static}.bracket-row{padding:12px}}
+/* Keep the entered schedule beside its controls, inside the results panel. */
+.app{max-width:1160px}main{grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr)}
+.inputs{grid-column:1;grid-row:1}.result{grid-column:2;grid-row:1;padding:24px}
+.result .breakdown{margin-top:24px;padding:18px 0 0;border:0;border-top:1px solid var(--line);border-radius:0;background:transparent}
+.result table{font-size:.8rem}.result th,.result td{padding:12px 6px}.result td:first-child{min-width:110px}
+.result tfoot{border-top:2px solid var(--line)}.result tfoot td{font-size:1.1rem;color:var(--accent);white-space:nowrap}
+@media(max-width:680px){main{grid-template-columns:minmax(0,1fr)}.inputs,.result{grid-column:1;grid-row:auto}.result{padding:20px}.result .breakdown{padding-top:16px}.result table{font-size:.75rem}}
+.result{position:static}

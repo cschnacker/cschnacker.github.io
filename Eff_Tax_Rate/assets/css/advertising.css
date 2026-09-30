@@ -1,0 +1,17 @@
+.calculator-ad[hidden] { display: none !important; }
+.calculator-ad {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 100%; grid-column: 1 / -1; order: 4;
+    margin: 28px 0 20px;
+    padding: 12px 10px;
+    border-top: 1px solid #cbd5db;
+    text-shadow: none;
+}
+.calculator-ad-label {
+    margin-bottom: 10px;
+    color: #59656e;
+    font: 11px/1.4 Arial, sans-serif;
+    text-align: center;
+}
+@media print { .calculator-ad { display: none !important; } }
