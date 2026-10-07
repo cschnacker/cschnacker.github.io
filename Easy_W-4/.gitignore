@@ -1,0 +1,7 @@
+outputs/
+analysis/
+dist/
+node_modules/
+*.keystore
+*.jks
+.env*

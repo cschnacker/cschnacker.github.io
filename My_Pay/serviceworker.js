@@ -1,43 +1,5 @@
-const cacheName = 'v2';
-
-// Call Install Event
-self.addEventListener('install', e => {
-  console.log('Service Worker: Installed');
-});
-
-// Call Activate Event
-self.addEventListener('activate', e => {
-  console.log('Service Worker: Activated');
-  // Remove unwanted caches
-  e.waitUntil(
-    caches.keys().then(cacheNames => {
-      return Promise.all(
-        cacheNames.map(cache => {
-          if (cache !== cacheName) {
-            console.log('Service Worker: Clearing Old Cache');
-            return caches.delete(cache);
-          }
-        })
-      );
-    })
-  );
-});
-
-// Call Fetch Event
-self.addEventListener('fetch', e => {
-  console.log('Service Worker: Fetching');
-  e.respondWith(
-    fetch(e.request)
-      .then(res => {
-        // Make copy/clone of response
-        const resClone = res.clone();
-        // Open cahce
-        caches.open(cacheName).then(cache => {
-          // Add response to cache
-          cache.put(e.request, resClone);
-        });
-        return res;
-      })
-      .catch(err => caches.match(e.request).then(res => res))
-  );
-});
+const CACHE='my-pay-v12';
+const FILES=['./','./index.html','./privacy.html','./assets/js/input-controls.js','./assets/js/saved-inputs.js','./assets/js/state-withholding.js','./data/state-withholding-2026.json','./assets/css/app.css','./assets/js/app.js','./assets/js/pay-engine.js','./assets/Pay550x550.png','./manifest.webmanifest','./data/income-tax-2026.json','./data/federal-withholding-2026.json','./data/pay-assumptions-2026.json','./data/payroll-2026.json'];
+self.addEventListener('install',event=>event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(FILES))));
+self.addEventListener('activate',event=>event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(key=>key.startsWith('my-pay-')&&key!==CACHE).map(key=>caches.delete(key))))));
+self.addEventListener('fetch',event=>{if(event.request.method!=='GET'||new URL(event.request.url).origin!==self.location.origin)return;event.respondWith(fetch(event.request).then(response=>{if(response.ok){const copy=response.clone();caches.open(CACHE).then(cache=>cache.put(event.request,copy));}return response;}).catch(()=>caches.match(event.request)));});

@@ -1,0 +1,620 @@
+{
+  "schemaVersion": 1,
+  "year": 2026,
+  "source": "Pay0.06-2026.xlsx, SEqn columns I:J (cached values)",
+  "status": "Legacy state estimates; not verified state withholding rules",
+  "states": {
+    "Alabama": {
+      "Single": {
+        "standardDeduction": 3000,
+        "personalExemption": 1500,
+        "personalCredit": 0
+      },
+      "Joint": {
+        "standardDeduction": 8500,
+        "personalExemption": 3000,
+        "personalCredit": 0
+      }
+    },
+    "Alaska": {
+      "Single": {
+        "standardDeduction": 0,
+        "personalExemption": 0,
+        "personalCredit": 0
+      },
+      "Joint": {
+        "standardDeduction": 0,
+        "personalExemption": 0,
+        "personalCredit": 0
+      }
+    },
+    "Arizona": {
+      "Single": {
+        "standardDeduction": 8350,
+        "personalExemption": 0,
+        "personalCredit": 0
+      },
+      "Joint": {
+        "standardDeduction": 16700,
+        "personalExemption": 0,
+        "personalCredit": 0
+      }
+    },
+    "Arkansas": {
+      "Single": {
+        "standardDeduction": 2410,
+        "personalExemption": 0,
+        "personalCredit": 29.0
+      },
+      "Joint": {
+        "standardDeduction": 4820,
+        "personalExemption": 0,
+        "personalCredit": 58.0
+      }
+    },
+    "California": {
+      "Single": {
+        "standardDeduction": 5540,
+        "personalExemption": 0,
+        "personalCredit": 153.0
+      },
+      "Joint": {
+        "standardDeduction": 11080,
+        "personalExemption": 0,
+        "personalCredit": 206.0
+      }
+    },
+    "Colorado": {
+      "Single": {
+        "standardDeduction": 16100,
+        "personalExemption": 0,
+        "personalCredit": 0
+      },
+      "Joint": {
+        "standardDeduction": 32200,
+        "personalExemption": 0,
+        "personalCredit": 0
+      }
+    },
+    "Connecticut": {
+      "Single": {
+        "standardDeduction": 0,
+        "personalExemption": 15000,
+        "personalCredit": 0
+      },
+      "Joint": {
+        "standardDeduction": 0,
+        "personalExemption": 24000,
+        "personalCredit": 0
+      }
+    },
+    "Delaware": {
+      "Single": {
+        "standardDeduction": 3250,
+        "personalExemption": 0,
+        "personalCredit": 110.0
+      },
+      "Joint": {
+        "standardDeduction": 6500,
+        "personalExemption": 0,
+        "personalCredit": 220.0
+      }
+    },
+    "Florida": {
+      "Single": {
+        "standardDeduction": 0,
+        "personalExemption": 0,
+        "personalCredit": 0
+      },
+      "Joint": {
+        "standardDeduction": 0,
+        "personalExemption": 0,
+        "personalCredit": 0
+      }
+    },
+    "Georgia": {
+      "Single": {
+        "standardDeduction": 12000,
+        "personalExemption": 0,
+        "personalCredit": 0
+      },
+      "Joint": {
+        "standardDeduction": 24000,
+        "personalExemption": 0,
+        "personalCredit": 0
+      }
+    },
+    "Hawaii": {
+      "Single": {
+        "standardDeduction": 4400,
+        "personalExemption": 1144,
+        "personalCredit": 0
+      },
+      "Joint": {
+        "standardDeduction": 8800,
+        "personalExemption": 2288,
+        "personalCredit": 0
+      }
+    },
+    "Idaho": {
+      "Single": {
+        "standardDeduction": 16100,
+        "personalExemption": 0,
+        "personalCredit": 0
+      },
+      "Joint": {
+        "standardDeduction": 32200,
+        "personalExemption": 0,
+        "personalCredit": 0
+      }
+    },
+    "Illinois": {
+      "Single": {
+        "standardDeduction": 0,
+        "personalExemption": 2925,
+        "personalCredit": 0
+      },
+      "Joint": {
+        "standardDeduction": 0,
+        "personalExemption": 5850,
+        "personalCredit": 0
+      }
+    },
+    "Indiana": {
+      "Single": {
+        "standardDeduction": 0,
+        "personalExemption": 1000,
+        "personalCredit": 0
+      },
+      "Joint": {
+        "standardDeduction": 0,
+        "personalExemption": 2000,
+        "personalCredit": 0
+      }
+    },
+    "Iowa": {
+      "Single": {
+        "standardDeduction": 16100,
+        "personalExemption": 0,
+        "personalCredit": 40.0
+      },
+      "Joint": {
+        "standardDeduction": 32200,
+        "personalExemption": 0,
+        "personalCredit": 80.0
+      }
+    },
+    "Kansas": {
+      "Single": {
+        "standardDeduction": 3605,
+        "personalExemption": 9160,
+        "personalCredit": 0
+      },
+      "Joint": {
+        "standardDeduction": 8240,
+        "personalExemption": 18320,
+        "personalCredit": 0
+      }
+    },
+    "Kentucky": {
+      "Single": {
+        "standardDeduction": 3360,
+        "personalExemption": 0,
+        "personalCredit": 0
+      },
+      "Joint": {
+        "standardDeduction": 3360,
+        "personalExemption": 0,
+        "personalCredit": 0
+      }
+    },
+    "Louisiana": {
+      "Single": {
+        "standardDeduction": 12875,
+        "personalExemption": 0,
+        "personalCredit": 0
+      },
+      "Joint": {
+        "standardDeduction": 25750,
+        "personalExemption": 0,
+        "personalCredit": 0
+      }
+    },
+    "Maine": {
+      "Single": {
+        "standardDeduction": 15000,
+        "personalExemption": 5150,
+        "personalCredit": 0
+      },
+      "Joint": {
+        "standardDeduction": 30000,
+        "personalExemption": 10300,
+        "personalCredit": 0
+      }
+    },
+    "Maryland": {
+      "Single": {
+        "standardDeduction": 3350,
+        "personalExemption": 3200,
+        "personalCredit": 0
+      },
+      "Joint": {
+        "standardDeduction": 6700,
+        "personalExemption": 6700,
+        "personalCredit": 0
+      }
+    },
+    "Massachusetts": {
+      "Single": {
+        "standardDeduction": 0,
+        "personalExemption": 4400,
+        "personalCredit": 0
+      },
+      "Joint": {
+        "standardDeduction": 0,
+        "personalExemption": 8800,
+        "personalCredit": 0
+      }
+    },
+    "Michigan": {
+      "Single": {
+        "standardDeduction": 0,
+        "personalExemption": 5900,
+        "personalCredit": 0
+      },
+      "Joint": {
+        "standardDeduction": 0,
+        "personalExemption": 11800,
+        "personalCredit": 0
+      }
+    },
+    "Minnesota": {
+      "Single": {
+        "standardDeduction": 15300,
+        "personalExemption": 0,
+        "personalCredit": 0
+      },
+      "Joint": {
+        "standardDeduction": 30600,
+        "personalExemption": 0,
+        "personalCredit": 0
+      }
+    },
+    "Mississippi": {
+      "Single": {
+        "standardDeduction": 2300,
+        "personalExemption": 6000,
+        "personalCredit": 0
+      },
+      "Joint": {
+        "standardDeduction": 4600,
+        "personalExemption": 12000,
+        "personalCredit": 0
+      }
+    },
+    "Missouri": {
+      "Single": {
+        "standardDeduction": 16100,
+        "personalExemption": 0,
+        "personalCredit": 0
+      },
+      "Joint": {
+        "standardDeduction": 32200,
+        "personalExemption": 0,
+        "personalCredit": 0
+      }
+    },
+    "Montana": {
+      "Single": {
+        "standardDeduction": 30000,
+        "personalExemption": 0,
+        "personalCredit": 0
+      },
+      "Joint": {
+        "standardDeduction": 0,
+        "personalExemption": 0,
+        "personalCredit": 0
+      }
+    },
+    "Nebraska": {
+      "Single": {
+        "standardDeduction": 8600,
+        "personalExemption": 0,
+        "personalCredit": 171.0
+      },
+      "Joint": {
+        "standardDeduction": 17200,
+        "personalExemption": 0,
+        "personalCredit": 342.0
+      }
+    },
+    "Nevada": {
+      "Single": {
+        "standardDeduction": 0,
+        "personalExemption": 0,
+        "personalCredit": 0
+      },
+      "Joint": {
+        "standardDeduction": 0,
+        "personalExemption": 0,
+        "personalCredit": 0
+      }
+    },
+    "New Hampshire": {
+      "Single": {
+        "standardDeduction": 0,
+        "personalExemption": 0,
+        "personalCredit": 0
+      },
+      "Joint": {
+        "standardDeduction": 0,
+        "personalExemption": 0,
+        "personalCredit": 0
+      }
+    },
+    "New Jersey": {
+      "Single": {
+        "standardDeduction": 0,
+        "personalExemption": 1000,
+        "personalCredit": 0
+      },
+      "Joint": {
+        "standardDeduction": 0,
+        "personalExemption": 2000,
+        "personalCredit": 0
+      }
+    },
+    "New Mexico": {
+      "Single": {
+        "standardDeduction": 16100,
+        "personalExemption": 0,
+        "personalCredit": 0
+      },
+      "Joint": {
+        "standardDeduction": 32200,
+        "personalExemption": 0,
+        "personalCredit": 0
+      }
+    },
+    "New York": {
+      "Single": {
+        "standardDeduction": 8000,
+        "personalExemption": 0,
+        "personalCredit": 0
+      },
+      "Joint": {
+        "standardDeduction": 16050,
+        "personalExemption": 0,
+        "personalCredit": 0
+      }
+    },
+    "North Carolina": {
+      "Single": {
+        "standardDeduction": 12750,
+        "personalExemption": 0,
+        "personalCredit": 0
+      },
+      "Joint": {
+        "standardDeduction": 25500,
+        "personalExemption": 0,
+        "personalCredit": 0
+      }
+    },
+    "North Dakota": {
+      "Single": {
+        "standardDeduction": 16100,
+        "personalExemption": 0,
+        "personalCredit": 0
+      },
+      "Joint": {
+        "standardDeduction": 32200,
+        "personalExemption": 0,
+        "personalCredit": 0
+      }
+    },
+    "Ohio": {
+      "Single": {
+        "standardDeduction": 0,
+        "personalExemption": 2400,
+        "personalCredit": 0
+      },
+      "Joint": {
+        "standardDeduction": 0,
+        "personalExemption": 4800,
+        "personalCredit": 0
+      }
+    },
+    "Oklahoma": {
+      "Single": {
+        "standardDeduction": 6350,
+        "personalExemption": 1000,
+        "personalCredit": 0
+      },
+      "Joint": {
+        "standardDeduction": 12700,
+        "personalExemption": 2000,
+        "personalCredit": 0
+      }
+    },
+    "Oregon": {
+      "Single": {
+        "standardDeduction": 2910,
+        "personalExemption": 0,
+        "personalCredit": 256.0
+      },
+      "Joint": {
+        "standardDeduction": 5820,
+        "personalExemption": 0,
+        "personalCredit": 512.0
+      }
+    },
+    "Pennsylvania": {
+      "Single": {
+        "standardDeduction": 0,
+        "personalExemption": 0,
+        "personalCredit": 0
+      },
+      "Joint": {
+        "standardDeduction": 0,
+        "personalExemption": 0,
+        "personalCredit": 0
+      }
+    },
+    "Rhode Island": {
+      "Single": {
+        "standardDeduction": 10900,
+        "personalExemption": 5100,
+        "personalCredit": 0
+      },
+      "Joint": {
+        "standardDeduction": 21800,
+        "personalExemption": 10200,
+        "personalCredit": 0
+      }
+    },
+    "South Carolina": {
+      "Single": {
+        "standardDeduction": 8350,
+        "personalExemption": 0,
+        "personalCredit": 0
+      },
+      "Joint": {
+        "standardDeduction": 16700,
+        "personalExemption": 0,
+        "personalCredit": 0
+      }
+    },
+    "South Dakota": {
+      "Single": {
+        "standardDeduction": 0,
+        "personalExemption": 0,
+        "personalCredit": 0
+      },
+      "Joint": {
+        "standardDeduction": 0,
+        "personalExemption": 0,
+        "personalCredit": 0
+      }
+    },
+    "Tennessee": {
+      "Single": {
+        "standardDeduction": 0,
+        "personalExemption": 0,
+        "personalCredit": 0
+      },
+      "Joint": {
+        "standardDeduction": 0,
+        "personalExemption": 0,
+        "personalCredit": 0
+      }
+    },
+    "Texas": {
+      "Single": {
+        "standardDeduction": 0,
+        "personalExemption": 0,
+        "personalCredit": 0
+      },
+      "Joint": {
+        "standardDeduction": 0,
+        "personalExemption": 0,
+        "personalCredit": 0
+      }
+    },
+    "Utah": {
+      "Single": {
+        "standardDeduction": 0,
+        "personalExemption": 0,
+        "personalCredit": 966.0
+      },
+      "Joint": {
+        "standardDeduction": 0,
+        "personalExemption": 0,
+        "personalCredit": 1932.0
+      }
+    },
+    "Vermont": {
+      "Single": {
+        "standardDeduction": 7400,
+        "personalExemption": 5100,
+        "personalCredit": 0
+      },
+      "Joint": {
+        "standardDeduction": 14850,
+        "personalExemption": 10200,
+        "personalCredit": 0
+      }
+    },
+    "Virginia": {
+      "Single": {
+        "standardDeduction": 8750,
+        "personalExemption": 930,
+        "personalCredit": 0
+      },
+      "Joint": {
+        "standardDeduction": 17500,
+        "personalExemption": 1860,
+        "personalCredit": 0
+      }
+    },
+    "Washington": {
+      "Single": {
+        "standardDeduction": 278000,
+        "personalExemption": 0,
+        "personalCredit": 0
+      },
+      "Joint": {
+        "standardDeduction": 278000,
+        "personalExemption": 0,
+        "personalCredit": 0
+      }
+    },
+    "West Virginia": {
+      "Single": {
+        "standardDeduction": 0,
+        "personalExemption": 2000,
+        "personalCredit": 0
+      },
+      "Joint": {
+        "standardDeduction": 0,
+        "personalExemption": 4000,
+        "personalCredit": 0
+      }
+    },
+    "Wisconsin": {
+      "Single": {
+        "standardDeduction": 13960,
+        "personalExemption": 700,
+        "personalCredit": 0
+      },
+      "Joint": {
+        "standardDeduction": 25840,
+        "personalExemption": 1400,
+        "personalCredit": 0
+      }
+    },
+    "Wyoming": {
+      "Single": {
+        "standardDeduction": 0,
+        "personalExemption": 0,
+        "personalCredit": 0
+      },
+      "Joint": {
+        "standardDeduction": 0,
+        "personalExemption": 0,
+        "personalCredit": 0
+      }
+    },
+    "D.C.": {
+      "Single": {
+        "standardDeduction": 16100,
+        "personalExemption": 0,
+        "personalCredit": 0
+      },
+      "Joint": {
+        "standardDeduction": 32200,
+        "personalExemption": 0,
+        "personalCredit": 0
+      }
+    }
+  }
+}

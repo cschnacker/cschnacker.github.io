@@ -1,0 +1,27 @@
+{
+  "workbook": "Pay0.06-2026.xlsx",
+  "sharedTaxRelease": "2026-existing-model",
+  "brokenReferences": [
+    {
+      "sheet": "My Pay",
+      "cell": "C30",
+      "formula": "=#REF!-SUM($C31:C31)"
+    },
+    {
+      "sheet": "My Pay",
+      "cell": "C44",
+      "formula": "=IF(ISERROR(#REF!),0,#REF!)-(IF(ISERROR(C62),0,C62)*C$52+IF(ISERROR(#REF!),0,#REF!)*#REF!+IF(ISERROR(#REF!),0,#REF!)*#REF!+IF(ISERROR(#REF!),0,#REF!)*#REF!)"
+    },
+    {
+      "sheet": "My Pay",
+      "cell": "C45",
+      "formula": "=#REF!-(IF(ISERROR(C63),0,C63)*C$52+IF(ISERROR(#REF!),0,#REF!)*#REF!+IF(ISERROR(#REF!),0,#REF!)*#REF!+IF(ISERROR(#REF!),0,#REF!)*#REF!)"
+    }
+  ],
+  "notes": [
+    "Federal withholding replaced with IRS Publication 15-T (2026), Worksheet 1A.",
+    "Refund projections with broken references are not carried forward.",
+    "State standard deductions, personal exemptions and credits are legacy workbook assumptions.",
+    "State estimates omit dependent adjustments, local taxes, disability and paid-leave deductions. Enter an actual state withholding amount to override."
+  ]
+}

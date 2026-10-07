@@ -1,0 +1,52 @@
+{
+  "name": "Easy W-4",
+  "short_name": "Easy W-4",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f5f6f2",
+  "theme_color": "#174b43",
+  "icons": [
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "id": "./",
+  "lang": "en-US",
+  "description": "Plan your paycheck and explore federal and state withholding across up to four jobs.",
+  "categories": [
+    "finance",
+    "utilities"
+  ],
+  "screenshots": [
+    {
+      "src": "screenshots/desktop.png",
+      "sizes": "1905x1017",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Paycheck and annual tax estimates using fictional inputs"
+    },
+    {
+      "src": "screenshots/phone.png",
+      "sizes": "525x922",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Shared W-4 remaining balances on a phone"
+    }
+  ]
+}
