@@ -1,0 +1,10 @@
+<!doctype html>
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Update Loan Planner</title><body><p id="status">Updating Loan Planner. Your saved inputs are preserved.</p><script>
+let returning=false;
+navigator.serviceWorker.addEventListener('controllerchange',()=>{if(!returning){returning=true;location.replace('./');}});
+navigator.serviceWorker.register('./serviceworker.js').then(async registration=>{
+  const activate=()=>{if(registration.waiting)registration.waiting.postMessage('activate-update');};
+  registration.addEventListener('updatefound',()=>{registration.installing?.addEventListener('statechange',activate);});
+  await registration.update();activate();
+}).catch(()=>{document.getElementById('status').textContent='Update unavailable. Please reload to try again.';});
+</script></body></html>

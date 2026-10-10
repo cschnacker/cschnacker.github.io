@@ -1,0 +1,74 @@
+Loan Planner
+
+Files and responsibilities
+  data/defaults.js    Stable defaults and storage schema. No yearly data updates.
+  js/storage.js      Versioned browser-local user inputs, load/save/clear.
+  js/calculations.js Pure monthly amortization, yearly totals, input validation.
+  js/app.js          Form events, results, chart and CSV presentation.
+  js/steppers.js     Amount buttons and arrow keys; exact typed values stay valid.
+  index.html        Accessible interface structure.
+  styles.css        Responsive interface styling.
+  serviceworker.js  Offline app shell, scoped to this application.
+
+Run checks: node --test tests/*.test.js
+Preview: serve this folder with a static HTTP server. Do not use file://.
+Deploy index.html, styles.css, data/, js/, manifest.json, serviceworker.js,
+and loan550x550.png together to the existing IIS Loan directory.
+Increment serviceworker.js VERSION on subsequent releases. Close all Loan
+tabs/windows and reopen to activate a complete new cached version.
+
+Storage
+Entries save immediately under loan-planner:user-data:v1. Only input data
+is stored. Results are recalculated on load. Values persist across sessions
+on the same browser profile and origin. Clearing browser/site data or using
+private browsing can remove them. The app reports storage failures. Clear
+saved data requires confirmation and removes only this application's key.
+Saved changes synchronize between open tabs on the same origin.
+Loan inputs remain browser-local; there is no loan account or server database.
+No advertising or analytics scripts are included. Loan inputs stay local.
+
+Calculation convention
+Source: Loan.22.xlsx, Loan Planner E14:E23, A17/A19/A21, rows 79:82 and
+84 onward. Regular loan payments are monthly, as clarified by the user.
+Monthly interest is opening balance multiplied by the annual rate / 12.
+Monthly PMT uses term-years * 12. Yearly totals aggregate that same schedule.
+The payoff month and actual number of monthly payments come from the schedule.
+The first payment month is selectable; old saved plans default to January.
+The storage key and schema version stay the same, preserving all saved inputs.
+Annual extra principal and one-time payments retain December timing. Annual
+growth and year-specific changes apply each January after the start year.
+Annual growth defaults: taxes 3%, insurance 3%, extra principal 0%.
+Year-specific modifications override only nonblank fields. Explicit zero
+is honored. Refinance recalculates payments using the remaining/new term.
+
+Corrections made in the extracted model
+The source contains stale #REF! asset/equity formulas not used by the app.
+These unused outputs are not carried over. The source tax override lookup
+uses a shifted F:P range; this app applies overrides to their named fields.
+Extra payments are capped at the actual balance due. Zero interest works.
+The projection can run to 100 years and reports outstanding balances,
+negative amortization and unused changes. The original had 42 output rows.
+Both monthly and yearly displays show Total payment as the second column,
+including principal, interest, taxes, insurance, extras, and one-time payments.
+The sum of all payments appears below the table and is included in CSV output.
+Tax/insurance costs after payoff and refinance fees are not modeled.
+
+The workbook itself has not been modified.
+
+Payment graph
+The second graph stacks regular principal, interest, taxes, insurance, extra
+principal, and one-time payments. Yearly/monthly controls share the saved view
+with the table and CSV. Each stack equals the schedule's total payment.
+update.html activates a complete cached update without clearing saved inputs.
+
+Portable plans
+Download plan exports a versioned Loan Planner JSON file containing only inputs
+and view settings. Upload plan validates this format and asks before replacing
+the current plan; calculations are rebuilt and entries are saved locally.
+Payment CSV files are reports and cannot be imported as plans.
+js/plan-files.js owns the portable file format and validation.
+
+Advertising
+Advertising was deferred at the user's request due to loan-data privacy concerns.
+The AdSense setup, publisher meta tag, and ad placement have been removed.
+No third-party advertising script is loaded by this application.
