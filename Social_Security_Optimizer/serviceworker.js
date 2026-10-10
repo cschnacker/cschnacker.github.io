@@ -1,43 +1,6 @@
-const cacheName = 'v2';
-
-// Call Install Event
-self.addEventListener('install', e => {
-  console.log('Service Worker: Installed');
-});
-
-// Call Activate Event
-self.addEventListener('activate', e => {
-  console.log('Service Worker: Activated');
-  // Remove unwanted caches
-  e.waitUntil(
-    caches.keys().then(cacheNames => {
-      return Promise.all(
-        cacheNames.map(cache => {
-          if (cache !== cacheName) {
-            console.log('Service Worker: Clearing Old Cache');
-            return caches.delete(cache);
-          }
-        })
-      );
-    })
-  );
-});
-
-// Call Fetch Event
-self.addEventListener('fetch', e => {
-  console.log('Service Worker: Fetching');
-  e.respondWith(
-    fetch(e.request)
-      .then(res => {
-        // Make copy/clone of response
-        const resClone = res.clone();
-        // Open cahce
-        caches.open(cacheName).then(cache => {
-          // Add response to cache
-          cache.put(e.request, resClone);
-        });
-        return res;
-      })
-      .catch(err => caches.match(e.request).then(res => res))
-  );
-});
+// Scope-specific cache; never clear other applications' caches on the same IIS origin.
+const PREFIX='ss-optimizer-modern-';const CACHE=PREFIX+'v2';
+const CORE=['./','index.html','ui/styles.css','ui/app.mjs','user-data/schema.mjs','user-data/storage.mjs','user-data/earnings.mjs','calculations/benefits.mjs','data/validate.mjs','data/current.json','manifest.json','icon.png'];
+self.addEventListener('install',event=>event.waitUntil((async()=>{const cache=await caches.open(CACHE);await cache.addAll(CORE);const release=await fetch('data/current.json',{cache:'no-store'}).then(r=>r.json());if(/^ssa-\d{4}\.json$/.test(release.file))await cache.add('data/'+release.file);await self.skipWaiting();})()));
+self.addEventListener('activate',event=>event.waitUntil((async()=>{for(const key of await caches.keys())if(key.startsWith(PREFIX)&&key!==CACHE)await caches.delete(key);await self.clients.claim();})()));
+self.addEventListener('fetch',event=>{const url=new URL(event.request.url);if(event.request.method!=='GET'||url.origin!==location.origin||!url.href.startsWith(self.registration.scope))return;event.respondWith((async()=>{try{const response=await fetch(event.request);if(response.ok){const cache=await caches.open(CACHE);await cache.put(event.request,response.clone());}return response;}catch{const cached=await caches.match(event.request);return cached||new Response('Offline file not available',{status:503});}})());});
