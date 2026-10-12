@@ -196,4 +196,3 @@ $('#import-file').addEventListener('change',async event=>{
 window.addEventListener('storage',event=>{if(event.key===STORAGE_KEY||event.key===null){storageBlocked=true;notice('Plans changed in another tab. Autosave is paused to protect those changes. Export your current work if needed, then reload this page.');$('#save-status').textContent='Autosave paused · Reload';}});
 function highlightNav(){document.querySelectorAll('nav a').forEach(a=>a.classList.toggle('active',a.hash===(location.hash||'#overview')));}
 window.addEventListener('hashchange',highlightNav);highlightNav();render();if(!storageBlocked)persist();else $('#save-status').textContent='Not saved · Export a backup';
-if('serviceWorker' in navigator&&location.protocol!=='file:')navigator.serviceWorker.register('./serviceworker.js').catch(error=>console.warn('Offline cache unavailable',error));

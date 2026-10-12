@@ -2,7 +2,13 @@
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#183d36"><meta name="description" content="Build, save, and move your business financial plans.">
 <title>Business Finance Planner</title><link rel="icon" href="icon.svg" type="image/svg+xml"><link rel="manifest" href="manifest.json"><link rel="stylesheet" href="styles.css">
-</head><body>
+<script>
+// Register independently of planner initialization, so offline support is always installed.
+if ('serviceWorker' in navigator && window.isSecureContext) {
+  navigator.serviceWorker.register('./serviceworker.js', {scope: './'})
+    .catch(error => console.warn('Offline cache unavailable', error));
+}
+</script></head><body>
 <aside class="sidebar"><a class="brand" href="#overview"><span class="brand-icon">B<span>↗</span></span><span>Business<br><small>FINANCE PLANNER</small></span></a>
 <div class="workspace-label">YOUR WORKSPACE</div><nav aria-label="Main navigation"><a href="#overview" class="active">◫ <span>Overview</span></a><a href="#inputs">☷ <span>Plan inputs</span></a><a href="#projection">↗ <span>Annual projection</span></a><a href="#plans">▤ <span>Saved plans</span></a></nav>
 <div class="sidebar-foot"><span class="dot"></span> Stored on this device<p>Export a backup to take your plans anywhere.</p><button data-action="export-all" class="sidebar-button">Export all plans ↗</button></div></aside>
