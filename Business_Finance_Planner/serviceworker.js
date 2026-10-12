@@ -1,43 +1,13 @@
-const cacheName = 'v2';
-
-// Call Install Event
-self.addEventListener('install', e => {
-  console.log('Service Worker: Installed');
-});
-
-// Call Activate Event
-self.addEventListener('activate', e => {
-  console.log('Service Worker: Activated');
-  // Remove unwanted caches
-  e.waitUntil(
-    caches.keys().then(cacheNames => {
-      return Promise.all(
-        cacheNames.map(cache => {
-          if (cache !== cacheName) {
-            console.log('Service Worker: Clearing Old Cache');
-            return caches.delete(cache);
-          }
-        })
-      );
-    })
-  );
-});
-
-// Call Fetch Event
-self.addEventListener('fetch', e => {
-  console.log('Service Worker: Fetching');
-  e.respondWith(
-    fetch(e.request)
-      .then(res => {
-        // Make copy/clone of response
-        const resClone = res.clone();
-        // Open cahce
-        caches.open(cacheName).then(cache => {
-          // Add response to cache
-          cache.put(e.request, resClone);
-        });
-        return res;
-      })
-      .catch(err => caches.match(e.request).then(res => res))
-  );
+// Cache only this application's shell; never clear another PWA's caches.
+const CACHE='business-finance-planner-shell-v10';
+const FILES=['./','index.html','styles.css','app.bundle.js','manifest.json','icon.svg'];
+self.addEventListener('install',event=>event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(FILES)).then(()=>self.skipWaiting())));
+self.addEventListener('activate',event=>event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k.startsWith('business-finance-planner-shell-')&&k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim())));
+self.addEventListener('fetch',event=>{
+  const url=new URL(event.request.url);
+  if(event.request.method!=='GET'||!FILES.some(file=>new URL(file,self.registration.scope).href===url.href))return;
+  event.respondWith(fetch(event.request).then(response=>{
+    if(response.ok){const clone=response.clone();event.waitUntil(caches.open(CACHE).then(cache=>cache.put(event.request,clone)));}
+    return response;
+  }).catch(()=>caches.open(CACHE).then(cache=>cache.match(event.request))));
 });
