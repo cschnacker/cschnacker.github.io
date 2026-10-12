@@ -1,5 +1,5 @@
 // Cache only this application's shell; never clear another PWA's caches.
-const CACHE='business-finance-planner-shell-v11';
+const CACHE='business-finance-planner-shell-v12';
 const FILES=['./','index.html','styles.css','app.bundle.js','manifest.json','icon.svg','icon-192.png','icon-512.png'];
 self.addEventListener('install',event=>event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(FILES)).then(()=>self.skipWaiting())));
 self.addEventListener('activate',event=>event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k.startsWith('business-finance-planner-shell-')&&k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim())));
