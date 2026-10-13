@@ -67,7 +67,7 @@ export function project(plan,annual,includeTrades=true){
   deflator*=1+assumptions.inflation/100;
   const total=cash+assets.reduce((a,h)=>a+h.value,0)+fixedIncome.balance();
   if(!Number.isFinite(total)||Math.abs(total)>1e100)throw Error('Projection is too large. Reduce rates or projection length.');
-  rows.push({year,opening,cash,total,real:total/deflator,external,growth,income,fees,realized,salaryBudget:Object.values(salaryBudgets({year,index:i,settings:s,primarySalary:primary,spouseSalary:spouse})).reduce((a,b)=>a+b,0),salaryContributions,fixedContributions,retirementWithdrawal,retirementRequested,retirementCash,retirementSales,retirementShortfall:Math.max(0,retirementRequested-retirementWithdrawal),bondBalance:fixedIncome.balance(),bondPurchases:purchases.bondPurchases,annuityPremiums:purchases.annuityPremiums,...flows,cash,detail});
+  rows.push({year,opening,cash,total,real:total/deflator,external,growth,income,fees,realized,salaryBudget:Object.values(salaryBudgets({year,index:i,settings:s,primarySalary:primary,spouseSalary:spouse})).reduce((a,b)=>a+b,0),salaryContributions,fixedContributions,retirementWithdrawal,retirementRequested,retirementCash,retirementSales,retirementShortfall:Math.max(0,retirementRequested-retirementWithdrawal),bondBalance:fixedIncome.balance(),bondPurchases:purchases.bondPurchases,bondPurchaseDetails:purchases.bondPurchaseDetails,annuityPremiums:purchases.annuityPremiums,...flows,cash,detail});
   primary*=1+assumptions.salaryGrowth/100;spouse*=1+assumptions.salaryGrowth/100;
  }
  if(includeTrades)for(const t of plan.trades)if(t.year<s.startYear||t.year>=s.startYear+s.years){warnings.push(`${t.year}: Trade outside projection period.`);tradeResults.push({...t,status:'Outside plan'});}

@@ -8,10 +8,10 @@ export function createFixedIncome(plan){
  const annuities=(plan.annuities||[]).map(a=>({...a,active:a.existing,failed:false}));
  return {
   balance:()=>bonds.filter(b=>b.active&&!informational(plan,b)).reduce((s,b)=>s+b.principal,0),
-  begin(year,cash,warnings){let bondPurchases=0,annuityPremiums=0;
-   for(const b of bonds){if(informational(plan,b)||b.existing||b.purchaseYear!==year)continue;if(cash+1e-8<b.principal){warnings.push(`${year}: ${b.name} — insufficient cash for bond purchase; purchase skipped.`);b.ended=true;continue;}cash-=b.principal;bondPurchases+=b.principal;b.active=true;}
+  begin(year,cash,warnings){let bondPurchases=0,annuityPremiums=0;const bondPurchaseDetails=[];
+   for(const b of bonds){if(informational(plan,b)||b.existing||b.purchaseYear!==year)continue;if(cash+1e-8<b.principal){warnings.push(`${year}: ${b.name} — insufficient cash for bond purchase; purchase skipped.`);b.ended=true;continue;}cash-=b.principal;bondPurchases+=b.principal;bondPurchaseDetails.push({id:b.id,amount:b.principal});b.active=true;}
    for(const a of annuities){if(informational(plan,a)||a.existing||a.failed)continue;const premium=(year===a.fundingYear?a.upfrontPremium:0)+(year>=a.fundingYear&&year<a.incomeStartYear?a.annualPremium:0);if(!premium)continue;if(cash+1e-8<premium){warnings.push(`${year}: ${a.name} — insufficient cash for annuity premium; contract income excluded until funding is corrected.`);a.failed=true;a.active=false;continue;}cash-=premium;annuityPremiums+=premium;a.active=true;}
-   return {cash,bondPurchases,annuityPremiums};
+   return {cash,bondPurchases,annuityPremiums,bondPurchaseDetails};
   },
   allocate(context,details){let total=0;for(const b of bonds){if(!b.active||b.ended||informational(plan,b))continue;const amount=salaryFunding({...b,contributionMode:'salary'},context);b.principal+=amount;total+=amount;const detail=details.find(x=>x.id===b.id);if(detail){detail.balance=b.principal;detail.salaryContribution=amount;}}return total;},
   end(year,cash){let bondInterest=0,bondRedemptions=0,annuityIncome=0;const bondDetails=[],annuityDetails=[];
