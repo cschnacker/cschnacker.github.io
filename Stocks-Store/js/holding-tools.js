@@ -1,3 +1,11 @@
+/*
+Copyright (c) 2026 SchnackerSoftwareSolutions, LLC.
+All rights reserved.
+
+This software is proprietary. No permission is granted
+to copy, modify, redistribute, or commercially exploit
+this code without prior written authorization.
+*/
 export function holdingLocation(plan,holding){
  if(holding.accountId)return (plan.accounts||[]).find(a=>a.id===holding.accountId)?.name||holding.account||'Linked account';
  return 'Standalone investment'+(holding.account?' · '+holding.account:'');

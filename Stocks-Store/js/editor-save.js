@@ -1,3 +1,11 @@
+/*
+Copyright (c) 2026 SchnackerSoftwareSolutions, LLC.
+All rights reserved.
+
+This software is proprietary. No permission is granted
+to copy, modify, redistribute, or commercially exploit
+this code without prior written authorization.
+*/
 export function invalidEditorField(form){
  for(const field of form.elements){if(field.disabled||!field.willValidate||field.closest('[hidden]'))continue;if(field.matches('input[data-dollar]'))field.setCustomValidity('');if(!field.checkValidity())return field;}return null;
 }

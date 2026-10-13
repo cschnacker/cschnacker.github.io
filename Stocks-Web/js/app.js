@@ -1,3 +1,11 @@
+/*
+Copyright (c) 2026 SchnackerSoftwareSolutions, LLC.
+All rights reserved.
+
+This software is proprietary. No permission is granted
+to copy, modify, redistribute, or commercially exploit
+this code without prior written authorization.
+*/
 import {bindMoneyInputs} from './money-input.js';
 import {bindEditorSave} from './editor-save.js';
 import {outsideFundingFields,bindOutsideFunding,applyOutsideFunding} from './outside-funding.js';

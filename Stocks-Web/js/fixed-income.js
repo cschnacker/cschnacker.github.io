@@ -1,3 +1,11 @@
+/*
+Copyright (c) 2026 SchnackerSoftwareSolutions, LLC.
+All rights reserved.
+
+This software is proprietary. No permission is granted
+to copy, modify, redistribute, or commercially exploit
+this code without prior written authorization.
+*/
 import {salaryFunding} from './funding.js';
 // Annual cash-flow schedules. Bond principal stays in wealth until redemption.
 // Annuities are income contracts: surrender value is deliberately not estimated.

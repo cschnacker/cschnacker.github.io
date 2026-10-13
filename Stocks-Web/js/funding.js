@@ -1,3 +1,11 @@
+/*
+Copyright (c) 2026 SchnackerSoftwareSolutions, LLC.
+All rights reserved.
+
+This software is proprietary. No permission is granted
+to copy, modify, redistribute, or commercially exploit
+this code without prior written authorization.
+*/
 export function salaryBudgets({year,index,settings:s,primarySalary,spouseSalary}){
  const part=(who,salary)=>{if(s[who+'SalaryEndYear']!=null&&year>s[who+'SalaryEndYear'])return 0;const mode=s[who+'InvestmentMode'];if(mode===undefined)return salary;if(mode==='none')return 0;if(mode==='dollars')return (s[who+'InvestmentAmount']||0)*Math.pow(1+(s[who+'InvestmentGrowth']||0)/100,index);return salary*(s[who+'InvestmentPercent']||0)/100;};
  return {primary:part('primary',primarySalary),spouse:part('spouse',spouseSalary)};

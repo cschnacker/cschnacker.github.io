@@ -1,3 +1,11 @@
+/*
+Copyright (c) 2026 SchnackerSoftwareSolutions, LLC.
+All rights reserved.
+
+This software is proprietary. No permission is granted
+to copy, modify, redistribute, or commercially exploit
+this code without prior written authorization.
+*/
 import {editorFundingMode} from './funding-allocations.js';
 export function outsideDestinations(p){const accounts=p.accounts||[],eligible=h=>(!h.accountId||accounts.find(a=>a.id===h.accountId)?.valuationMode!=='manual')&&h.contributionMode!=='salary-dollars';return [...p.holdings.filter(eligible).map(h=>({id:h.id,item:h,kind:'holdings',label:(h.symbol||h.name)+' · '+(accounts.find(a=>a.id===h.accountId)?.name||h.account||'Standalone')})),...accounts.filter(a=>a.valuationMode!=='holdings'&&eligible(a)).map(a=>({id:a.id,item:a,kind:'accounts',label:a.name+(a.valuationMode==='mixed'?' · Remaining investments':' · Account total')})),...(p.otherInvestments||[]).filter(eligible).map(h=>({id:h.id,item:h,kind:'otherInvestments',label:h.name+' · Private investment'}))];}
 export function applyOutsideFunding(p,rows){const dest=outsideDestinations(p),seen=new Set();for(const r of rows){if(!dest.some(d=>d.id===r.id))throw Error('Choose a valid outside-funding destination or remove the row.');if(seen.has(r.id))throw Error('Choose each outside-funding destination only once.');seen.add(r.id);if(!Number.isFinite(r.amount)||Math.abs(r.amount)>1e12||!Number.isFinite(r.growth)||r.growth< -100||r.growth>100)throw Error('Check the outside funding amount and growth rate.');}for(const d of dest){const r=rows.find(x=>x.id===d.id);d.item.contribution=r?.amount??0;if(r)d.item.contributionGrowth=r.growth;if(d.kind!=='otherInvestments')d.item.contributionMode=editorFundingMode(d.item,r?'fixed':'none');}return p;}

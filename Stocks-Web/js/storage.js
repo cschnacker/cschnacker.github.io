@@ -1,3 +1,11 @@
+/*
+Copyright (c) 2026 SchnackerSoftwareSolutions, LLC.
+All rights reserved.
+
+This software is proprietary. No permission is granted
+to copy, modify, redistribute, or commercially exploit
+this code without prior written authorization.
+*/
 import {validatePlan,emptyPlan,uid} from './model.js';
 // Named records share one small IndexedDB store. Legacy single plans migrate atomically.
 export function createPlanStorage(indexedDB,databaseName='stocks-funds-user-data'){

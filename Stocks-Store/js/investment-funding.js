@@ -1,3 +1,11 @@
+/*
+Copyright (c) 2026 SchnackerSoftwareSolutions, LLC.
+All rights reserved.
+
+This software is proprietary. No permission is granted
+to copy, modify, redistribute, or commercially exploit
+this code without prior written authorization.
+*/
 export function investmentFundingRows(plan,result,id){
  const accounts=plan.accounts||[],account=accounts.find(a=>a.id===id),items=[...plan.holdings,...(plan.bonds||[]),...(plan.otherInvestments||[])],selected=items.find(h=>h.id===id);
  if(selected?.accountId&&accounts.find(a=>a.id===selected.accountId)?.valuationMode==='manual')return {excluded:true,rows:[],note:'This position is included in its manual account total. View projected funding on that account; separate funding is excluded to avoid counting it twice.'};

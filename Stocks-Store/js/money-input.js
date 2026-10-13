@@ -1,3 +1,11 @@
+/*
+Copyright (c) 2026 SchnackerSoftwareSolutions, LLC.
+All rights reserved.
+
+This software is proprietary. No permission is granted
+to copy, modify, redistribute, or commercially exploit
+this code without prior written authorization.
+*/
 export function steppedMoney(value,direction,increment,min=-Infinity,max=Infinity){
  const current=value===''?0:Number(value);if(!Number.isFinite(current)||!Number.isFinite(increment)||increment<=0)return null;const next=Math.min(max,Math.max(min,Number((current+direction*increment).toPrecision(15))));return Number.isFinite(next)?next:null;
 }

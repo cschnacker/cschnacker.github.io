@@ -1,3 +1,11 @@
+/*
+Copyright (c) 2026 SchnackerSoftwareSolutions, LLC.
+All rights reserved.
+
+This software is proprietary. No permission is granted
+to copy, modify, redistribute, or commercially exploit
+this code without prior written authorization.
+*/
 export function recordSnapshot(holding,{kind='price',value,symbol=holding.symbol,source='manual',recordedAt=new Date().toISOString(),marketTime=''}={}){
  const entry={kind,value,symbol:symbol.trim().toUpperCase(),source,recordedAt,marketTime};validateHistory([entry]);holding.history??=[];
  if(holding.history.some(x=>x.kind===kind&&x.symbol===entry.symbol&&x.source===source&&x.recordedAt===recordedAt&&x.value===value))return;

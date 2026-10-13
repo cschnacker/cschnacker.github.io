@@ -1,3 +1,11 @@
+/*
+Copyright (c) 2026 SchnackerSoftwareSolutions, LLC.
+All rights reserved.
+
+This software is proprietary. No permission is granted
+to copy, modify, redistribute, or commercially exploit
+this code without prior written authorization.
+*/
 import {salaryBudgets} from './funding.js';
 export function fundingDestinations(plan,who){
  const accounts=plan.accounts||[],eligible=h=>h.owner!==(who==='primary'?'Spouse':'Primary')&&(!h.accountId||accounts.find(a=>a.id===h.accountId)?.valuationMode!=='manual')&&h.contributionMode!=='salary-dollars';

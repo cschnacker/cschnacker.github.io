@@ -1,3 +1,11 @@
+/*
+Copyright (c) 2026 SchnackerSoftwareSolutions, LLC.
+All rights reserved.
+
+This software is proprietary. No permission is granted
+to copy, modify, redistribute, or commercially exploit
+this code without prior written authorization.
+*/
 export function cashFlowRows(result){
  return result.rows.map(r=>({year:r.year,plannedSales:result.tradeResults.filter(t=>t.year===r.year&&t.side==='sell'&&t.status==='Applied').reduce((sum,t)=>sum+t.amount-t.fee,0),retirementSales:r.retirementSales||0,annuityIncome:r.annuityIncome||0,bondInterest:r.bondInterest||0,maturities:r.bondRedemptions||0})).map(r=>({...r,total:r.plannedSales+r.retirementSales+r.annuityIncome+r.bondInterest+r.maturities}));
 }
