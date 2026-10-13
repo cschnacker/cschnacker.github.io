@@ -24,3 +24,4 @@ export function bindAllocationFields(form,plan,esc,money){
  form.addEventListener('input',e=>{if(e.target.matches('[data-exact]')){const row=e.target.closest('[data-row]'),who=row.closest('[data-contributor]').dataset.contributor;models[who][Number(row.dataset.row)].percent=Number(e.target.value);}update();});
  render('primary');render('spouse');return ()=>structuredClone(models);
 }
+export function editorFundingMode(item,source){if(source==='salary-dollars')return source;const salary=['salary','both'].includes(item.contributionMode??'both')&&((item.primaryPct||0)+(item.spousePct||0)>0);return source==='fixed'?(salary?'both':'fixed'):(salary?'salary':'none');}

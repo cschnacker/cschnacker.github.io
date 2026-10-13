@@ -15,3 +15,7 @@ header{height:auto;min-height:78px;flex-wrap:wrap;gap:10px;padding-top:12px;padd
 .help-body{line-height:1.8}.help-body li{margin-bottom:10px}.help-body p{margin:12px 0}.help-topic>summary{font-size:15px;line-height:1.5}.help-topic[open]>summary{margin-bottom:12px;border-bottom:1px solid #e2e9e2}.help-body ul,.help-body ol{padding-left:24px}
 
 .budget-allocation-row{display:grid;grid-template-columns:minmax(220px,2fr) minmax(140px,1fr) minmax(100px,1fr) auto;gap:12px;align-items:end;margin:12px 0}.budget-allocation-row label[hidden]{display:none}.budget-allocation-row span{align-self:center;white-space:nowrap}.salary-allocations{margin:20px 0}.budget-allocation-row button{margin-bottom:2px}@media(max-width:850px){.budget-allocation-row{grid-template-columns:1fr 1fr}.budget-allocation-row label:first-child{grid-column:1/-1}}
+
+.funding-dialog{width:min(920px,calc(100% - 32px))}.funding-report{max-height:45vh;overflow:auto}.funding-report thead th{position:sticky;top:0;background:#f5f7f5;z-index:1}.funding-dialog button[hidden]{display:none}
+
+.outside-funding{margin:20px 0}.outside-funding-row{display:grid;grid-template-columns:2fr 1fr 1fr auto;gap:12px;align-items:end;margin:14px 0}@media(max-width:850px){.outside-funding-row{grid-template-columns:1fr 1fr}.outside-funding-row label:first-child{grid-column:1/-1}}
