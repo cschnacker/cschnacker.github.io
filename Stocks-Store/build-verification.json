@@ -12,7 +12,7 @@
     "index.html": "fcef57908715789c5e03143aa87703a6e56aa344d42dc895f8790a5e142ba8dd",
     "js/account-history.js": "fb7d8f55fb05e5a2a6f7c22d4fa94edde3b4733450448f6992b2a35b162884a8",
     "js/account-valuation.js": "b688ec5b7f93155abf43cbfaeac72ef02c888695310b14861e8e1020e7ddfe0f",
-    "js/app.js": "f8878d5924326d4209eb5097a7a32d2327139cbd8689a9ab749ac7e818c2e6fe",
+    "js/app.js": "6fb7f6c812b88a774dbbf3f4586822c462f3adbcb8bba54fe56f64308d29dd5b",
     "js/calculations.js": "2457eb26b1ca0c3bab20680378e1d59acbdbac543963ef7a7d8f3b9a937ef53e",
     "js/cash-flow.js": "96a58ef13ce2c1da2c882866060a05d5123d32b44ccae092e3ded5a475c65653",
     "js/config.js": "2c44c7995e23053d1b0bfa28ceeb94feb4b15505288d0b226ff78039f6679ae1",
@@ -25,8 +25,8 @@
     "js/storage.js": "52363371814a4be23c1459f53f8b850f103014f19d323a08942c2a236f4febef",
     "js/symbol-search.js": "901f3b756f6aa9bde0485d337d9a30b28235881280b016fe3c30a9d276c2728b",
     "manifest.json": "2485b068a80e6c364e7c0f4402d2d4ca3174a67f75ad242e00bf189944ab00ce",
-    "RELEASE-NOTES.txt": "a5e8626f668987ed1e0d1ecac3caa2ff04de1f7fb5fd0f199c0c2b3c7ebbfaf3",
-    "serviceworker.js": "3434d902108fa5e32a40a98892601f9d861d09471ff16e944b695c98b1ed9178",
+    "RELEASE-NOTES.txt": "62a497bae127858b303f6d7a655e7934d4bc9300f46e69d69fb05940578e5e7a",
+    "serviceworker.js": "9fdb7679679e7e01774717f1199e739d7b9bacfdf199525de2ab7a93cf15cdd8",
     "styles.css": "b453951ad7b466fe7a1d49a48d13f9b20f5aea8fb37f79b6c78889fc3a68b859"
   }
 }

@@ -13,3 +13,5 @@ Accounts now have Overview editing and Historical graph controls. Manual full ba
 Overview: projected cash flow by source chart and yearly table added, including planned net sales, retirement sales, annuity income, fixed-income interest, and maturities/redemptions.
 
 Share prices now use $0.01 increments, without a $1,000 toggle. Large dollar balances retain their increment controls.
+
+Fees and share prices now default to $1 increments, with an Exact dollars & cents override. Existing fractional amounts open in exact mode without rounding.

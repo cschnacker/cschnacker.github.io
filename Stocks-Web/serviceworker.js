@@ -1,4 +1,4 @@
-const CACHE='stocks-funds-planner-all-v15';
+const CACHE='stocks-funds-planner-all-v16';
 const FILES=['./','./index.html','./styles.css','./js/app.js','./js/history.js','./js/account-history.js','./js/cash-flow.js','./js/model.js','./js/account-valuation.js','./js/calculations.js','./js/storage.js','./js/config.js','./js/prices.js','./js/fixed-income.js','./js/module-validation.js','./js/module-ui.js','./data/annual.json','./data/symbols.json','./data/symbols-metadata.json','./js/symbol-search.js','./manifest.json','./icon.svg'];
 self.addEventListener('install',e=>e.waitUntil(caches.open(CACHE).then(c=>c.addAll(FILES))));
 self.addEventListener('activate',e=>e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k.startsWith('stocks-funds-planner-')&&k!==CACHE).map(k=>caches.delete(k))))));
