@@ -4,3 +4,5 @@
 fieldset{min-inline-size:0}legend{float:none;width:auto;margin-bottom:16px}.fields>*{min-width:0}
 .year-display{font-size:12px;font-weight:600;color:#4d635c;margin-bottom:17px}.year-display strong{display:block;margin-top:8px;padding:11px 10px;min-height:43px;border:1px solid #dce3dd;border-radius:7px;background:#f4f6f1;color:#243b39;font-size:15px;font-weight:600}
 textarea{display:block;width:100%;margin-top:8px;border:1px solid #bdcbc3;border-radius:7px;background:#fff;padding:11px 10px;font:12px/1.6 Consolas,monospace;resize:vertical}textarea:focus{outline:2px solid var(--teal);outline-offset:1px}input[readonly]{background:#f4f6f1;color:#68766c}h1{max-width:950px}
+
+.government-notice{border:1px solid var(--border);border-radius:10px;background:#fff;padding:12px 16px;margin:0 0 18px;color:#4d635c;font-size:13px}.government-notice p{margin:0;line-height:1.6}.government-notice .quiet{font-size:inherit;padding:2px 0;margin-left:6px;text-decoration:underline}
