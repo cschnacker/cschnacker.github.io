@@ -1,3 +1,4 @@
+import {salaryFunding} from './funding.js';
 // Annual cash-flow schedules. Bond principal stays in wealth until redemption.
 // Annuities are income contracts: surrender value is deliberately not estimated.
 export function initialBondValue(plan){return (plan.bonds||[]).filter(b=>b.existing&&b.maturityYear>=plan.settings.startYear&&(b.sellYear==null||b.sellYear>=plan.settings.startYear)&&!informational(plan,b)).reduce((sum,b)=>sum+b.principal,0);}
@@ -12,6 +13,7 @@ export function createFixedIncome(plan){
    for(const a of annuities){if(informational(plan,a)||a.existing||a.failed)continue;const premium=(year===a.fundingYear?a.upfrontPremium:0)+(year>=a.fundingYear&&year<a.incomeStartYear?a.annualPremium:0);if(!premium)continue;if(cash+1e-8<premium){warnings.push(`${year}: ${a.name} — insufficient cash for annuity premium; contract income excluded until funding is corrected.`);a.failed=true;a.active=false;continue;}cash-=premium;annuityPremiums+=premium;a.active=true;}
    return {cash,bondPurchases,annuityPremiums};
   },
+  allocate(context,details){let total=0;for(const b of bonds){if(!b.active||b.ended||informational(plan,b))continue;const amount=salaryFunding({...b,contributionMode:'salary'},context);b.principal+=amount;total+=amount;const detail=details.find(x=>x.id===b.id);if(detail){detail.balance=b.principal;detail.salaryContribution=amount;}}return total;},
   end(year,cash){let bondInterest=0,bondRedemptions=0,annuityIncome=0;const bondDetails=[],annuityDetails=[];
    for(const b of bonds){if(!b.active||b.ended||informational(plan,b))continue;const interest=b.principal*b.rate/100;bondInterest+=interest;cash+=interest;const redeem=year>=Math.min(b.maturityYear,b.sellYear??b.maturityYear)?b.principal:0;if(redeem){cash+=redeem;bondRedemptions+=redeem;b.active=false;b.ended=true;}bondDetails.push({id:b.id,interest,redemption:redeem,balance:b.active?b.principal:0});}
    for(const a of annuities){if(!a.active||a.failed||informational(plan,a))continue;const income=year>=a.incomeStartYear&&year<=a.incomeEndYear?a.monthlyIncome*12*Math.pow(1+a.incomeGrowth/100,year-a.incomeStartYear):0;cash+=income;annuityIncome+=income;annuityDetails.push({id:a.id,income});}
