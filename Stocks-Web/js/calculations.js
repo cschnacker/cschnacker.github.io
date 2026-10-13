@@ -10,7 +10,7 @@ export function project(plan,annual,includeTrades=true){
  const rows=[],warnings=[],tradeResults=[],fixedIncome=createFixedIncome(plan);
  for(let i=0;i<s.years;i++){
   const year=s.startYear+i, assumptions=annual.years.find(x=>x.year===year)||annual.defaults;
-  const opening=cash+assets.reduce((a,h)=>a+h.value,0)+fixedIncome.balance();let external=s.cashContribution,fees=0,income=0,growth=0,realized=0;
+  const opening=cash+assets.reduce((a,h)=>a+h.value,0)+fixedIncome.balance();let external=s.cashContribution,fees=0,income=0,growth=0,realized=0,salaryContributions=0;
   cash+=s.cashContribution;
   const purchases=fixedIncome.begin(year,cash,warnings);cash=purchases.cash;
   if(includeTrades)for(const t of plan.trades.filter(t=>t.year===year)){
@@ -33,13 +33,14 @@ export function project(plan,annual,includeTrades=true){
    // Missing mode preserves older version-1 plans that could combine both sources.
    const mode=h.contributionMode??'both';
    const salary=['salary','both'].includes(mode)?(h.owner==='Spouse'||(s.primarySalaryEndYear!=null&&year>s.primarySalaryEndYear)?0:primary*h.primaryPct/100)+(h.owner==='Primary'||(s.spouseSalaryEndYear!=null&&year>s.spouseSalaryEndYear)?0:spouse*h.spousePct/100):0;
+   salaryContributions+=salary;
    const fixed=['fixed','both'].includes(mode)?(o.contribution??h.contribution*Math.pow(1+h.contributionGrowth/100,i)):0;
    const requested=fixed+salary+(o.oneTime??0);
    const contribution=Math.max(-h.value,requested);
    if(requested<contribution)warnings.push(`${year}: ${h.symbol||h.name} — withdrawal limited to available value.`);
    if(contribution<0){const basisRemoved=h.value?h.cost*(-contribution)/h.value:0;h.cost=Math.max(0,h.cost-basisRemoved);}else h.cost+=contribution;
    h.value+=contribution;external+=contribution;
-   detail.push({id:h.id,value:h.value,basis:h.cost,dividend,growth:gain,contribution});
+   detail.push({id:h.id,value:h.value,basis:h.cost,dividend,growth:gain,contribution,salaryContribution:salary});
   }
   const flows=fixedIncome.end(year,cash);cash=flows.cash;income+=flows.bondInterest+flows.annuityIncome;
   // Retirement spending leaves the plan at year end, cash first, then proportional assets.
@@ -64,7 +65,7 @@ export function project(plan,annual,includeTrades=true){
   deflator*=1+assumptions.inflation/100;
   const total=cash+assets.reduce((a,h)=>a+h.value,0)+fixedIncome.balance();
   if(!Number.isFinite(total)||Math.abs(total)>1e100)throw Error('Projection is too large. Reduce rates or projection length.');
-  rows.push({year,opening,cash,total,real:total/deflator,external,growth,income,fees,realized,retirementWithdrawal,retirementRequested,retirementCash,retirementSales,retirementShortfall:Math.max(0,retirementRequested-retirementWithdrawal),bondBalance:fixedIncome.balance(),bondPurchases:purchases.bondPurchases,annuityPremiums:purchases.annuityPremiums,...flows,cash,detail});
+  rows.push({year,opening,cash,total,real:total/deflator,external,growth,income,fees,realized,salaryContributions,retirementWithdrawal,retirementRequested,retirementCash,retirementSales,retirementShortfall:Math.max(0,retirementRequested-retirementWithdrawal),bondBalance:fixedIncome.balance(),bondPurchases:purchases.bondPurchases,annuityPremiums:purchases.annuityPremiums,...flows,cash,detail});
   primary*=1+assumptions.salaryGrowth/100;spouse*=1+assumptions.salaryGrowth/100;
  }
  if(includeTrades)for(const t of plan.trades)if(t.year<s.startYear||t.year>=s.startYear+s.years){warnings.push(`${t.year}: Trade outside projection period.`);tradeResults.push({...t,status:'Outside plan'});}
