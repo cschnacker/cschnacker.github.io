@@ -17,3 +17,5 @@ Share prices now use $0.01 increments, without a $1,000 toggle. Large dollar bal
 Fees and share prices now default to $1 increments, with an Exact dollars & cents override. Existing fractional amounts open in exact mode without rounding.
 
 Salary-funded contributions added to cash-flow chart and yearly table, with salary growth, ownership and last-working-year handling. Reporting does not change portfolio or cash totals.
+
+Desktop sidebar now scrolls vertically in short windows so Modules, Plan settings and Data & backups remain reachable without zooming.
