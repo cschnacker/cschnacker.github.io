@@ -11,3 +11,5 @@ Historical graph is available for each stock/fund. Manual price/value saves and 
 Accounts now have Overview editing and Historical graph controls. Manual full balances and calculated linked totals retain history in named-plan backups.
 
 Overview: projected cash flow by source chart and yearly table added, including planned net sales, retirement sales, annuity income, fixed-income interest, and maturities/redemptions.
+
+Share prices now use $0.01 increments, without a $1,000 toggle. Large dollar balances retain their increment controls.
