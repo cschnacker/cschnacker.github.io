@@ -1,0 +1,1 @@
+{"schemaVersion":1,"description":"User-editable planning assumptions, not market forecasts. An exact year overrides defaults; unlisted years use defaults.","defaults":{"inflation":2.5,"salaryGrowth":0},"years":[]}

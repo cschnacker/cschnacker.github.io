@@ -1,0 +1,13 @@
+Investment Planner - Store edition web assets
+
+Manual-only pricing: no Twelve Data connection, API-key prompt, update-price control or quote endpoint. Enter overall dollar values or share prices manually.
+
+These are build assets for Android and Windows packaging, not an APK, AAB or MSIX installer. Platform packaging, signing, final company identity/privacy/support details and device testing are still required before store submission.
+
+Named plans: + New plan starts a blank, independent plan; the Plan selector switches saved plans. Clear saved data only resets the selected plan, retains its name, warns about permanent loss, offers export, and requires typing CLEAR. Existing data migrates automatically. Export/import one plan at a time.
+
+Historical graph is available for each stock/fund. Manual price/value saves and successful API refreshes retain timestamped observations in each named plan and portable backup; there is no backfill or daily sampling without an update. Store edition remains manual-only.
+
+Accounts now have Overview editing and Historical graph controls. Manual full balances and calculated linked totals retain history in named-plan backups.
+
+Overview: projected cash flow by source chart and yearly table added, including planned net sales, retirement sales, annuity income, fixed-income interest, and maturities/redemptions.

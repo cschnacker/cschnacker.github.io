@@ -1,0 +1,13 @@
+Investment Planner - Website edition
+
+Publish this folder on your company website using HTTPS. Serve index.html at this location and keep the folder structure intact. No Node server is required for static website hosting. Browser data is saved per website address; export/import backups when moving between addresses.
+
+Manual dollar balances and entered share prices are always available. Optional Twelve Data connection accepts an individual API key in tab memory; external display licensing must be confirmed before public production use of automatic quotes. It sends ticker symbols to the provider, not account balances or share counts.
+
+Named plans: + New plan starts a blank, independent plan; the Plan selector switches saved plans. Clear saved data only resets the selected plan, retains its name, warns about permanent loss, offers export, and requires typing CLEAR. Existing data migrates automatically. Export/import one plan at a time.
+
+Historical graph is available for each stock/fund. Manual price/value saves and successful API refreshes retain timestamped observations in each named plan and portable backup; there is no backfill or daily sampling without an update. Store edition remains manual-only.
+
+Accounts now have Overview editing and Historical graph controls. Manual full balances and calculated linked totals retain history in named-plan backups.
+
+Overview: projected cash flow by source chart and yearly table added, including planned net sales, retirement sales, annuity income, fixed-income interest, and maturities/redemptions.

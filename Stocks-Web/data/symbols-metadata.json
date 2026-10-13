@@ -1,0 +1,15 @@
+{
+  "refreshedOn": "2026-10-12",
+  "count": 13268,
+  "sources": [
+    {
+      "url": "https://www.nasdaqtrader.com/dynamic/SymDir/nasdaqlisted.txt",
+      "fileCreation": "File Creation Time: 1012202618:01|||||||"
+    },
+    {
+      "url": "https://www.nasdaqtrader.com/dynamic/SymDir/otherlisted.txt",
+      "fileCreation": "File Creation Time: 1012202618:01||||||"
+    }
+  ],
+  "coverage": "US-listed securities plus supplemental mutual funds. Names and tickers only; no prices."
+}
