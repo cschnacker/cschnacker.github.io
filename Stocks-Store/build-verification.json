@@ -2,7 +2,7 @@
   "edition": "store",
   "builtDate": "2026-10-12",
   "automaticPriceConnection": false,
-  "moduleTestsPassed": 65,
+  "moduleTestsPassed": 68,
   "namedPlanStorageChecksPassed": 11,
   "helpEditionChecksPassed": true,
   "files": {
@@ -13,13 +13,14 @@
     "index.html": "b37988910d64e9161e42f495bf166981cd07620d136b01bb8869c22d80b7f380",
     "js/account-history.js": "fb7d8f55fb05e5a2a6f7c22d4fa94edde3b4733450448f6992b2a35b162884a8",
     "js/account-valuation.js": "b688ec5b7f93155abf43cbfaeac72ef02c888695310b14861e8e1020e7ddfe0f",
-    "js/app.js": "072ce6368ea1f9cd2529f1baec4d92b73adb48a5723f838e60667230a212b9b1",
-    "js/calculations.js": "f852ea5782258337158de12bd5eafde34ee1c144101a3b8746b495b056f6ff5c",
+    "js/app.js": "6da312f3d048b6830b32785332798f08505d95c78af7d21db8d88576ff155da7",
+    "js/calculations.js": "1b1982f18a5ff52154f4a06577ac7ef04b8e27e717f8463b396a7d4441777bec",
     "js/cash-flow.js": "397c035acf7e48c6241145ac6a1097a38d91c6105781b1c4c2bec2913ab15076",
     "js/config.js": "2c44c7995e23053d1b0bfa28ceeb94feb4b15505288d0b226ff78039f6679ae1",
     "js/fixed-income.js": "cfc1040dd64195c5aebe19436007b9beebcf9d3dbdb56ca3c5878b1cdbd869f5",
-    "js/help.js": "3b45481c57a36f81a3f7747cbc2d7362950bf32ec67068c793f41a7063498f50",
+    "js/help.js": "603778e1af4545eb11381389ac3e2843fcc9d5508e6851e0c646549689e6d5e6",
     "js/history.js": "8fb23ef7b8206adfc9d760c6e1af70835e1f2af8cf2ded83446355e98f684de7",
+    "js/holding-tools.js": "fb4cc51b6ac76e7292d49a27786e23de1dd8a3f93855930526e74ec5e71764b6",
     "js/model.js": "1484b403be4adaa330ea1b496af31ad6ec1c9ca7771eed31e7bbf0f0df6a8520",
     "js/module-ui.js": "338f607b55245f95639bbbf2809533d2fd16595e3d2d42b31272cc6a189a50af",
     "js/module-validation.js": "01381f7cb0ccbc1ff3a037cfcd6f478c973bdca94471e3c31c07780925e851e5",
@@ -27,8 +28,8 @@
     "js/storage.js": "52363371814a4be23c1459f53f8b850f103014f19d323a08942c2a236f4febef",
     "js/symbol-search.js": "901f3b756f6aa9bde0485d337d9a30b28235881280b016fe3c30a9d276c2728b",
     "manifest.json": "2485b068a80e6c364e7c0f4402d2d4ca3174a67f75ad242e00bf189944ab00ce",
-    "RELEASE-NOTES.txt": "6ed864b6a4dfe5caa209e50dec0ab39176b04bd32d43e9f7747a62320e3cf87b",
-    "serviceworker.js": "d5307df9e32c3b80691ab543e51aada39ce2508c74a2f2ee39f6c30427a2de41",
+    "RELEASE-NOTES.txt": "fd4cea42b0ddf76bc2597631cf10fa312d3cde83f2779d9458e051c2d646b2ca",
+    "serviceworker.js": "0631c33217adb1b50d51158c0d4e26441c1fc60553cd773b61e946161daf8a35",
     "styles.css": "6cebaa59cdb020367a2803dfb6ca3099373a886005d46c88ab8225b3852ba4ad"
   }
 }

@@ -21,3 +21,5 @@ Salary-funded contributions added to cash-flow chart and yearly table, with sala
 Desktop sidebar now scrolls vertically in short windows so Modules, Plan settings and Data & backups remain reachable without zooming.
 
 Help & instructions added: first-plan walkthrough, 12 expandable guides, worked examples, troubleshooting and Help links on main screens. Store instructions use manual pricing.
+
+Add to another account reuses stock details while resetting balances, funding, basis and history. Trade choices and history titles identify the account/location. Manual-account trade warning explains both account-total and selected-holdings choices.
