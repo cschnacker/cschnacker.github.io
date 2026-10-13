@@ -11,3 +11,5 @@ header{height:auto;min-height:78px;flex-wrap:wrap;gap:10px;padding-top:12px;padd
 .overview-accounts table{white-space:normal}.overview-accounts td:last-child .text-button{display:block;padding:6px 0;text-align:left;white-space:normal}.overview-accounts td{vertical-align:top}@media(max-width:700px){.overview-accounts td,.overview-accounts th{padding:12px 6px}.overview-accounts td:last-child{min-width:105px}}
 
 @media(min-width:701px){aside{overflow-y:auto;overscroll-behavior:contain}aside>.brand,aside>.nav-caption,aside>nav,aside>.sidebar-bottom{flex-shrink:0}}
+
+.help-body{line-height:1.8}.help-body li{margin-bottom:10px}.help-body p{margin:12px 0}.help-topic>summary{font-size:15px;line-height:1.5}.help-topic[open]>summary{margin-bottom:12px;border-bottom:1px solid #e2e9e2}.help-body ul,.help-body ol{padding-left:24px}

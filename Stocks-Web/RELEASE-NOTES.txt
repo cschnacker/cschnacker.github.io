@@ -19,3 +19,5 @@ Fees and share prices now default to $1 increments, with an Exact dollars & cent
 Salary-funded contributions added to cash-flow chart and yearly table, with salary growth, ownership and last-working-year handling. Reporting does not change portfolio or cash totals.
 
 Desktop sidebar now scrolls vertically in short windows so Modules, Plan settings and Data & backups remain reachable without zooming.
+
+Help & instructions added: first-plan walkthrough, 12 expandable guides, worked examples, troubleshooting and Help links on main screens. Store instructions use manual pricing.

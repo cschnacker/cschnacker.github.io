@@ -1,3 +1,4 @@
+import {helpView} from './help.js';
 import {cashFlowView} from './cash-flow.js';
 import {recordDerivedAccountHistory} from './account-history.js';
 import {recordSnapshot,historyView} from './history.js';
@@ -16,13 +17,13 @@ const exact=v=>new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',mi
 const pct=v=>`${v.toFixed(1)}%`, btn=(label,action,id='',cls='')=>`<button class="${cls}" data-action="${action}" data-id="${esc(id)}">${label}</button>`;
 let plan=emptyPlan(), annual, storageReady=false, saving=false, editorSave, symbols, undoPlan, channel;
 let quoteKey='',refreshing=false,quoteReport='',planSummaries=[];
-const titleMap={accounts:'Accounts',overview:'Overview',holdings:'Stocks & funds',trades:'Buy / sell plan',funding:'Funding',retirement:'Retirement',annual:'Yearly assumptions',settings:'Plan settings',data:'Data & backups',modules:'Modules',bonds:'Bonds, CDs & treasuries',annuities:'Annuities',other:'Private investments'};
+const titleMap={help:'Help & instructions',accounts:'Accounts',overview:'Overview',holdings:'Stocks & funds',trades:'Buy / sell plan',funding:'Funding',retirement:'Retirement',annual:'Yearly assumptions',settings:'Plan settings',data:'Data & backups',modules:'Modules',bonds:'Bonds, CDs & treasuries',annuities:'Annuities',other:'Private investments'};
 const currentView=()=>Object.hasOwn(titleMap,location.hash.slice(1))?location.hash.slice(1):'overview';
 function toast(message){$('#toast').textContent=message;$('#toast').style.display='block';clearTimeout(toast.timer);toast.timer=setTimeout(()=>$('#toast').style.display='none',4500);}
 function status(message,error=false){$('#save-state').textContent=message;$('#save-state').style.color=error?'#a13e39':'';}
 async function commit(next){if(saving)throw Error('A save is in progress. Please retry.');if(!storageReady)throw Error('Database unavailable. Export your data before retrying.');recordDerivedAccountHistory(next,plan,(p,a)=>accountValue(a,p));validatePlan(next);saving=true;status('Saving…');try{await database.write(next);plan=next;planSummaries=planSummaries.map(x=>x.id===database.activeId()?{...x,name:next.settings.name}:x);channel?.postMessage('changed');status('✓ Saved on this browser');}catch(e){status('Save failed — changes not saved',true);throw e;}finally{saving=false;}}
 const effectiveAnnual=()=>plan.annualData||annual;
-const heading=(title,subtitle,actions='')=>`<div class="page-heading"><div><div class="eyebrow">${esc(plan.settings.name)}</div><h1>${title}</h1><p>${subtitle}</p></div><div class="actions">${actions}</div></div>`;
+const heading=(title,subtitle,actions='')=>`<div class="page-heading"><div><div class="eyebrow">${esc(plan.settings.name)}</div><h1>${title}</h1><p>${subtitle}</p></div><div class="actions">${actions}${currentView()!=='help'?'<a class="button text-button" href="#help">Help</a>':''}</div></div>`;
 const empty=(title,text,action='')=>`<div class="empty"><div class="empty-mark">↗</div><strong>${title}</strong><p>${text}</p>${action}</div>`;
 const dollarFields=new Set(['cash','cashContribution','primarySalary','spouseSalary','price','balance','basis','contribution','amount','fee','oneTime','cashAmount','upfrontPremium','annualPremium','monthlyIncome','principal','value']);
 function precisionLabel(increment,exactMode){return exactMode?'Use $'+increment.toLocaleString('en-US')+' steps':increment===1?'Exact dollars & cents':'Exact dollars';}
@@ -88,7 +89,7 @@ case'clear':openEditor('Clear current plan?',`<p class="notice error"><b>This pe
 
 }}
 document.addEventListener('click',e=>{const b=e.target.closest('[data-action]');if(b){e.preventDefault();action(b.dataset.action,b.dataset.id).catch(err=>toast(err.message));}});
-function render(){attachPlanSelector();const view=currentView();$('#section-title').textContent=titleMap[view];document.querySelectorAll('nav a').forEach(a=>{a.classList.toggle('active',a.hash==='#'+view);if(a.hash==='#'+view)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');});try{$('#content').innerHTML=({overview,accounts:accountsView,holdings,trades,funding,retirement,annual:annualView,settings,data:dataView,modules:moduleUI.modules,bonds:moduleUI.bonds,annuities:moduleUI.annuities,other:moduleUI.other}[view])();}catch(e){$('#content').innerHTML=`<div class="notice error">${esc(e.message)}</div><a href="#settings">Edit settings</a> · <a href="#holdings">Edit holdings</a> · <a href="#data">Export database</a>`;return;}
+function render(){attachPlanSelector();const view=currentView();$('#section-title').textContent=titleMap[view];document.querySelectorAll('nav a').forEach(a=>{a.classList.toggle('active',a.hash==='#'+view);if(a.hash==='#'+view)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');});try{$('#content').innerHTML=({help:()=>helpView(heading,{allInvestments:true,automaticPrices:config.quoteMode!=='disabled'}),overview,accounts:accountsView,holdings,trades,funding,retirement,annual:annualView,settings,data:dataView,modules:moduleUI.modules,bonds:moduleUI.bonds,annuities:moduleUI.annuities,other:moduleUI.other}[view])();}catch(e){$('#content').innerHTML=`<div class="notice error">${esc(e.message)}</div><a href="#settings">Edit settings</a> · <a href="#holdings">Edit holdings</a> · <a href="#data">Export database</a>`;return;}
 moduleUI.attach();
 attachQuoteUI(view);
 if(config.quoteMode!=='disabled'&&quoteReport)$('#content').insertAdjacentHTML('afterbegin',quoteReport);
