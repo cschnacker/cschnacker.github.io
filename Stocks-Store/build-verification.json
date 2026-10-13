@@ -2,7 +2,7 @@
   "edition": "store",
   "builtDate": "2026-10-13",
   "automaticPriceConnection": false,
-  "moduleTestsPassed": 98,
+  "moduleTestsPassed": 103,
   "namedPlanStorageChecksPassed": 11,
   "helpEditionChecksPassed": true,
   "endingValueBrowserCheckPassed": true,
@@ -14,10 +14,11 @@
     "index.html": "b37988910d64e9161e42f495bf166981cd07620d136b01bb8869c22d80b7f380",
     "js/account-history.js": "fb7d8f55fb05e5a2a6f7c22d4fa94edde3b4733450448f6992b2a35b162884a8",
     "js/account-valuation.js": "b688ec5b7f93155abf43cbfaeac72ef02c888695310b14861e8e1020e7ddfe0f",
-    "js/app.js": "dd201cf1ecb42c432f4d1cf4c7f3adb5a9b0a20c63555fe919a3ab5d32cd1982",
+    "js/app.js": "5ea60c28e86808fe44d15898319b3da5aa5e5c8f96b0417b5be36949467cb0b6",
     "js/calculations.js": "365cd187b59e92a2b842112506888bd1737890eb89200dd03edb7910eb08b5d6",
     "js/cash-flow.js": "54c80613d88b655db79dd24d7cd47cfdc7af6508fc2986d3b67c6f06ea41069f",
     "js/config.js": "2c44c7995e23053d1b0bfa28ceeb94feb4b15505288d0b226ff78039f6679ae1",
+    "js/editor-save.js": "331ffb58fd3abfeec1534a5bc90763dffb09d659adf3913fa63e87c248e9fa2d",
     "js/fixed-income.js": "8362ca38f2f88e87280bdf362736f0d0177eb2e9f9db16e2be2989965491e1e6",
     "js/funding-allocations.js": "04e25104755461dcbe9a3743445c21091f2234681975105a2a5c82364ca58c0a",
     "js/funding.js": "5e1e1c077e11007ed7b82993873449f3a3f58b1f80935d233d91fc081077eda9",
@@ -33,7 +34,8 @@
     "js/storage.js": "52363371814a4be23c1459f53f8b850f103014f19d323a08942c2a236f4febef",
     "js/symbol-search.js": "901f3b756f6aa9bde0485d337d9a30b28235881280b016fe3c30a9d276c2728b",
     "manifest.json": "2485b068a80e6c364e7c0f4402d2d4ca3174a67f75ad242e00bf189944ab00ce",
-    "serviceworker.js": "1d0e5fcee67b0974c7f976c0f84c7d45f48cf94763e7098f6c146aa69f6b50e7",
+    "serviceworker.js": "711a2be0a9839021ff021b6fbe095d353441824c13a55cc6f7c95346223ca68e",
     "styles.css": "61751287af257122bd53d8c5aff263608d333408991515a02b22ca7bd5bf9e68"
-  }
+  },
+  "editorSaveBrowserChecksPassed": true
 }
