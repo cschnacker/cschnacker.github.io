@@ -19,3 +19,5 @@ header{height:auto;min-height:78px;flex-wrap:wrap;gap:10px;padding-top:12px;padd
 .funding-dialog{width:min(920px,calc(100% - 32px))}.funding-report{max-height:45vh;overflow:auto}.funding-report thead th{position:sticky;top:0;background:#f5f7f5;z-index:1}.funding-dialog button[hidden]{display:none}
 
 .outside-funding{margin:20px 0}.outside-funding-row{display:grid;grid-template-columns:2fr 1fr 1fr auto;gap:12px;align-items:end;margin:14px 0}@media(max-width:850px){.outside-funding-row{grid-template-columns:1fr 1fr}.outside-funding-row label:first-child{grid-column:1/-1}}
+
+.money-control{display:flex;gap:6px;align-items:stretch;min-width:0}.money-control input{flex:1;min-width:0;appearance:textfield;-moz-appearance:textfield}.money-control input::-webkit-inner-spin-button,.money-control input::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}.money-steps{display:flex;gap:3px}.money-steps button{padding:0;width:34px;min-height:40px;font-size:18px;font-weight:600}.money-control input{margin:0}
