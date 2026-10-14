@@ -1,0 +1,203 @@
+{
+  "schemaVersion": 1,
+  "year": 2026,
+  "releaseId": "retirement-2026.4",
+  "standardDeduction": {
+    "Single": 16100,
+    "Joint": 32200,
+    "Separate": 16100,
+    "HoH": 24150
+  },
+  "limits": {
+    "workplace": 24500,
+    "catchUp": 8000,
+    "superCatchUp": 11250,
+    "ira": 7500,
+    "iraCatchUp": 1100
+  },
+  "ssThresholds": {
+    "Single": [
+      25000,
+      34000
+    ],
+    "Joint": [
+      32000,
+      44000
+    ],
+    "Separate": [
+      0,
+      0
+    ],
+    "HoH": [
+      25000,
+      34000
+    ]
+  },
+  "rmdFactors": {
+    "72": 27.4,
+    "73": 26.5,
+    "74": 25.5,
+    "75": 24.6,
+    "76": 23.7,
+    "77": 22.9,
+    "78": 22,
+    "79": 21.1,
+    "80": 20.2,
+    "81": 19.4,
+    "82": 18.5,
+    "83": 17.7,
+    "84": 16.8,
+    "85": 16,
+    "86": 15.2,
+    "87": 14.4,
+    "88": 13.7,
+    "89": 12.9,
+    "90": 12.2,
+    "91": 11.5,
+    "92": 10.8,
+    "93": 10.1,
+    "94": 9.5,
+    "95": 8.9,
+    "96": 8.4,
+    "97": 7.8,
+    "98": 7.3,
+    "99": 6.8,
+    "100": 6.4,
+    "101": 6,
+    "102": 5.6,
+    "103": 5.2,
+    "104": 4.9,
+    "105": 4.6,
+    "106": 4.3,
+    "107": 4.1,
+    "108": 3.9,
+    "109": 3.7,
+    "110": 3.5,
+    "111": 3.4,
+    "112": 3.3,
+    "113": 3.1,
+    "114": 3,
+    "115": 2.9,
+    "116": 2.8,
+    "117": 2.7,
+    "118": 2.5,
+    "119": 2.3,
+    "120": 2
+  },
+  "sources": [
+    "https://www.irs.gov/newsroom/401k-limit-increases-to-24500-for-2026-ira-limit-increases-to-7500",
+    "https://www.irs.gov/newsroom/irs-releases-tax-inflation-adjustments-for-tax-year-2026-including-amendments-from-the-one-big-beautiful-bill",
+    "https://www.irs.gov/publications/p590b",
+    "https://www.irs.gov/publications/p915",
+    "https://www.irs.gov/pub/irs-drop/rp-25-32.pdf",
+    "https://www.irs.gov/pub/irs-pdf/f1040s1a.pdf",
+    "https://www.irs.gov/newsroom/check-your-eligibility-for-the-new-enhanced-deduction-for-seniors",
+    "https://www.ssa.gov/oact/cola/cbb.html",
+    "https://www.irs.gov/taxtopics/tc560",
+    "https://www.irs.gov/publications/p15",
+    "https://www.irs.gov/irb/2025-45_IRB",
+    "https://www.irs.gov/instructions/i1040s8",
+    "https://www.irs.gov/publications/p596"
+  ],
+  "ageAdditionalDeduction": {
+    "minimumAge": 65,
+    "inflate": true,
+    "amounts": {
+      "Single": 2050,
+      "Joint": 1650,
+      "Separate": 1650,
+      "HoH": 2050
+    }
+  },
+  "enhancedSeniorDeduction": {
+    "minimumAge": 65,
+    "startYear": 2025,
+    "endYear": 2028,
+    "amountPerPerson": 6000,
+    "phaseoutRate": 0.06,
+    "thresholds": {
+      "Single": 75000,
+      "Joint": 150000,
+      "HoH": 75000
+    },
+    "inflate": false
+  },
+  "payroll": {
+    "socialSecurityRate": 0.062,
+    "socialSecurityWageBase": 184500,
+    "inflateWageBase": true,
+    "medicareRate": 0.0145,
+    "additionalMedicareRate": 0.009,
+    "additionalMedicareThresholds": {
+      "Single": 200000,
+      "Joint": 250000,
+      "Separate": 125000,
+      "HoH": 200000
+    }
+  },
+  "familyCredits": {
+    "inflate": true,
+    "child": {
+      "maximumAge": 16,
+      "amount": 2200,
+      "refundableAmount": 1700,
+      "earnedIncomeFloor": 2500,
+      "refundRate": 0.15,
+      "phaseoutStep": 1000,
+      "phaseoutReduction": 50,
+      "thresholds": {
+        "Single": 200000,
+        "Joint": 400000,
+        "Separate": 200000,
+        "HoH": 200000
+      },
+      "alternateRefundMinimumChildren": 3
+    },
+    "earned": {
+      "maximumChildAge": 18,
+      "maximumStudentAge": 23,
+      "minimumAdultAge": 25,
+      "maximumAdultAge": 64,
+      "investmentIncomeLimit": 12200,
+      "tiers": [
+        {
+          "maximum": 664,
+          "phaseInRate": 0.0765,
+          "phaseOutRate": 0.0765,
+          "start": 10860,
+          "jointStart": 18140,
+          "end": 19540,
+          "jointEnd": 26820
+        },
+        {
+          "maximum": 4427,
+          "phaseInRate": 0.34,
+          "phaseOutRate": 0.1598,
+          "start": 23890,
+          "jointStart": 31160,
+          "end": 51593,
+          "jointEnd": 58863
+        },
+        {
+          "maximum": 7316,
+          "phaseInRate": 0.4,
+          "phaseOutRate": 0.2106,
+          "start": 23890,
+          "jointStart": 31160,
+          "end": 58629,
+          "jointEnd": 65899
+        },
+        {
+          "maximum": 8231,
+          "phaseInRate": 0.45,
+          "phaseOutRate": 0.2106,
+          "start": 23890,
+          "jointStart": 31160,
+          "end": 62974,
+          "jointEnd": 70244
+        }
+      ]
+    },
+    "notes": "Forecast inflation indexes CTC maximum/refundable amounts and EITC dollar parameters from this file year. CTC phaseout thresholds, phaseout steps and earned-income floor remain fixed. EITC uses a continuous formula estimate, not IRS $50 tax-table bands. Federal credits only."
+  }
+}

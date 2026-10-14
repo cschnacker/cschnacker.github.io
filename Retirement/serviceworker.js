@@ -1,43 +1,5 @@
-const cacheName = 'v2';
-
-// Call Install Event
-self.addEventListener('install', e => {
-  console.log('Service Worker: Installed');
-});
-
-// Call Activate Event
-self.addEventListener('activate', e => {
-  console.log('Service Worker: Activated');
-  // Remove unwanted caches
-  e.waitUntil(
-    caches.keys().then(cacheNames => {
-      return Promise.all(
-        cacheNames.map(cache => {
-          if (cache !== cacheName) {
-            console.log('Service Worker: Clearing Old Cache');
-            return caches.delete(cache);
-          }
-        })
-      );
-    })
-  );
-});
-
-// Call Fetch Event
-self.addEventListener('fetch', e => {
-  console.log('Service Worker: Fetching');
-  e.respondWith(
-    fetch(e.request)
-      .then(res => {
-        // Make copy/clone of response
-        const resClone = res.clone();
-        // Open cahce
-        caches.open(cacheName).then(cache => {
-          // Add response to cache
-          cache.put(e.request, resClone);
-        });
-        return res;
-      })
-      .catch(err => caches.match(e.request).then(res => res))
-  );
-});
+const CACHE='sss-retirement-v39-png-icons';
+const ASSETS=['./','./index.html','./styles.css','./icon.svg','./icon-192x192.png','./icon-512x512.png','./manifest.json','./js/app.js','./js/numeric-input.js','./js/family-credits.js','./js/balance-history.js','./js/help.js','./js/projection-charts.js','./js/projection-tables.js','./js/cash-flow.js','./js/model.js','./js/fixed-income.js','./js/fixed-ui.js','./js/calculations.js','./js/senior-deductions.js','./js/payroll.js','./js/storage.js','./js/annual.js','./js/transfer.js','./js/tax-engine.js','./js/symbol-search.js','./data/config.json','./data/tax-data.js','./data/retirement-2026.json','./data/symbols.json'];
+self.addEventListener('install',event=>{event.waitUntil(caches.open(CACHE).then(c=>c.addAll(ASSETS)));self.skipWaiting();});
+self.addEventListener('activate',event=>{event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k.startsWith('sss-retirement-')&&k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim()));});
+self.addEventListener('fetch',event=>{const u=new URL(event.request.url);if(event.request.method!=='GET'||u.origin!==self.location.origin)return;const scope=new URL(self.registration.scope).pathname;if(!u.pathname.startsWith(scope)||u.pathname.includes('/legacy/'))return;event.respondWith(fetch(event.request).then(response=>{if(response.ok){const copy=response.clone();event.waitUntil(caches.open(CACHE).then(c=>c.put(event.request,copy)));}return response;}).catch(()=>caches.match(event.request).then(r=>r||Response.error())));});

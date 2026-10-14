@@ -1,22 +1,29 @@
 {
-    "name": "Retirement_Planner",
-    "scope": "https://cschnacker.github.io/Retirement/",
-	"display": "standalone",
-	"start_url": "https://cschnacker.github.io/Retirement/index.html",
-    "id": "https://cschnacker.github.io/Retirement/",
-	"short_name": "Retirement_Planner",
-	"theme_color": "#A9C9DE",
-	"description": "Retirement Planner",
-	"orientation": "portrait",
-	"background_color": "#E7E8E8",
-	"related_applications": [],
-	"prefer_related_applications": false,
-	"icons": [
-        {
-        "src": "https://cschnacker.github.io/Retirement/Retire.png",
-        "type": "image/png",
-        "sizes": "550x550",
-        "purpose": "any"
-        }        
-    ],
-	"generated": "true"}
+  "name": "SchnackerSoftwareSolutions Retirement Planner",
+  "short_name": "Retirement",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f5f7f5",
+  "theme_color": "#163c38",
+  "icons": [
+    {
+      "src": "icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

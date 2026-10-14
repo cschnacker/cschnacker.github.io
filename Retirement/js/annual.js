@@ -1,0 +1,21 @@
+import {num} from './model.js';
+export function validateRetirement(r){if(!r||r.schemaVersion!==1||!Number.isInteger(r.year)||r.year<2020||r.year>2300)throw Error('Invalid retirement annual file.');for(const f of ['Single','Joint','Separate','HoH']){num(r.standardDeduction?.[f],'standard deduction');const t=r.ssThresholds?.[f];if(!Array.isArray(t)||t.length!==2)throw Error('Invalid Social Security thresholds.');num(t[0],'threshold');num(t[1],'threshold',t[0]);}for(const k of ['workplace','catchUp','superCatchUp','ira','iraCatchUp'])num(r.limits?.[k],k);for(let age=72;age<=120;age++)num(r.rmdFactors?.[age],'RMD divisor',0.1,100);if(r.ageAdditionalDeduction){const a=r.ageAdditionalDeduction;num(a.minimumAge,'additional deduction age',18,120);if(typeof a.inflate!=='boolean')throw Error('Invalid age deduction indexing.');for(const f of ['Single','Joint','Separate','HoH'])num(a.amounts?.[f],'age additional deduction');}
+if(r.enhancedSeniorDeduction){const a=r.enhancedSeniorDeduction;num(a.minimumAge,'senior deduction age',18,120);num(a.startYear,'senior start year',2020,2300);num(a.endYear,'senior end year',a.startYear,2300);if(!Number.isInteger(a.startYear)||!Number.isInteger(a.endYear))throw Error('Senior years must be whole.');num(a.amountPerPerson,'senior amount');num(a.phaseoutRate,'senior phaseout rate',0,1);if(typeof a.inflate!=='boolean')throw Error('Invalid senior indexing.');for(const f of ['Single','Joint','HoH'])num(a.thresholds?.[f],'senior threshold');}
+if(r.payroll){const p=r.payroll;for(const k of ['socialSecurityRate','medicareRate','additionalMedicareRate'])num(p[k],k,0,1);num(p.socialSecurityWageBase,'Social Security wage base');if(typeof p.inflateWageBase!=='boolean')throw Error('Invalid wage base indexing.');for(const f of ['Single','Joint','Separate','HoH'])num(p.additionalMedicareThresholds?.[f],'Additional Medicare threshold');}
+if(r.familyCredits){
+ const f=r.familyCredits;if(typeof f.inflate!=='boolean'||!f.child||!f.earned)throw Error('Invalid family credit rules.');
+ const c=f.child,e=f.earned;
+ for(const k of ['amount','refundableAmount','earnedIncomeFloor','phaseoutReduction'])num(c[k],'child credit '+k);
+ for(const k of ['maximumAge','alternateRefundMinimumChildren']){num(c[k],k,0,120);if(!Number.isInteger(c[k]))throw Error('Invalid child credit age or count.');}
+ num(c.phaseoutStep,'child phaseout step',1);num(c.refundRate,'refund rate',0,1);
+ if(c.refundableAmount>c.amount)throw Error('Refundable child amount exceeds total credit.');
+ for(const filing of ['Single','Joint','Separate','HoH'])num(c.thresholds?.[filing],'child credit threshold');
+ for(const k of ['maximumChildAge','maximumStudentAge','minimumAdultAge','maximumAdultAge']){num(e[k],k,0,120);if(!Number.isInteger(e[k]))throw Error('Invalid EITC age.');}
+ if(e.maximumChildAge>e.maximumStudentAge||e.minimumAdultAge>e.maximumAdultAge)throw Error('Invalid EITC age ranges.');
+ num(e.investmentIncomeLimit,'EITC investment income limit');
+ if(!Array.isArray(e.tiers)||e.tiers.length!==4)throw Error('Four EITC tiers required.');
+ for(const t of e.tiers){for(const k of ['maximum','start','jointStart','end','jointEnd'])num(t[k],'EITC '+k);for(const k of ['phaseInRate','phaseOutRate'])num(t[k],'EITC rate',0,1);if(t.end<t.start||t.jointEnd<t.jointStart)throw Error('Invalid EITC phaseout range.');}
+ }
+ return structuredClone(r);}
+export function parseTax(text){const clean=text.replace(/^\s*\/\*[\s\S]*?\*\/\s*/, '').replace(/^\s*window\.TaxData\s*=\s*/, '').replace(/;\s*$/, '');return globalThis.TaxEngine.validate(JSON.parse(clean));}
+export async function loadAnnual(){const config=await (await fetch('./data/config.json',{cache:'no-store'})).json();let tax,source;try{const r=await fetch(config.sharedTaxUrl,{cache:'no-store'});if(!r.ok)throw Error();tax=parseTax(await r.text());source='Shared Effective Tax Fed/State file';}catch{const r=await fetch('./data/tax-data.js',{cache:'no-store'});if(!r.ok)throw Error('Tax data unavailable.');tax=parseTax(await r.text());source='Bundled copy of Effective Tax Fed/State file';}const r=await fetch(config.retirementUrl,{cache:'no-store'});if(!r.ok)throw Error('Annual retirement data unavailable.');return {tax,retirement:validateRetirement(await r.json()),source};}
