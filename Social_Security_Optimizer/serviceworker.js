@@ -1,5 +1,5 @@
 // Scope-specific cache; never clear other applications' caches on the same IIS origin.
-const PREFIX='ss-optimizer-modern-';const CACHE=PREFIX+'v2';
+const PREFIX='ss-optimizer-modern-';const CACHE=PREFIX+'v3';
 const CORE=['./','index.html','ui/styles.css','ui/app.mjs','user-data/schema.mjs','user-data/storage.mjs','user-data/earnings.mjs','calculations/benefits.mjs','data/validate.mjs','data/current.json','manifest.json','icon.png'];
 self.addEventListener('install',event=>event.waitUntil((async()=>{const cache=await caches.open(CACHE);await cache.addAll(CORE);const release=await fetch('data/current.json',{cache:'no-store'}).then(r=>r.json());if(/^ssa-\d{4}\.json$/.test(release.file))await cache.add('data/'+release.file);await self.skipWaiting();})()));
 self.addEventListener('activate',event=>event.waitUntil((async()=>{for(const key of await caches.keys())if(key.startsWith(PREFIX)&&key!==CACHE)await caches.delete(key);await self.clients.claim();})()));

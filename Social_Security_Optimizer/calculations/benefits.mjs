@@ -40,11 +40,16 @@ export function scenario(plan,data,claims,estimates,cache){
  for(let t=0;t<years;t++){
   const year=plan.startYear+t,ages=people.map(s=>s.age+t),alive=people.map((s,i)=>ages[i]<=s.lifeAge),pias=bases.map((b,i)=>piaInYear(cache?cache[i][year]:['salary','history'].includes(people[i].method)?estimatePia(people[i],plan,data,Math.min(year-1,births[i]+people[i].lifeAge)):b,year,plan,data,people[i]));
   const starts=people.map((s,i)=>claimSerial(s,claims[i],plan));
-  let benefits=people.map((s,i)=>{const monthly=s.method==='ssa'?(claims[i]===70?(s.monthly70===''?s.monthly67*factors[i]/retirementFactor(67,births[i]):s.monthly70):s.monthly67)*(1+plan.futureCola/100)**(year-s.dollarYear):pias[i]*factors[i];return alive[i]?monthly*12*fractionFrom(starts[i],year):0;}),wages=people.map((s,i)=>alive[i]?ownIncome(s,ages[i]):0),pensions=people.map((s,i)=>alive[i]?pension(s,ages[i]):0);
+  const ownMonthly=people.map((s,i)=>s.method==='ssa'?(claims[i]===70?(s.monthly70===''?s.monthly67*factors[i]/retirementFactor(67,births[i]):s.monthly70):s.monthly67)*(1+plan.futureCola/100)**(year-s.dollarYear):pias[i]*factors[i]);
+  let benefits=ownMonthly.map((monthly,i)=>alive[i]?monthly*12*fractionFrom(starts[i],year):0),wages=people.map((s,i)=>alive[i]?ownIncome(s,ages[i]):0),pensions=people.map((s,i)=>alive[i]?pension(s,ages[i]):0);
   if(people.length===2)for(let i=0;i<2;i++){const j=1-i;
    if(alive[i]&&alive[j]){
     const start=Math.max(starts[i],starts[j]);const firstSpousalAge=Math.max(claims[i],people[i].age+(claims[j]-people[j].age));
-    benefits[i]+=Math.max(0,pias[j]/2-pias[i])*spousalFactor(firstSpousalAge,births[i])*12*fractionFrom(start,year);
+    // SSA POMS RS 00615.694: own delayed credits reduce the payable spouse excess.
+    // Calculate this monthly before prorating the months when both claims are active.
+    const excess=Math.max(0,pias[j]/2-pias[i])*spousalFactor(firstSpousalAge,births[i]);
+    const delayedIncrease=ownMonthly[i]-ownMonthly[i]/Math.max(1,factors[i]);
+    benefits[i]+=Math.max(0,excess-delayedIncrease)*12*fractionFrom(start,year);
    }
    // Survivor simplification: at survivor FRA, larger of own benefit or deceased's amount.
    // Early survivor filing, switching and the widow(er) limit need an individual SSA review.
