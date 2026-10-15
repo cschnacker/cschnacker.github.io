@@ -1,5 +1,5 @@
 // Update VERSION when deploying changed app files. Storage is separate from this cache.
-const VERSION = '14';
+const VERSION = '15';
 const PREFIX = `loan-planner:${self.registration.scope}:`;
 const CACHE = PREFIX + VERSION;
 const FILES = ['./','./index.html','./styles.css','./js/app.js','./js/steppers.js','./js/plan-files.js','./js/calculations.js','./js/storage.js','./data/defaults.js','./manifest.json','./loan550x550.png'];
