@@ -100,3 +100,11 @@ launch from /Budget/. A live PWABuilder analysis and store packaging must
 follow deployment; they have not been claimed complete before pushing.
 Sources: https://github.com/pwa-builder/PWABuilder/blob/main/docs/builder/android.md
 https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps/Guides/Making_PWAs_installable
+
+WINDOWS STORE IDENTITY
+Use Display name: Yearly Budget Planner
+Package identity: 39053SchnackerSoftwareSol.YearlyBudgetPlanner
+Publisher display name: SchnackerSoftwareSolutions, LLC
+Keep the publisher identity from Partner Center. Budget Planner is the short
+in-app name; it is not the existing reserved Store display name. Rebuild
+packages after changing display names; do not edit a signed MSIX directly.
