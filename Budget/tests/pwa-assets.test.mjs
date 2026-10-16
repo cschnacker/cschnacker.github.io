@@ -28,4 +28,4 @@ test('PWA launch and identity stay within the Budget deployment scope',()=>{
   assert.ok(fs.readFileSync(new URL('index.html',root),'utf8').includes('href="manifest.webmanifest"'));
 });
 
-test('manifest retains the existing Microsoft Store display name',()=>{assert.equal(manifest.name,'Yearly Budget Planner');});
+test('manifest retains the existing Microsoft Store display name',()=>{assert.equal(manifest.name,'Yearly Budget Planner');assert.equal(manifest.short_name,'Yearly Budget Planner');});

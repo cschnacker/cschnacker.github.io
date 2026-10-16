@@ -105,6 +105,8 @@ WINDOWS STORE IDENTITY
 Use Display name: Yearly Budget Planner
 Package identity: 39053SchnackerSoftwareSol.YearlyBudgetPlanner
 Publisher display name: SchnackerSoftwareSolutions, LLC
-Keep the publisher identity from Partner Center. Budget Planner is the short
-in-app name; it is not the existing reserved Store display name. Rebuild
+Keep the publisher identity from Partner Center. Both manifest name and short_name use Yearly Budget Planner. In the
+PWABuilder Windows options, explicitly confirm Display name also equals
+Yearly Budget Planner before generating. The package display name is
+separate from the package identity and must use the reserved Store name. Rebuild
 packages after changing display names; do not edit a signed MSIX directly.
