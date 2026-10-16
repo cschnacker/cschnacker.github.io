@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "revision": "2026.1",
+  "year": 2026,
+  "currency": "USD",
+  "defaultInflation": 2.5,
+  "defaultIncomeGrowth": 3,
+  "note": "Planning assumptions carried from the supplied workbook, not observed inflation or guaranteed growth. Update this file for new plans; existing plans retain their saved assumptions.",
+  "fixedCategories": [
+    "House payment",
+    "Car 1 payment",
+    "Car 2 payment",
+    "Credit card"
+  ],
+  "inflationCategories": [
+    "Rent",
+    "Gas",
+    "Internet/Cable",
+    "Cell phone",
+    "Groceries",
+    "Utilities",
+    "Trash",
+    "Newspaper",
+    "Life insurance",
+    "Car insurance",
+    "Dining",
+    "Charity",
+    "Vacation",
+    "College",
+    "Health insurance",
+    "Investment/Savings",
+    "Miscellaneous"
+  ]
+}
