@@ -1,0 +1,3 @@
+const http=require('http'),fs=require('fs'),path=require('path');
+const root=__dirname;
+http.createServer((req,res)=>{let name;try{name=decodeURIComponent(req.url.split('?')[0]);}catch(e){res.writeHead(400);return res.end();}const file=path.resolve(root,'.'+(name==='/'?'/index.html':name));if(!file.startsWith(root+path.sep)){res.writeHead(403);return res.end();}fs.readFile(file,(err,data)=>{if(err){res.writeHead(404);return res.end('Not found');}res.setHeader('Content-Type',({'.html':'text/html','.mjs':'text/javascript','.js':'text/javascript','.css':'text/css','.json':'application/json','.svg':'image/svg+xml'})[path.extname(file)]||'text/plain');res.end(data);});}).listen(8765,'127.0.0.1',()=>console.log('Credit Card Planner: http://127.0.0.1:8765'));

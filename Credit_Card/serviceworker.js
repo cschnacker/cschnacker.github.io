@@ -1,43 +1,21 @@
-const cacheName = 'v2';
+const CACHE='sss-credit-card-v17';
+const FILES=['./','index.html','styles.css','js/app.mjs','js/chart.mjs','js/payoff.mjs','js/dates.mjs','js/model.mjs','js/database.mjs','js/calculations.mjs','data/annual.json','manifest.json','icon.svg'];
+self.addEventListener('install',e=>e.waitUntil(caches.open(CACHE).then(c=>c.addAll(FILES)).then(()=>self.skipWaiting())));
+self.addEventListener('activate',e=>e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k.startsWith('sss-credit-card-')&&k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim())));
+self.addEventListener('fetch',e=>{if(e.request.method!=='GET'||new URL(e.request.url).origin!==location.origin)return;e.respondWith(fetch(e.request).then(r=>{if(r.ok){const copy=r.clone();e.waitUntil(caches.open(CACHE).then(c=>c.put(e.request,copy)));}return r;}).catch(()=>caches.match(e.request)));});
 
-// Call Install Event
-self.addEventListener('install', e => {
-  console.log('Service Worker: Installed');
-});
 
-// Call Activate Event
-self.addEventListener('activate', e => {
-  console.log('Service Worker: Activated');
-  // Remove unwanted caches
-  e.waitUntil(
-    caches.keys().then(cacheNames => {
-      return Promise.all(
-        cacheNames.map(cache => {
-          if (cache !== cacheName) {
-            console.log('Service Worker: Clearing Old Cache');
-            return caches.delete(cache);
-          }
-        })
-      );
-    })
-  );
-});
 
-// Call Fetch Event
-self.addEventListener('fetch', e => {
-  console.log('Service Worker: Fetching');
-  e.respondWith(
-    fetch(e.request)
-      .then(res => {
-        // Make copy/clone of response
-        const resClone = res.clone();
-        // Open cahce
-        caches.open(cacheName).then(cache => {
-          // Add response to cache
-          cache.put(e.request, resClone);
-        });
-        return res;
-      })
-      .catch(err => caches.match(e.request).then(res => res))
-  );
-});
+
+
+
+
+
+
+
+
+
+
+
+
+

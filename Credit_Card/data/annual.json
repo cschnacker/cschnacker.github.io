@@ -1,0 +1,9 @@
+{
+  "year": 2026,
+  "currency": "USD",
+  "defaultMonths": 120,
+  "defaultMinimum": 25,
+  "defaultMinimumPercent": 2,
+  "note": "Planning defaults carried forward from CreditCard.22.xlsx; not issuer rules. Review annually. Existing plans retain their own values."
+}
+

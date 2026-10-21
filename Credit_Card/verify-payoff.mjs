@@ -1,0 +1,18 @@
+import assert from 'node:assert/strict';
+import {projectCard,solvePayment} from './js/calculations.mjs';
+import {newCard,newPlan,validate} from './js/model.mjs';
+import {serialize,deserialize} from './js/database.mjs';
+const config={year:2026,defaultMonths:120,defaultMinimum:25,defaultMinimumPercent:2};
+const card=newCard(config,'test');card.balance=1000;
+let q=solvePayment(card,10);assert.equal(q.payment,100);assert.equal(q.projection.rows[9].balance,0);
+card.apr=12;q=solvePayment(card,12);assert(q.payment>88&&q.payment<90);assert.equal(q.projection.rows[11].balance,0);assert(projectCard({...card,fixedPayment:q.payment-.01},12).rows[11].balance>0);
+card.charges=50;q=solvePayment(card,12);assert(q.payment>138);assert.equal(q.projection.rows[11].balance,0);
+card.changes=[{month:3,apr:20,oneCharge:200},{month:6,onePayment:100}];q=solvePayment(card,12);assert.equal(q.projection.rows[11].balance,0);
+card.extra=300;card.extraGrowth=50;card.changes.push({month:8,extra:500});assert.equal(solvePayment(card,12).payment,q.payment);
+const locked={...card,fixedPayment:q.payment,payoffTarget:'2027-09'};assert.equal(projectCard(locked,12).rows[11].balance,0);
+const plan=newPlan(config);plan.cards=[locked];assert.deepEqual(deserialize(serialize(plan)),plan);assert.throws(()=>validate({...plan,cards:[{...locked,fixedPayment:-1}]}));
+assert.equal(solvePayment({...newCard(config,'zero')},12).payment,0);
+assert.equal(solvePayment({...newCard(config,'small'),balance:10},12).payment,10);
+assert.equal(solvePayment({...newCard(config,'one'),balance:100,apr:12},1).payment,101);
+assert.throws(()=>solvePayment(card,0));assert.throws(()=>solvePayment(card,601));
+console.log('PASS: target solving, cent precision, charges, APR changes, one-time payments, override isolation, locked projection, persistence format, bounds, zero and single-month cases.');

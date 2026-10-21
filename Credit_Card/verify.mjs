@@ -1,0 +1,18 @@
+import assert from 'assert';
+import {projectCard,project} from './js/calculations.mjs';
+import {newCard,newPlan,validate} from './js/model.mjs';
+import {serialize,deserialize} from './js/database.mjs';
+const config={year:2026,defaultMonths:200,defaultMinimum:25,defaultMinimumPercent:2};
+const c=newCard(config,'test');
+c.balance=100;c.apr=12;
+let r=projectCard(c,12);assert.equal(r.rows[0].interest,1);assert.equal(r.rows[0].balance,76);assert.equal(r.payoff,5);
+c.apr=0;c.extra=1000;r=projectCard(c,2);assert.equal(r.rows[0].payment,100);assert.equal(r.rows[0].balance,0);
+c.extra=0;c.balance=0;c.changes=[{month:3,oneCharge:100}];r=projectCard(c,6);assert.equal(r.rows[2].balance,75);assert.equal(r.payoff,6);
+c.changes=[{month:1,apr:24,balance:100,onePayment:200}];r=projectCard(c,1);assert.equal(r.rows[0].interest,2);assert.equal(r.rows[0].payment,102);
+c.changes=[];c.balance=1000;c.apr=100;c.minimum=0;c.minimumPercent=0;r=projectCard(c,12);assert.equal(r.payoff,null);assert(r.rows[11].balance>1000);
+c.apr=0;c.balance=0;c.charges=10;c.chargeGrowth=10;r=projectCard(c,13);assert.equal(r.rows[12].charges,11);
+let p=newPlan(config);p.cards=[c];assert.deepStrictEqual(deserialize(serialize(p)),p);assert.equal(project(p).rows.length,200);
+assert.throws(()=>deserialize('{"schemaVersion":999}'));
+const bad=JSON.parse(serialize(p));bad.cards[0].apr=-1;assert.throws(()=>validate(bad));
+bad.cards[0].apr=0;bad.cards[0].changes=[{month:1},{month:1}];assert.throws(()=>validate(bad));
+console.log('PASS: interest, payment caps, future charges, overrides, non-payoff, annual growth, export/import, input validation.');
