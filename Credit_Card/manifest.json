@@ -1,1 +1,29 @@
-{"name":"Credit Card Planner","short_name":"Credit Planner","start_url":"./","scope":"./","display":"standalone","theme_color":"#143f3d","background_color":"#f4f6f3","icons":[{"src":"icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any"}]}
+{
+  "name": "Credit Card Planner",
+  "short_name": "Credit Planner",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "theme_color": "#143f3d",
+  "background_color": "#f4f6f3",
+  "icons": [
+    {
+      "src": "icon192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
