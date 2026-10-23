@@ -34,3 +34,13 @@ export async function fetchPrices(symbols,{key,endpoint,mode='personal',fetcher=
  return results;
 }
 export function applyQuotes(plan,results){const next=structuredClone(plan);for(const h of next.holdings){if(h.valuationMode==='dollars')continue;const q=results.find(q=>q.symbol===h.symbol.toUpperCase());if(q?.quote){h.quote=q.quote;recordSnapshot(h,{kind:'price',value:q.quote.price,source:'api',recordedAt:q.quote.retrievedAt,marketTime:q.quote.marketTime});}}return next;}
+
+// Browser preference only: never attach credentials to a plan or its backups.
+const QUOTE_KEY_STORAGE='investment-planner:twelve-data-api-key';
+export function readQuoteKey(mode,storage){
+ if(mode!=='personal')return '';
+ try{return String((storage??globalThis.localStorage).getItem(QUOTE_KEY_STORAGE)||'').trim();}catch{return '';}
+}
+export function saveQuoteKey(key,remember,storage){
+ try{const target=storage??globalThis.localStorage;if(remember)target.setItem(QUOTE_KEY_STORAGE,key.trim());else target.removeItem(QUOTE_KEY_STORAGE);return true;}catch{return false;}
+}
