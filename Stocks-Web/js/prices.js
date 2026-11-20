@@ -6,7 +6,7 @@ This software is proprietary. No permission is granted
 to copy, modify, redistribute, or commercially exploit
 this code without prior written authorization.
 */
-import {recordSnapshot} from './history.js';
+import {recordSnapshot,recordHoldingSnapshot,completeHoldingHistory} from './history.js';
 export function normalizeQuote(symbol,data){
  if(!data||data.status==='error')throw Error(data?.message||'Quote unavailable');
  const price=Number(data.close??data.price);
@@ -33,7 +33,7 @@ export async function fetchPrices(symbols,{key,endpoint,mode='personal',fetcher=
  }catch(e){results.push({symbol,error:e.name==='TimeoutError'?'The quote request timed out. Try again.':e instanceof TypeError?'Cannot reach Twelve Data. Check your internet connection and whether your browser or network blocks the quote service. Your previous price is unchanged.':e.message});}}
  return results;
 }
-export function applyQuotes(plan,results){const next=structuredClone(plan);for(const h of next.holdings){if(h.valuationMode==='dollars')continue;const q=results.find(q=>q.symbol===h.symbol.toUpperCase());if(q?.quote){h.quote=q.quote;recordSnapshot(h,{kind:'price',value:q.quote.price,source:'api',recordedAt:q.quote.retrievedAt,marketTime:q.quote.marketTime});}}return next;}
+export function applyQuotes(plan,results){const next=structuredClone(plan);for(const h of next.holdings){if(h.valuationMode==='dollars')continue;const q=results.find(q=>q.symbol===h.symbol.toUpperCase());if(q?.quote){h.history=completeHoldingHistory(h);h.quote=q.quote;if(h.valuationMode==='dollars')recordSnapshot(h,{kind:'price',value:q.quote.price,source:'api',recordedAt:q.quote.retrievedAt,marketTime:q.quote.marketTime});else recordHoldingSnapshot(h,{price:q.quote.price,source:'api',recordedAt:q.quote.retrievedAt,marketTime:q.quote.marketTime});}}return next;}
 
 // Browser preference only: never attach credentials to a plan or its backups.
 const QUOTE_KEY_STORAGE='investment-planner:twelve-data-api-key';
