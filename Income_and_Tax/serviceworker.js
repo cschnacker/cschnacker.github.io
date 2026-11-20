@@ -1,43 +1,42 @@
-const cacheName = 'v2';
+const prefix = 'schnacker-income-tax-';
+const cacheName = prefix + '2026-2';
+const assets = ['./index.html', './styles.css', './manifest.json', './Inc%26Tax.png',
+  './src/app.mjs', './src/model.mjs', './src/storage.mjs', './src/legacy.mjs',
+  './src/tax-data.mjs', './src/calculations.mjs', './data/releases.json'];
 
-// Call Install Event
-self.addEventListener('install', e => {
-  console.log('Service Worker: Installed');
+self.addEventListener('install', event => {
+  event.waitUntil((async () => {
+    const cache = await caches.open(cacheName);
+    await cache.addAll(assets);
+    const manifest = await (await cache.match('./data/releases.json')).json();
+    await cache.addAll(manifest.years.flatMap(year => [
+      './data/tax-' + year + '.json', './data/planner-' + year + '.json'
+    ]));
+    await self.skipWaiting();
+  })());
 });
-
-// Call Activate Event
-self.addEventListener('activate', e => {
-  console.log('Service Worker: Activated');
-  // Remove unwanted caches
-  e.waitUntil(
-    caches.keys().then(cacheNames => {
-      return Promise.all(
-        cacheNames.map(cache => {
-          if (cache !== cacheName) {
-            console.log('Service Worker: Clearing Old Cache');
-            return caches.delete(cache);
-          }
-        })
-      );
-    })
-  );
+self.addEventListener('activate', event => {
+  event.waitUntil((async () => {
+    for (const name of await caches.keys()) {
+      if (name.startsWith(prefix) && name !== cacheName) await caches.delete(name);
+    }
+    await self.clients.claim();
+  })());
 });
-
-// Call Fetch Event
-self.addEventListener('fetch', e => {
-  console.log('Service Worker: Fetching');
-  e.respondWith(
-    fetch(e.request)
-      .then(res => {
-        // Make copy/clone of response
-        const resClone = res.clone();
-        // Open cahce
-        caches.open(cacheName).then(cache => {
-          // Add response to cache
-          cache.put(e.request, resClone);
-        });
-        return res;
-      })
-      .catch(err => caches.match(e.request).then(res => res))
-  );
+self.addEventListener('fetch', event => {
+  const url = new URL(event.request.url);
+  if (event.request.method !== 'GET' || !url.href.startsWith(self.registration.scope)) return;
+  event.respondWith((async () => {
+    try {
+      const response = await fetch(event.request);
+      if (response.ok) return response;
+      const cache = await caches.open(cacheName);
+      return await cache.match(event.request) ?? response;
+    } catch {
+      const cache = await caches.open(cacheName);
+      const response = await cache.match(event.request) ??
+        (event.request.mode === 'navigate' ? await cache.match('./index.html') : null);
+      return response ?? Response.error();
+    }
+  })());
 });

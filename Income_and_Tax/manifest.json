@@ -1,22 +1,11 @@
 {
-    "name": "Income and Tax Planner",
-    "scope": "https://cschnacker.github.io/Income_and_Tax/",
-	"display": "standalone",
-	"start_url": "https://cschnacker.github.io/Income_and_Tax/index.html",
-    "id": "https://cschnacker.github.io/Income_and_Tax/",
-	"short_name": "Income and Tax Planner",
-	"theme_color": "#A9C9DE",
-	"description": "Income and Tax Planner",
-	"orientation": "portrait",
-	"background_color": "#E7E8E8",
-	"related_applications": [],
-	"prefer_related_applications": false,
-	"icons": [
-        {
-        "src": "https://cschnacker.github.io/Income_and_Tax/Inc&Tax.png",
-        "type": "image/png", 
-        "sizes": "550x550",
-        "purpose": "any"
-        }        
-    ],
-	"generated": "true"}
+  "name": "Income and Tax Planner",
+  "short_name": "Income & Tax",
+  "id": "./",
+  "scope": "./",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "theme_color": "#142a3c",
+  "background_color": "#f2f5f7",
+  "icons": [{ "src": "Inc%26Tax.png", "sizes": "550x550", "type": "image/png", "purpose": "any" }]
+}

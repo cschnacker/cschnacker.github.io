@@ -1,0 +1,704 @@
+{
+  "year": 2026,
+  "releaseId": "2026-existing-model",
+  "sources": [
+    {
+      "name": "SchnackerSoftwareSolutions Effective Tax Rate Fed/State, shared bracket schedules"
+    },
+    {
+      "name": "Income and Tax 0.27\u20132026 workbook, state allowances (SEqn)"
+    },
+    {
+      "name": "IRS Revenue Procedure 2025-32, federal amounts",
+      "url": "https://www.irs.gov/irb/2025-45_IRB"
+    },
+    {
+      "name": "SSA contribution and benefit bases",
+      "url": "https://www.ssa.gov/oact/cola/cbb.html"
+    },
+    {
+      "name": "IRS Social Security and Medicare withholding rates",
+      "url": "https://www.irs.gov/taxtopics/tc751"
+    }
+  ],
+  "standardDeduction": {
+    "Single": 16100,
+    "Joint": 32200,
+    "Separate": 16100,
+    "HoH": 24150
+  },
+  "capitalGains": {
+    "Single": [
+      49450,
+      545500
+    ],
+    "Joint": [
+      98900,
+      613700
+    ],
+    "Separate": [
+      49450,
+      306850
+    ],
+    "HoH": [
+      66200,
+      579600
+    ]
+  },
+  "payroll": {
+    "wageBase": 184500,
+    "socialSecurity": 6.2,
+    "medicare": 1.45,
+    "additionalMedicare": 0.9,
+    "threshold": {
+      "Single": 200000,
+      "Joint": 250000,
+      "Separate": 125000,
+      "HoH": 200000
+    }
+  },
+  "socialSecurityThresholds": {
+    "Single": [
+      25000,
+      34000
+    ],
+    "Joint": [
+      32000,
+      44000
+    ],
+    "Separate": [
+      0,
+      0
+    ],
+    "HoH": [
+      25000,
+      34000
+    ]
+  },
+  "childCredit": {
+    "amount": 2200,
+    "otherDependent": 500,
+    "phaseoutStep": 1000,
+    "phaseoutReduction": 50,
+    "threshold": {
+      "Single": 200000,
+      "Joint": 400000,
+      "Separate": 200000,
+      "HoH": 200000
+    }
+  },
+  "stateAllowances": {
+    "Alabama": {
+      "Single": {
+        "deduction": 3000,
+        "exemption": 1500,
+        "credit": 0
+      },
+      "Joint": {
+        "deduction": 8500,
+        "exemption": 3000,
+        "credit": 0
+      }
+    },
+    "Alaska": {
+      "Single": {
+        "deduction": 0,
+        "exemption": 0,
+        "credit": 0
+      },
+      "Joint": {
+        "deduction": 0,
+        "exemption": 0,
+        "credit": 0
+      }
+    },
+    "Arizona": {
+      "Single": {
+        "deduction": 8350,
+        "exemption": 0,
+        "credit": 0
+      },
+      "Joint": {
+        "deduction": 16700,
+        "exemption": 0,
+        "credit": 0
+      }
+    },
+    "Arkansas": {
+      "Single": {
+        "deduction": 2410,
+        "exemption": 0,
+        "credit": 29
+      },
+      "Joint": {
+        "deduction": 4820,
+        "exemption": 0,
+        "credit": 58
+      }
+    },
+    "California": {
+      "Single": {
+        "deduction": 5540,
+        "exemption": 0,
+        "credit": 153
+      },
+      "Joint": {
+        "deduction": 11080,
+        "exemption": 0,
+        "credit": 206
+      }
+    },
+    "Colorado": {
+      "Single": {
+        "deduction": 16100,
+        "exemption": 0,
+        "credit": 0
+      },
+      "Joint": {
+        "deduction": 32200,
+        "exemption": 0,
+        "credit": 0
+      }
+    },
+    "Connecticut": {
+      "Single": {
+        "deduction": 0,
+        "exemption": 15000,
+        "credit": 0
+      },
+      "Joint": {
+        "deduction": 0,
+        "exemption": 24000,
+        "credit": 0
+      }
+    },
+    "Delaware": {
+      "Single": {
+        "deduction": 3250,
+        "exemption": 0,
+        "credit": 110
+      },
+      "Joint": {
+        "deduction": 6500,
+        "exemption": 0,
+        "credit": 220
+      }
+    },
+    "Florida": {
+      "Single": {
+        "deduction": 0,
+        "exemption": 0,
+        "credit": 0
+      },
+      "Joint": {
+        "deduction": 0,
+        "exemption": 0,
+        "credit": 0
+      }
+    },
+    "Georgia": {
+      "Single": {
+        "deduction": 12000,
+        "exemption": 0,
+        "credit": 0
+      },
+      "Joint": {
+        "deduction": 24000,
+        "exemption": 0,
+        "credit": 0
+      }
+    },
+    "Hawaii": {
+      "Single": {
+        "deduction": 4400,
+        "exemption": 1144,
+        "credit": 0
+      },
+      "Joint": {
+        "deduction": 8800,
+        "exemption": 2288,
+        "credit": 0
+      }
+    },
+    "Idaho": {
+      "Single": {
+        "deduction": 16100,
+        "exemption": 0,
+        "credit": 0
+      },
+      "Joint": {
+        "deduction": 32200,
+        "exemption": 0,
+        "credit": 0
+      }
+    },
+    "Illinois": {
+      "Single": {
+        "deduction": 0,
+        "exemption": 2925,
+        "credit": 0
+      },
+      "Joint": {
+        "deduction": 0,
+        "exemption": 5850,
+        "credit": 0
+      }
+    },
+    "Indiana": {
+      "Single": {
+        "deduction": 0,
+        "exemption": 1000,
+        "credit": 0
+      },
+      "Joint": {
+        "deduction": 0,
+        "exemption": 2000,
+        "credit": 0
+      }
+    },
+    "Iowa": {
+      "Single": {
+        "deduction": 16100,
+        "exemption": 0,
+        "credit": 40
+      },
+      "Joint": {
+        "deduction": 32200,
+        "exemption": 0,
+        "credit": 80
+      }
+    },
+    "Kansas": {
+      "Single": {
+        "deduction": 3605,
+        "exemption": 9160,
+        "credit": 0
+      },
+      "Joint": {
+        "deduction": 8240,
+        "exemption": 18320,
+        "credit": 0
+      }
+    },
+    "Kentucky": {
+      "Single": {
+        "deduction": 3360,
+        "exemption": 0,
+        "credit": 0
+      },
+      "Joint": {
+        "deduction": 3360,
+        "exemption": 0,
+        "credit": 0
+      }
+    },
+    "Louisiana": {
+      "Single": {
+        "deduction": 12875,
+        "exemption": 0,
+        "credit": 0
+      },
+      "Joint": {
+        "deduction": 25750,
+        "exemption": 0,
+        "credit": 0
+      }
+    },
+    "Maine": {
+      "Single": {
+        "deduction": 15000,
+        "exemption": 5150,
+        "credit": 0
+      },
+      "Joint": {
+        "deduction": 30000,
+        "exemption": 10300,
+        "credit": 0
+      }
+    },
+    "Maryland": {
+      "Single": {
+        "deduction": 3350,
+        "exemption": 3200,
+        "credit": 0
+      },
+      "Joint": {
+        "deduction": 6700,
+        "exemption": 6700,
+        "credit": 0
+      }
+    },
+    "Massachusetts": {
+      "Single": {
+        "deduction": 0,
+        "exemption": 4400,
+        "credit": 0
+      },
+      "Joint": {
+        "deduction": 0,
+        "exemption": 8800,
+        "credit": 0
+      }
+    },
+    "Michigan": {
+      "Single": {
+        "deduction": 0,
+        "exemption": 5900,
+        "credit": 0
+      },
+      "Joint": {
+        "deduction": 0,
+        "exemption": 11800,
+        "credit": 0
+      }
+    },
+    "Minnesota": {
+      "Single": {
+        "deduction": 15300,
+        "exemption": 0,
+        "credit": 0
+      },
+      "Joint": {
+        "deduction": 30600,
+        "exemption": 0,
+        "credit": 0
+      }
+    },
+    "Mississippi": {
+      "Single": {
+        "deduction": 2300,
+        "exemption": 6000,
+        "credit": 0
+      },
+      "Joint": {
+        "deduction": 4600,
+        "exemption": 12000,
+        "credit": 0
+      }
+    },
+    "Missouri": {
+      "Single": {
+        "deduction": 16100,
+        "exemption": 0,
+        "credit": 0
+      },
+      "Joint": {
+        "deduction": 32200,
+        "exemption": 0,
+        "credit": 0
+      }
+    },
+    "Montana": {
+      "Single": {
+        "deduction": 30000,
+        "exemption": 0,
+        "credit": 0
+      },
+      "Joint": {
+        "deduction": 0,
+        "exemption": 0,
+        "credit": 0
+      }
+    },
+    "Nebraska": {
+      "Single": {
+        "deduction": 8600,
+        "exemption": 0,
+        "credit": 171
+      },
+      "Joint": {
+        "deduction": 17200,
+        "exemption": 0,
+        "credit": 342
+      }
+    },
+    "Nevada": {
+      "Single": {
+        "deduction": 0,
+        "exemption": 0,
+        "credit": 0
+      },
+      "Joint": {
+        "deduction": 0,
+        "exemption": 0,
+        "credit": 0
+      }
+    },
+    "New Hampshire": {
+      "Single": {
+        "deduction": 0,
+        "exemption": 0,
+        "credit": 0
+      },
+      "Joint": {
+        "deduction": 0,
+        "exemption": 0,
+        "credit": 0
+      }
+    },
+    "New Jersey": {
+      "Single": {
+        "deduction": 0,
+        "exemption": 1000,
+        "credit": 0
+      },
+      "Joint": {
+        "deduction": 0,
+        "exemption": 2000,
+        "credit": 0
+      }
+    },
+    "New Mexico": {
+      "Single": {
+        "deduction": 16100,
+        "exemption": 0,
+        "credit": 0
+      },
+      "Joint": {
+        "deduction": 32200,
+        "exemption": 0,
+        "credit": 0
+      }
+    },
+    "New York": {
+      "Single": {
+        "deduction": 8000,
+        "exemption": 0,
+        "credit": 0
+      },
+      "Joint": {
+        "deduction": 16050,
+        "exemption": 0,
+        "credit": 0
+      }
+    },
+    "North Carolina": {
+      "Single": {
+        "deduction": 12750,
+        "exemption": 0,
+        "credit": 0
+      },
+      "Joint": {
+        "deduction": 25500,
+        "exemption": 0,
+        "credit": 0
+      }
+    },
+    "North Dakota": {
+      "Single": {
+        "deduction": 16100,
+        "exemption": 0,
+        "credit": 0
+      },
+      "Joint": {
+        "deduction": 32200,
+        "exemption": 0,
+        "credit": 0
+      }
+    },
+    "Ohio": {
+      "Single": {
+        "deduction": 0,
+        "exemption": 2400,
+        "credit": 0
+      },
+      "Joint": {
+        "deduction": 0,
+        "exemption": 4800,
+        "credit": 0
+      }
+    },
+    "Oklahoma": {
+      "Single": {
+        "deduction": 6350,
+        "exemption": 1000,
+        "credit": 0
+      },
+      "Joint": {
+        "deduction": 12700,
+        "exemption": 2000,
+        "credit": 0
+      }
+    },
+    "Oregon": {
+      "Single": {
+        "deduction": 2910,
+        "exemption": 0,
+        "credit": 256
+      },
+      "Joint": {
+        "deduction": 5820,
+        "exemption": 0,
+        "credit": 512
+      }
+    },
+    "Pennsylvania": {
+      "Single": {
+        "deduction": 0,
+        "exemption": 0,
+        "credit": 0
+      },
+      "Joint": {
+        "deduction": 0,
+        "exemption": 0,
+        "credit": 0
+      }
+    },
+    "Rhode Island": {
+      "Single": {
+        "deduction": 10900,
+        "exemption": 5100,
+        "credit": 0
+      },
+      "Joint": {
+        "deduction": 21800,
+        "exemption": 10200,
+        "credit": 0
+      }
+    },
+    "South Carolina": {
+      "Single": {
+        "deduction": 8350,
+        "exemption": 0,
+        "credit": 0
+      },
+      "Joint": {
+        "deduction": 16700,
+        "exemption": 0,
+        "credit": 0
+      }
+    },
+    "South Dakota": {
+      "Single": {
+        "deduction": 0,
+        "exemption": 0,
+        "credit": 0
+      },
+      "Joint": {
+        "deduction": 0,
+        "exemption": 0,
+        "credit": 0
+      }
+    },
+    "Tennessee": {
+      "Single": {
+        "deduction": 0,
+        "exemption": 0,
+        "credit": 0
+      },
+      "Joint": {
+        "deduction": 0,
+        "exemption": 0,
+        "credit": 0
+      }
+    },
+    "Texas": {
+      "Single": {
+        "deduction": 0,
+        "exemption": 0,
+        "credit": 0
+      },
+      "Joint": {
+        "deduction": 0,
+        "exemption": 0,
+        "credit": 0
+      }
+    },
+    "Utah": {
+      "Single": {
+        "deduction": 0,
+        "exemption": 0,
+        "credit": 0
+      },
+      "Joint": {
+        "deduction": 0,
+        "exemption": 0,
+        "credit": 0
+      }
+    },
+    "Vermont": {
+      "Single": {
+        "deduction": 7400,
+        "exemption": 5100,
+        "credit": 0
+      },
+      "Joint": {
+        "deduction": 14850,
+        "exemption": 10200,
+        "credit": 0
+      }
+    },
+    "Virginia": {
+      "Single": {
+        "deduction": 8750,
+        "exemption": 930,
+        "credit": 0
+      },
+      "Joint": {
+        "deduction": 17500,
+        "exemption": 1860,
+        "credit": 0
+      }
+    },
+    "Washington": {
+      "Single": {
+        "deduction": 278000,
+        "exemption": 0,
+        "credit": 0
+      },
+      "Joint": {
+        "deduction": 278000,
+        "exemption": 0,
+        "credit": 0
+      }
+    },
+    "West Virginia": {
+      "Single": {
+        "deduction": 0,
+        "exemption": 2000,
+        "credit": 0
+      },
+      "Joint": {
+        "deduction": 0,
+        "exemption": 4000,
+        "credit": 0
+      }
+    },
+    "Wisconsin": {
+      "Single": {
+        "deduction": 13960,
+        "exemption": 700,
+        "credit": 0
+      },
+      "Joint": {
+        "deduction": 25840,
+        "exemption": 1400,
+        "credit": 0
+      }
+    },
+    "Wyoming": {
+      "Single": {
+        "deduction": 0,
+        "exemption": 0,
+        "credit": 0
+      },
+      "Joint": {
+        "deduction": 0,
+        "exemption": 0,
+        "credit": 0
+      }
+    },
+    "D.C.": {
+      "Single": {
+        "deduction": 16100,
+        "exemption": 0,
+        "credit": 0
+      },
+      "Joint": {
+        "deduction": 32200,
+        "exemption": 0,
+        "credit": 0
+      }
+    }
+  }
+}
