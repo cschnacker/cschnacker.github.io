@@ -1,13 +1,14 @@
 const prefix = 'schnacker-income-tax-';
-const cacheName = prefix + '2026-4';
-const assets = ['./index.html', './styles.css', './manifest.json', './Inc%26Tax.png',
-  './src/app.mjs', './src/model.mjs', './src/storage.mjs', './src/legacy.mjs',
+const version = '2026-5';
+const cacheName = prefix + version;
+const assets = ['./index.html', './styles.css?v=' + version, './manifest.json', './Inc%26Tax.png',
+  './src/app.mjs?v=' + version, './src/model.mjs', './src/storage.mjs', './src/legacy.mjs',
   './src/tax-data.mjs', './src/calculations.mjs', './data/releases.json'];
 
 self.addEventListener('install', event => {
   event.waitUntil((async () => {
     const cache = await caches.open(cacheName);
-    await cache.addAll(assets);
+    await cache.addAll(assets.map(path => new Request(path, { cache: 'reload' })));
     const manifest = await (await cache.match('./data/releases.json')).json();
     await cache.addAll(manifest.years.flatMap(year => [
       './data/tax-' + year + '.json', './data/planner-' + year + '.json'
