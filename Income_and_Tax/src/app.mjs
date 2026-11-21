@@ -183,12 +183,30 @@ function updateConditionalFields() {
   }
 }
 
+const projectionSeries = [
+  { key: 'net', label: 'Net income', color: '#087d73', amount: row => row.net },
+  { key: 'federal', label: 'Federal income tax', color: '#965608', amount: row => row.federal },
+  { key: 'state', label: 'State income tax', color: '#794491', amount: row => row.state },
+  { key: 'payroll', label: 'Payroll tax', color: '#2c60a8', amount: row => row.socialTax + row.medicare }
+];
+
 function chart(row) {
   const width = Math.max(280, byId('chart').clientWidth || 720);
   const height = width < 500 ? 198 : 246;
   const left = 62, right = 12, top = 16, bottom = 33;
-  const values = rows.flatMap(item => [item.gross, item.net]).filter(value => value !== null);
-  const max = values.some(Boolean) ? Math.max(1, ...values) : 100;
+  const stacks = rows.map(item => {
+    if (item.net === null) return null;
+    let positiveTotal = 0;
+    return projectionSeries.map(series => {
+      const amount = series.amount(item);
+      if (amount < 0) return { base: 0, edge: amount };
+      const base = positiveTotal;
+      positiveTotal += amount;
+      return { base, edge: positiveTotal };
+    });
+  });
+  const values = stacks.flatMap(stack => stack?.map(point => point.edge) ?? []);
+  const max = values.some(Boolean) ? Math.max(0, ...values) : 100;
   const min = Math.min(0, ...values);
   const unit = 10 ** Math.floor(Math.log10((max - min) / 4));
   const tick = Math.ceil((max - min) / 4 / unit) * unit;
@@ -205,11 +223,11 @@ function chart(row) {
   }
   svg.setAttribute('viewBox', [0, 0, width, height].join(' '));
   svg.setAttribute('role', 'img');
-  svg.setAttribute('aria-label', 'Gross and net annual income. Exact amounts appear in the projection table.');
+  svg.setAttribute('aria-label', 'Stacked annual projection of net income, federal income tax, state income tax, and payroll tax. Exact amounts appear in the selected-year legend and projection table.');
   for (let index = 0; index <= Math.round((upper - lower) / tick); index += 1) {
     const value = lower + tick * index;
-    draw('line', { x1: left, x2: width - right, y1: y(value), y2: y(value), stroke: '#dce5eb' });
-    draw('text', { x: left - 10, y: y(value) + 4, 'text-anchor': 'end' }, '$' + compact.format(value));
+    draw('line', { x1: left, x2: width - right, y1: y(value), y2: y(value), stroke: value === 0 ? '#91a7b6' : '#dce5eb' });
+    draw('text', { x: left - 10, y: y(value) + 4, 'text-anchor': 'end' }, (value < 0 ? '−$' : '$') + compact.format(Math.abs(value)));
   }
   const last = rows.length - 1;
   for (const index of new Set([0, Math.round(last / 3), Math.round(last * 2 / 3), last])) {
@@ -217,22 +235,36 @@ function chart(row) {
       draw('text', { x: x(index), y: height - 11, 'text-anchor': index === last && last ? 'end' : index === 0 ? 'start' : 'middle' }, rows[index].year);
     }
   }
-  const focus = x(row.year - rows[0].year);
-  draw('line', { x1: focus, x2: focus, y1: top, y2: height - bottom, stroke: '#90a9b6', 'stroke-dasharray': '3 4' });
-  for (const [key, color, dash] of [['gross', '#657e93', '6 5'], ['net', '#087d73', 'none']]) {
-    let penUp = true;
-    const path = rows.map((item, index) => {
-      if (item[key] === null) {
-        penUp = true;
-        return '';
-      }
-      const command = penUp ? 'M' : 'L';
-      penUp = false;
-      return command + x(index) + ' ' + y(item[key]);
-    }).join(' ');
-    draw('path', { d: path, fill: 'none', stroke: color, 'stroke-width': 2.5, 'stroke-dasharray': dash });
-    if (row[key] !== null) draw('circle', { cx: focus, cy: y(row[key]), r: 4, fill: color, stroke: 'white' });
+  const runs = [];
+  let run = [];
+  for (const [index, stack] of stacks.entries()) {
+    if (stack) {
+      if (!run.length) runs.push(run);
+      run.push({ x: x(index), stack });
+    } else run = [];
   }
+  const paths = projectionSeries.map((series, band) => ({
+    ...series,
+    segments: runs.map(points => {
+      const edge = points.map(point => point.x + ' ' + y(point.stack[band].edge)).join(' L');
+      const base = points.toReversed().map(point => point.x + ' ' + y(point.stack[band].base)).join(' L');
+      return { line: 'M' + edge, fill: 'M' + edge + ' L' + base + ' Z' };
+    })
+  }));
+  for (const series of paths) {
+    draw('path', { d: series.segments.map(segment => segment.fill).join(' '), fill: series.color, 'fill-opacity': '.17' });
+  }
+  const selectedIndex = row.year - rows[0].year;
+  const focus = x(selectedIndex);
+  draw('line', { x1: focus, x2: focus, y1: top, y2: height - bottom, stroke: '#78909f', 'stroke-dasharray': '3 4' });
+  paths.forEach(({ key, color, segments }, band) => {
+    draw('path', { d: segments.map(segment => segment.line).join(' '), fill: 'none', stroke: color,
+      'stroke-width': 2, 'stroke-linejoin': 'round', 'data-series': key });
+    const point = stacks[selectedIndex]?.[band];
+    if (point && (band === 0 || point.edge !== point.base)) {
+      draw('circle', { cx: focus, cy: y(point.edge), r: 3.5, fill: color, stroke: 'white' });
+    }
+  });
   byId('chart').replaceChildren(svg);
 }
 
@@ -273,6 +305,14 @@ function inspect() {
     row.year < row.sourceYear ? row.sourceYear + ' baseline used for this earlier year' :
       'Projected from ' + row.sourceYear + ' tax tables';
   byId('projection-note').textContent = [description, row.warning].filter(Boolean).join(' · ');
+  const legend = byId('projection-legend');
+  legend.setAttribute('aria-label', 'Projection amounts for ' + row.year);
+  legend.replaceChildren(...projectionSeries.map(series => {
+    const item = node('div', undefined, 'legend-item');
+    item.style.setProperty('--series-color', series.color);
+    item.append(node('span', series.label), node('strong', money(series.amount(row))));
+    return item;
+  }));
   chart(row);
   details(row);
   for (const tableRow of byId('schedule-body').rows) {
