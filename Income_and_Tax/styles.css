@@ -78,8 +78,14 @@ input[type=checkbox] { accent-color: var(--teal); width: 18px; height: 18px; mar
 .legend-item { display: grid; gap: 4px; padding: 8px 10px; border: 1px solid var(--line); border-top: 3px solid var(--series-color); border-radius: 7px; }
 .legend-item strong { color: var(--text); font-size: .94rem; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
 @media (max-width: 680px) { .legend { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+#chart { position: relative; }
 #chart svg { width: 100%; height: auto; display: block; margin-top: 8px; overflow: visible; }
 #chart text { fill: var(--muted); font-family: inherit; font-size: 12px; }
+.projection-hit-area { cursor: crosshair; }
+.projection-tooltip { position: absolute; top: 12px; z-index: 1; display: grid; gap: 6px; width: max-content; max-width: 100%; padding: 10px 12px; border: 1px solid var(--line); border-radius: 8px; background: var(--paper); box-shadow: 0 4px 14px #192e3e33; color: var(--text); font-size: .84rem; pointer-events: none; }
+.projection-tooltip-entry { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; font-variant-numeric: tabular-nums; }
+.projection-tooltip-entry span::before { content: ''; display: inline-block; width: 9px; height: 9px; margin-right: 6px; border-radius: 50%; background: var(--series-color); }
+.projection-tooltip-entry strong { overflow-wrap: anywhere; }
 .chart-note { font-size: .84rem; color: var(--muted); margin-top: 9px; }
 .chart-note:empty { display: none; }
 .breakdown-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 11px; margin-bottom: 14px; }

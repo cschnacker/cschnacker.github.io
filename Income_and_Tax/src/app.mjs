@@ -190,8 +190,54 @@ const projectionSeries = [
   { key: 'payroll', label: 'Payroll tax', color: '#2c60a8', amount: row => row.socialTax + row.medicare }
 ];
 
+function addProjectionHover(chartContainer, svg, guide, hitArea, x, plotWidth, viewWidth) {
+  const tooltip = node('div', undefined, 'projection-tooltip');
+  const title = node('strong');
+  tooltip.append(title);
+  const amounts = projectionSeries.map(series => {
+    const entry = node('div', undefined, 'projection-tooltip-entry');
+    entry.style.setProperty('--series-color', series.color);
+    const amount = node('strong');
+    entry.append(node('span', series.label), amount);
+    tooltip.append(entry);
+    return amount;
+  });
+  tooltip.hidden = true;
+  chartContainer.append(tooltip);
+
+  let hoveredIndex = -1;
+  hitArea.addEventListener('pointermove', event => {
+    if (event.pointerType === 'touch') return;
+    const bounds = svg.getBoundingClientRect();
+    const cursor = (event.clientX - bounds.left) * viewWidth / bounds.width;
+    const fraction = Math.max(0, Math.min(1, (cursor - x(0)) / plotWidth));
+    const index = Math.round(fraction * (rows.length - 1));
+    if (index === hoveredIndex) return;
+    hoveredIndex = index;
+    const hovered = rows[index];
+    title.textContent = hovered.year;
+    projectionSeries.forEach((series, band) => { amounts[band].textContent = money(series.amount(hovered)); });
+
+    const position = x(index);
+    guide.setAttribute('x1', position);
+    guide.setAttribute('x2', position);
+    guide.removeAttribute('visibility');
+    tooltip.hidden = false;
+    const anchor = position * bounds.width / viewWidth;
+    const maximumLeft = chartContainer.clientWidth - tooltip.offsetWidth;
+    const left = anchor + 12 <= maximumLeft ? anchor + 12 : anchor - tooltip.offsetWidth - 12;
+    tooltip.style.left = Math.max(0, Math.min(maximumLeft, left)) + 'px';
+  });
+  hitArea.addEventListener('pointerleave', () => {
+    hoveredIndex = -1;
+    tooltip.hidden = true;
+    guide.setAttribute('visibility', 'hidden');
+  });
+}
+
 function chart(row) {
-  const width = Math.max(280, byId('chart').clientWidth || 720);
+  const chartContainer = byId('chart');
+  const width = Math.max(280, chartContainer.clientWidth || 720);
   const height = width < 500 ? 198 : 246;
   const left = 62, right = 12, top = 16, bottom = 33;
   const stacks = rows.map(item => {
@@ -212,7 +258,8 @@ function chart(row) {
   const tick = Math.ceil((max - min) / 4 / unit) * unit;
   const lower = Math.floor(min / tick) * tick;
   const upper = Math.ceil(max / tick) * tick;
-  const x = index => left + index / Math.max(1, rows.length - 1) * (width - left - right);
+  const plotWidth = width - left - right;
+  const x = index => left + index / Math.max(1, rows.length - 1) * plotWidth;
   const y = value => top + (upper - value) / (upper - lower) * (height - top - bottom);
   const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
   function draw(tag, attributes, text) {
@@ -220,6 +267,7 @@ function chart(row) {
     for (const [key, value] of Object.entries(attributes)) element.setAttribute(key, value);
     if (text !== undefined) element.textContent = text;
     svg.append(element);
+    return element;
   }
   svg.setAttribute('viewBox', [0, 0, width, height].join(' '));
   svg.setAttribute('role', 'img');
@@ -265,7 +313,10 @@ function chart(row) {
       draw('circle', { cx: focus, cy: y(point.edge), r: 3.5, fill: color, stroke: 'white' });
     }
   });
-  byId('chart').replaceChildren(svg);
+  const guide = draw('line', { y1: top, y2: height - bottom, stroke: '#405e70', 'stroke-dasharray': '4 3', visibility: 'hidden' });
+  const hitArea = draw('rect', { x: left, y: top, width: plotWidth, height: height - top - bottom, fill: 'transparent', class: 'projection-hit-area' });
+  chartContainer.replaceChildren(svg);
+  addProjectionHover(chartContainer, svg, guide, hitArea, x, plotWidth, width);
 }
 
 function details(row) {
