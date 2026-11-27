@@ -1,5 +1,5 @@
 const prefix = 'schnacker-income-tax-';
-const version = '2026-5';
+const version = '2026-6';
 const cacheName = prefix + version;
 const assets = ['./index.html', './styles.css?v=' + version, './manifest.json', './Inc%26Tax.png',
   './src/app.mjs?v=' + version, './src/model.mjs', './src/storage.mjs', './src/legacy.mjs',

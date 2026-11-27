@@ -51,8 +51,13 @@ function choose(options, current) {
   return element;
 }
 
+const amountSteps = {
+  wages: 1000, spouseWages: 1000, other: 500,
+  pension: 1000, spousePension: 1000, social: 1000, spouseSocial: 1000
+};
+
 function field(module, fields, key, label, settings = {}) {
-  const { index, wide, spouse, spec = schemas[module][key], options } = settings;
+  const { index, wide, spouse, spec = schemas[module][key], options, step = amountSteps[key] } = settings;
   const current = fields[key];
   const container = node('label', undefined, 'field');
   if (wide) container.classList.add('wide');
@@ -71,7 +76,7 @@ function field(module, fields, key, label, settings = {}) {
       input.type = 'number';
       input.min = spec[1];
       input.max = spec[2];
-      input.step = 'any';
+      input.step = step ?? 'any';
       input.value = current === 0 && spec[0] === 0 ? '' : current;
       input.placeholder = '0';
     } else {
@@ -164,7 +169,9 @@ function buildRecords(module) {
         ['status', 'stateStatus'].includes(record.field) ? { '': 'Choose status', ...statuses } : undefined;
       const spec = changeSpec(record.field);
       const value = record.value === '' ? '' : valueFor(record.field, spec, record.value);
-      const control = field(module, { value }, 'value', changeLabels[record.field] + ' value', { index, spec, options });
+      const control = field(module, { value }, 'value', changeLabels[record.field] + ' value', {
+        index, spec, options, step: amountSteps[record.field]
+      });
       if (value === '' && !options) control.querySelector('input').placeholder = 'Enter new value';
       group.append(control);
     }
