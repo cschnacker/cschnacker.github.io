@@ -26,7 +26,10 @@ export const schemas = {
     pension: amount, pensionAge: [67, 0, 121], pensionGrowth: rate,
     spousePension: amount, spousePensionAge: [67, 0, 121], spousePensionGrowth: rate,
     taxable: amount, taxableAge: [67, 0, 121], taxableGrowth: rate,
-    nontaxable: amount, nontaxableAge: [67, 0, 121], nontaxableGrowth: rate
+    nontaxable: amount, nontaxableAge: [67, 0, 121], nontaxableGrowth: rate,
+    contributionMode: ['Salary percentage', 'Fixed amount'],
+    contributionPercent: taxRate, contributionAmount: amount,
+    investmentOpening: amount, investmentGrowth: rate
   },
   holdings: {
     name: '', type: ['Stock', 'Fund', 'Bond', 'Cash', 'Other'],

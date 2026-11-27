@@ -1,4 +1,4 @@
-import { changeSpec, emptyPlan, normalize } from './model.mjs';
+import { changeSpec, emptyPlan, normalize } from './model.mjs?v=2026-8';
 
 const legacyName = 'incomeandtax0.27-2026';
 const legacyKey = 'this_form_';

@@ -1,4 +1,4 @@
-import { changeSpec, valueFor } from './model.mjs';
+import { changeSpec, valueFor } from './model.mjs?v=2026-8';
 import { bracketTax, releaseFor, scheduleFor } from './tax-data.mjs';
 
 const compound = (value, rate, years) => value * (1 + rate / 100) ** years;
@@ -20,12 +20,16 @@ function gainsTax(gains, ordinary, limits, scale) {
   return inMiddle * 0.15 + (gains - belowZero - inMiddle) * 0.20;
 }
 
-function investmentIncome(holdings, age, startingAge) {
+function investmentIncome(holdings, balances, age, startingAge) {
   const total = { balance: 0, Ordinary: 0, Qualified: 0, 'Tax-free': 0 };
-  for (const holding of holdings) {
+  for (const [index, holding] of holdings.entries()) {
     const start = Math.max(holding.startAge, startingAge);
-    if (age < start || age >= holding.endAge) continue;
-    const value = compound(holding.units * holding.price, holding.growth, age - start);
+    if (age < start || age >= holding.endAge) {
+      balances[index] = 0;
+      continue;
+    }
+    const value = age === start ? holding.units * holding.price : compound(balances[index], holding.growth, 1);
+    balances[index] = value;
     total.balance += value;
     total[holding.tax] += value * holding.yield / 100;
   }
@@ -36,6 +40,11 @@ export function project(plan, releases) {
   const h = { ...plan.household };
   const income = { ...plan.income };
   const r = plan.retirement;
+  const holdingBalances = plan.holdings.map(() => 0);
+  let investmentCash = r.investmentOpening ?? 0;
+  const fixedContribution = r.contributionMode === 'Fixed amount';
+  const trackInvestments = investmentCash > 0 || plan.holdings.some(holding => holding.units > 0 && holding.price > 0) ||
+    (fixedContribution ? r.contributionAmount : r.contributionPercent) > 0;
   const rows = [];
   const changes = new Map();
   for (const change of plan.changes) {
@@ -59,23 +68,45 @@ export function project(plan, releases) {
     const wages = age < income.retireAge ? income.wages : 0;
     const spouseWages = h.spouse && spouseAge < income.spouseRetireAge ? income.spouseWages : 0;
     const earned = wages + spouseWages;
+    const contribution = fixedContribution ? r.contributionAmount ?? 0
+      : earned * (r.contributionPercent ?? 0) / 100;
+    const other = age < income.retireAge ? income.other : 0;
     const social = startsAt(r.social, age, r.socialAge, r.socialGrowth, offset) +
       (h.spouse ? startsAt(r.spouseSocial, spouseAge, r.spouseSocialAge, r.spouseSocialGrowth, offset) : 0);
     const pension = startsAt(r.pension, age, r.pensionAge, r.pensionGrowth, offset) +
       (h.spouse ? startsAt(r.spousePension, spouseAge, r.spousePensionAge, r.spousePensionGrowth, offset) : 0);
-    const taxableWithdrawal = startsAt(r.taxable, age, r.taxableAge, r.taxableGrowth, offset);
-    const taxFree = startsAt(r.nontaxable, age, r.nontaxableAge, r.nontaxableGrowth, offset);
-    const investments = investmentIncome(plan.holdings, age, h.age);
+    const requestedTaxable = startsAt(r.taxable, age, r.taxableAge, r.taxableGrowth, offset);
+    const requestedNontaxable = startsAt(r.nontaxable, age, r.nontaxableAge, r.nontaxableGrowth, offset);
+    const requested = requestedTaxable + requestedNontaxable;
+    const investments = investmentIncome(plan.holdings, holdingBalances, age, h.age);
+    investmentCash = compound(investmentCash, r.investmentGrowth ?? 0, offset === 0 ? 0 : 1) + contribution;
+    const available = investmentCash + investments.balance;
+    const fulfilled = trackInvestments ? Math.min(requested, available) : requested;
+    const withdrawalFraction = requested > 0 ? fulfilled / requested : 1;
+    const taxableWithdrawal = requestedTaxable * withdrawalFraction;
+    const taxFree = requestedNontaxable * withdrawalFraction;
+    const shortfall = requested - fulfilled;
+    if (trackInvestments && fulfilled > 0) {
+      const fromCash = Math.min(fulfilled, investmentCash);
+      investmentCash -= fromCash;
+      const fromHoldings = fulfilled - fromCash;
+      if (fromHoldings > 0 && investments.balance > 0) {
+        const remainingFraction = dollars(1 - fromHoldings / investments.balance);
+        for (const [index, balance] of holdingBalances.entries()) holdingBalances[index] = balance * remainingFraction;
+      }
+    }
+    const investmentBalance = trackInvestments ? dollars(available - fulfilled) : null;
+    const taxableInvestment = taxableWithdrawal + investments.Ordinary + investments.Qualified;
+    const nontaxableInvestment = taxFree + investments['Tax-free'];
     const pretax = Math.min(earned, income.pretax + income.health);
-    const ordinary = earned + income.other + pension + taxableWithdrawal + investments.Ordinary - pretax;
+    const ordinary = earned + other + pension + taxableWithdrawal + investments.Ordinary - pretax;
     const taxableSocial = taxableBenefits(social, ordinary + investments.Qualified, rules, h);
     const adjusted = ordinary + investments.Qualified + taxableSocial;
     const fedDeduction = rules.standardDeduction[h.status] * scale;
     const fedTaxable = dollars(adjusted - fedDeduction);
     const gains = Math.min(fedTaxable, investments.Qualified);
     const ordinaryTaxable = fedTaxable - gains;
-    const gross = earned + income.other + pension + taxableWithdrawal + taxFree + social +
-      investments.Ordinary + investments.Qualified + investments['Tax-free'];
+    const gross = earned + other + pension + social + taxableInvestment + nontaxableInvestment;
 
     const children = plan.dependents.filter(person => year >= person.birth && year - person.birth < 17).length;
     const students = plan.dependents.filter(person =>
@@ -107,8 +138,9 @@ export function project(plan, releases) {
       if (state === null) warning = h.state + ' taxable income exceeds the shared schedule.';
       else state = dollars(state - allowance.credit - income.stateCredits);
     } else if (h.state === 'Other') {
-      federal = dollars((gross - pretax) * h.federalRate / 100 - income.credits);
-      state = dollars((gross - pretax) * h.stateRate / 100 - income.stateCredits);
+      const customTaxable = gross - pretax - nontaxableInvestment;
+      federal = dollars(customTaxable * h.federalRate / 100 - income.credits);
+      state = dollars(customTaxable * h.stateRate / 100 - income.stateCredits);
       socialTax = 0;
       medicare = 0;
     } else {
@@ -116,13 +148,15 @@ export function project(plan, releases) {
       if (gross) warning = 'Choose a state to complete the tax and net income estimates.';
     }
     const tax = state === null ? null : federal + state + socialTax + medicare;
+    const net = tax === null ? null : gross - pretax - tax;
     rows.push({ year, age, spouseAge: h.spouse ? spouseAge : null, sourceYear: rules.year, stateName: h.state,
       stateStatus: h.stateStatus, status: h.status, gross, adjusted, federal, state, socialTax, medicare, tax,
-      net: tax === null ? null : gross - pretax - tax, fedDeduction, fedTaxable, stateDeduction, stateTaxable,
+      net, fedDeduction, fedTaxable, stateDeduction, stateTaxable,
       fedRate: gross ? federal / gross : 0, stateRate: state === null ? null : gross ? state / gross : 0,
       balance: investments.balance, distribution: investments.Ordinary + investments.Qualified + investments['Tax-free'],
-      wages, spouseWages, other: income.other, pension, social, taxableSocial, taxableWithdrawal, taxFree,
-      dependentCredit, children, students, pretax, warning });
+      wages, spouseWages, other, pension, social, taxableSocial, taxableWithdrawal, taxFree,
+      dependentCredit, children, students, pretax, warning, taxableInvestment, nontaxableInvestment,
+      contribution, remainingCash: net === null ? null : net - contribution, investmentBalance, shortfall });
     for (const [amount, growth] of [['wages','wageGrowth'], ['spouseWages','spouseGrowth'], ['other','otherGrowth'],
       ['pretax','pretaxGrowth'], ['health','healthGrowth'], ['credits','creditGrowth'], ['stateCredits','stateCreditGrowth']]) {
       income[amount] = compound(income[amount], income[growth], 1);

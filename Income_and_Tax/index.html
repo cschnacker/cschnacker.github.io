@@ -8,8 +8,8 @@
   <title>Income &amp; Tax Planner</title>
   <link rel="icon" href="Inc%26Tax.png">
   <link rel="manifest" href="manifest.json">
-  <link rel="stylesheet" href="styles.css?v=2026-7">
-  <script type="module" src="src/app.mjs?v=2026-7"></script>
+  <link rel="stylesheet" href="styles.css?v=2026-8">
+  <script type="module" src="src/app.mjs?v=2026-8"></script>
 </head>
 <body>
   <a class="skip" href="#main">Skip to planner</a>
@@ -73,10 +73,29 @@
       </section>
     </div>
     <div id="panel-investments" class="panel" hidden>
-      <section class="card editor">
-        <div class="outlook-head"><div class="section-heading"><h2>Investment holdings</h2><p>Use shares, price, and yield to model investment income.</p></div><button type="button" class="secondary" data-add="holdings">Add holding</button></div>
-        <div class="summary invest-summary"><div class="metric"><span>Starting investment value</span><strong id="start-balance">—</strong></div><div class="metric"><span>Starting annual distributions</span><strong id="start-distribution">—</strong></div></div>
-        <div id="holdings-records"></div>
+      <div class="edit-grid">
+        <section class="card editor">
+          <div class="section-heading"><h2>Investment income</h2><p>Enter annual withdrawals in starting-year dollars. Set start ages and growth in Optional investment info.</p></div>
+          <div id="investment-income-fields"></div>
+        </section>
+        <section class="card editor">
+          <div class="section-heading"><h2>Annual contributions</h2><p>Choose a percentage of primary and spouse salary or a fixed annual dollar amount.</p></div>
+          <div id="contribution-fields"></div>
+        </section>
+      </div>
+      <section class="card editor records">
+        <div class="section-heading"><h2>Annual investment plan</h2></div>
+        <div class="table-scroll" tabindex="0" role="region" aria-label="Annual investment plan">
+          <table><thead><tr><th scope="col">Year</th><th scope="col">Primary salary</th><th scope="col">Spouse salary</th><th scope="col">Taxable investment income</th><th scope="col">Non-taxable investment income</th><th scope="col">Amount to invest</th><th scope="col">Cash after investing</th><th scope="col">End-of-year balance</th><th scope="col" id="withdrawal-shortfall-heading" hidden>Unfunded withdrawals</th></tr></thead><tbody id="investment-schedule"></tbody></table>
+        </div>
+        <p id="investment-balance-note" class="chart-note">Add a starting balance, individual holdings, or contributions to track withdrawals against available investments.</p>
+        <details id="optional-investment-info">
+          <summary>Optional investment info</summary>
+          <div id="investment-timing-fields"></div>
+          <div class="outlook-head records"><div class="section-heading"><h3>Individual holdings</h3><p>Income from holdings adds to the annual amounts entered above.</p></div><button type="button" class="secondary" data-add="holdings">Add holding</button></div>
+          <div class="summary invest-summary"><div class="metric"><span>Starting holding value</span><strong id="start-balance">—</strong></div><div class="metric"><span>Starting annual holding distributions</span><strong id="start-distribution">—</strong></div></div>
+          <div id="holdings-records"></div>
+        </details>
       </section>
     </div>
     <div id="panel-changes" class="panel" hidden>
@@ -98,8 +117,9 @@
       <section class="card editor readable">
         <div class="section-heading"><h2>Using the planner</h2><p>Enter a starting scenario, add expected changes, and inspect the years that matter to you.</p></div>
         <details open><summary>Set up your household</summary><p>In Overview, choose a start year, projection length, your age, and the federal and state filing statuses. Enable a spouse to enter both sets of work and retirement income. For a separate return, enter only the income covered by that return. Choose Other to use your own effective income tax rates and turn off U.S. payroll taxes.</p></details>
-        <details><summary>Enter income and retirement dates</summary><p>Enter annual starting-year amounts and growth rates. The controls step by $1,000 for wages, pensions, Social Security, and taxable or tax-free withdrawals, and by $500 for other taxable income. You can also type an exact amount. Wages stop in the year the retirement age is reached. Retirement income begins at its specified age and uses the entered growth rate from the starting year. Pre-tax payroll deductions are capped at wages and reduce income taxes. Enter Social Security separately from taxable pension income.</p></details>
-        <details><summary>Add holdings, dependents, and future changes</summary><p>Holdings generate distributions from projected value times yield. For a future purchase, enter the price expected at first inclusion. Values compound after inclusion. Select ordinary, qualified, or tax-free distributions. The end age excludes the holding in that year. Appreciation is unrealized and distributions are paid in cash. A change takes effect at the start of its year and remains in effect. For two changes to the same field in the same year, the last entry applies.</p></details>
+        <details><summary>Enter income and retirement dates</summary><p>Enter annual starting-year amounts and growth rates. The controls step by $1,000 for wages, pensions, Social Security, and taxable or tax-free withdrawals, and by $500 for other taxable income. You can also type an exact amount. Each person's wages stop at their retirement age. Other taxable income stops at the primary retirement age. Retirement income begins at its specified age and uses the entered growth rate from the starting year. Pre-tax payroll deductions are capped at wages and reduce income taxes. Enter Social Security separately from taxable pension income.</p></details>
+        <details><summary>Plan investment income and contributions</summary><p>Enter taxable and non-taxable annual withdrawals. Set their timing and growth under Optional investment info. Taxable withdrawals are treated as ordinary income. Holdings also pay distributions based on their projected value, yield, and tax treatment. Enter the expected purchase price for a future holding. Its end age excludes it from that year onward.</p><p>Percentage contributions use combined gross wages and follow changes in either spouse’s pay. Fixed contributions apply each year, including years without wages. Contributions use after-tax cash and add to the investment balance.</p><p>Enter a starting balance for investments outside the individual holdings you list. Its growth rate also applies to accumulated contributions. Withdrawals draw from that balance first, then reduce remaining individual holdings proportionally. If funds run short, the planner reduces both withdrawal amounts in proportion and shows the unfunded amount. Without a balance, holdings, or contributions, entered withdrawals are treated as planned income.</p></details>
+        <details><summary>Add dependents and future changes</summary><p>A change takes effect at the start of its year and remains in effect. When two changes affect the same field in the same year, the last entry applies.</p></details>
         <details><summary>Read the estimates</summary><p>The annual chart stacks net income, federal income tax, state income tax, and payroll tax. Payroll tax combines Social Security and Medicare. Each band’s thickness shows that category’s amount. Negative net income falls below zero, and years with incomplete tax estimates appear as gaps. Hover over the chart to see all four amounts for any year. To see the same amounts in the legend and update the tax breakdown, use Inspect year.</p><p>Federal and state effective rates use gross cash income. Forecast years use the most recent available annual release and apply your indexing assumptions to bracket limits and deductions. Years before the first release use its amounts without indexing.</p><p>The model uses standard deductions and employee payroll taxes on entered wages before pre-tax deductions. It estimates nonrefundable dependent credits assuming otherwise eligible dependents and models qualified distributions at federal 0%, 15%, and 20% rates. Enter eligible earned income, education, and other credits as dollar estimates. State calculations use the shared filing-status mappings and workbook allowances, exclude Social Security benefits, and omit local taxes and state-specific adjustments. The planner also excludes itemizing, self-employment tax, refundable credits, AMT, NIIT, and special senior or dependent deductions. Use these figures for planning.</p></details>
         <details><summary>Move or erase a plan</summary><p>Download a backup in Plan data, move the JSON file to the other machine, then choose it under Import plan and confirm the replacement. Use Clear plan to remove the browser’s copy. A downloaded backup still contains the data you exported.</p></details>
         <details><summary>Tax data sources</summary><ul id="source-list"></ul><p>State tables are inherited from Effective Tax Rate Fed/State. Some statuses use shared single-filer approximations and the data may lag state releases.</p></details>

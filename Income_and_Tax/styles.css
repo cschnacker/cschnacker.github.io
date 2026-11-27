@@ -102,6 +102,7 @@ details p { color: var(--muted); margin-top: 9px; }
 table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
 th, td { padding: 10px; text-align: right; white-space: nowrap; border-bottom: 1px solid var(--line); }
 th:first-child, td:first-child { text-align: left; }
+#investment-schedule th { position: static; background: transparent; font-size: inherit; }
 th { color: #3e5869; background: #f2f6f8; font-size: .83rem; position: sticky; top: 0; }
 tr.selected td { background: #e6f3ef; }
 td button { background: none; border: 0; padding: 4px 2px; color: var(--teal); font-weight: 700; text-decoration: underline; }

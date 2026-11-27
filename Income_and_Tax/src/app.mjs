@@ -1,7 +1,7 @@
-import { readLegacy } from './legacy.mjs';
-import { project } from './calculations.mjs';
-import { changeLabels, changeSpec, emptyPlan, normalize, schemas, statuses, valueFor } from './model.mjs';
-import { openPlanStore, readBackup, serialize } from './storage.mjs';
+import { readLegacy } from './legacy.mjs?v=2026-8';
+import { project } from './calculations.mjs?v=2026-8';
+import { changeLabels, changeSpec, emptyPlan, normalize, schemas, statuses, valueFor } from './model.mjs?v=2026-8';
+import { openPlanStore, readBackup, serialize } from './storage.mjs?v=2026-8';
 import { loadReleases, releaseFor } from './tax-data.mjs';
 
 const byId = id => document.getElementById(id);
@@ -54,7 +54,7 @@ function choose(options, current) {
 const amountSteps = {
   wages: 1000, spouseWages: 1000, other: 500,
   pension: 1000, spousePension: 1000, social: 1000, spouseSocial: 1000,
-  taxable: 1000, nontaxable: 1000
+  taxable: 1000, nontaxable: 1000, contributionAmount: 1000, investmentOpening: 1000
 };
 
 function field(module, fields, key, label, settings = {}) {
@@ -126,7 +126,7 @@ function buildForms() {
   byId('income-fields').replaceChildren(
     fieldset('income', 'Primary employment', [['wages', 'Annual wages ($)'], ['wageGrowth', 'Wage growth (%/yr)'], ['retireAge', 'Age wages stop']]),
     fieldset('income', 'Spouse employment', [['spouseWages', 'Annual wages ($)'], ['spouseGrowth', 'Wage growth (%/yr)'], ['spouseRetireAge', 'Age wages stop']], true),
-    fieldset('income', 'Other income', [['other', 'Other taxable income ($)'], ['otherGrowth', 'Other income growth (%/yr)']]),
+    fieldset('income', 'Other income before primary retirement', [['other', 'Other taxable income ($)'], ['otherGrowth', 'Other income growth (%/yr)']]),
     fieldset('income', 'Pre-tax costs', [['pretax', 'Other pre-tax deductions ($)'], ['pretaxGrowth', 'Deduction growth (%/yr)'],
       ['health', 'Pre-tax health premiums ($)'], ['healthGrowth', 'Premium growth (%/yr)']]),
     fieldset('income', 'Other credits', [['credits', 'Federal credits ($)'], ['creditGrowth', 'Federal credit growth (%/yr)'],
@@ -136,12 +136,28 @@ function buildForms() {
     fieldset('retirement', 'Primary benefits', [['social', 'Annual Social Security ($)'], ['socialAge', 'Social Security start age'], ['socialGrowth', 'Social Security COLA (%)'],
       ['pension', 'Annual taxable pension ($)'], ['pensionAge', 'Pension start age'], ['pensionGrowth', 'Pension growth (%/yr)']]),
     fieldset('retirement', 'Spouse benefits', [['spouseSocial', 'Annual Social Security ($)'], ['spouseSocialAge', 'Social Security start age'], ['spouseSocialGrowth', 'Social Security COLA (%)'],
-      ['spousePension', 'Annual taxable pension ($)'], ['spousePensionAge', 'Pension start age'], ['spousePensionGrowth', 'Pension growth (%/yr)']], true),
-    fieldset('retirement', 'Withdrawals and other investment income', [['taxable', 'Annual taxable amount ($)'], ['taxableAge', 'Taxable start age'], ['taxableGrowth', 'Taxable growth (%/yr)'],
-      ['nontaxable', 'Annual tax-free amount ($)'], ['nontaxableAge', 'Tax-free start age'], ['nontaxableGrowth', 'Tax-free growth (%/yr)']])
+      ['spousePension', 'Annual taxable pension ($)'], ['spousePensionAge', 'Pension start age'], ['spousePensionGrowth', 'Pension growth (%/yr)']], true)
+  );
+  byId('investment-income-fields').replaceChildren(fieldsFor('retirement', plan.retirement, [
+    ['taxable', 'Annual taxable income ($)'], ['nontaxable', 'Annual non-taxable income ($)']
+  ]));
+  byId('contribution-fields').replaceChildren(fieldsFor('retirement', plan.retirement, [
+    ['contributionMode', 'Contribution method', { wide: true }],
+    ['contributionPercent', 'Combined salary (%)', { wide: true }],
+    ['contributionAmount', 'Fixed annual contribution ($)', { wide: true }]
+  ]));
+  byId('investment-timing-fields').replaceChildren(
+    fieldset('retirement', 'Withdrawal timing and growth', [
+      ['taxableAge', 'Taxable withdrawal start age'], ['taxableGrowth', 'Taxable withdrawal growth (%/yr)'],
+      ['nontaxableAge', 'Non-taxable withdrawal start age'], ['nontaxableGrowth', 'Non-taxable withdrawal growth (%/yr)']
+    ]),
+    fieldset('retirement', 'Balance outside individual holdings', [
+      ['investmentOpening', 'Starting investment balance ($)'], ['investmentGrowth', 'Annual balance growth (%)']
+    ])
   );
   for (const name of Object.keys(collectionNames)) buildRecords(name);
   updateConditionalFields();
+  updateContributionFields();
 }
 
 function buildRecords(module) {
@@ -189,6 +205,12 @@ function updateConditionalFields() {
     label.hidden = key === 'separateLivedApart' ? plan.household.status !== 'Separate'
       : (plan.household.state === 'Other') === (key === 'stateStatus');
   }
+}
+
+function updateContributionFields() {
+  const fixed = plan.retirement.contributionMode === 'Fixed amount';
+  document.querySelector('[data-key="contributionPercent"]').closest('label').hidden = fixed;
+  document.querySelector('[data-key="contributionAmount"]').closest('label').hidden = !fixed;
 }
 
 const projectionSeries = [
@@ -344,13 +366,18 @@ function details(row) {
     ['Primary wages', money(row.wages)], ['Spouse wages', money(row.spouseWages)], ['Other taxable income', money(row.other)],
     ['Taxable pension', money(row.pension)], ['Social Security benefits', money(row.social)], ['Taxable Social Security', money(row.taxableSocial)],
     ['Taxable withdrawals', money(row.taxableWithdrawal)], ['Tax-free withdrawals', money(row.taxFree)],
-    ['Investment distributions', money(row.distribution)], ['Investment value', money(row.balance)], ['Pre-tax costs', money(row.pretax)],
+    ['Investment distributions', money(row.distribution)], ['Investment value before withdrawals', money(row.balance)], ['Pre-tax costs', money(row.pretax)],
     ['Federal standard deduction', money(row.fedDeduction)], ['Federal taxable income', money(row.fedTaxable)],
     ['State deductions and exemptions', money(row.stateDeduction)], ['State taxable income', money(row.stateTaxable)],
     ['State effective tax rate', rate(row.stateRate)], ['Estimated dependent credit before tax limit', money(row.dependentCredit)],
     ['Children under 17', row.children], ['Dependents in college', row.students]
   ];
   if (row.stateName === 'Other') detail.splice(12, 4);
+  if (row.investmentBalance !== null) {
+    detail.push(['Amount invested', money(row.contribution)], ['Cash after investing', money(row.remainingCash)],
+      ['End-of-year investment balance', money(row.investmentBalance)]);
+    if (row.shortfall > 0) detail.push(['Unfunded withdrawals', money(row.shortfall)]);
+  }
   byId('year-detail').replaceChildren(...detail.flatMap(([label, value]) => [node('dt', label), node('dd', value)]));
 }
 
@@ -388,6 +415,19 @@ function recalculate() {
   byId('period').textContent = start.year === end.year ? String(start.year) : start.year + '–' + end.year;
   byId('start-balance').textContent = money(start.balance);
   byId('start-distribution').textContent = money(start.distribution);
+  const trackBalance = start.investmentBalance !== null;
+  const hasShortfall = rows.some(row => row.shortfall > 0);
+  byId('investment-balance-note').hidden = trackBalance;
+  byId('withdrawal-shortfall-heading').hidden = !hasShortfall;
+  byId('investment-schedule').replaceChildren(...rows.map(row => {
+    const tr = node('tr');
+    const amounts = [row.wages, row.spouseAge === null ? null : row.spouseWages, row.taxableInvestment,
+      row.nontaxableInvestment, row.contribution, row.remainingCash, row.investmentBalance];
+    if (hasShortfall) amounts.push(row.shortfall);
+    tr.append(node('th', row.year), ...amounts.map(amount => node('td', money(amount))));
+    tr.cells[0].scope = 'row';
+    return tr;
+  }));
   projectionYears.replaceChildren(...rows.map(row => new Option(row.year, row.year)));
   byId('schedule-body').replaceChildren(...rows.map(row => {
     const tr = node('tr');
@@ -458,6 +498,7 @@ function setInput(event) {
     document.querySelector('[data-module="changes"][data-key="field"][data-index="' + index + '"]')?.focus();
   }
   if (module === 'household') updateConditionalFields();
+  if (key === 'contributionMode') updateContributionFields();
   recalculate();
   save(module);
 }

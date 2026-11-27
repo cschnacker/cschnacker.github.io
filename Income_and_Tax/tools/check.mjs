@@ -46,7 +46,7 @@ test('future changes persist and investment distributions stop at the end age', 
   plan.changes.push(normalize('changes', { year: 2027, field: 'other', value: '1200' }));
   const rows = project(plan, releases);
   assert.deepEqual(rows.map(row => row.wages), [30000, 40000, 0, 0]);
-  assert.deepEqual(rows.map(row => row.other), [0, 1200, 1200, 1200]);
+  assert.deepEqual(rows.map(row => row.other), [0, 1200, 0, 0]);
   close(rows[0].distribution, 50);
   close(rows[1].distribution, 55);
   assert.equal(rows[2].distribution, 0);
@@ -59,6 +59,47 @@ test('backup round-trip and explicit error for income beyond a finite tax schedu
   assert.throws(() => readBackup('{"version":0}', 2026), /version 1/);
   assert.equal(bracketTax(101, [{ upper: 100, rate: 10 }]), null);
   assert.equal(bracketTax(100, [{ upper: 100, rate: 10 }]), 10);
+});
+
+test('investment contributions use household wages or a fixed amount without changing taxes', () => {
+  const oldPlan = emptyPlan(2026);
+  Object.assign(oldPlan.household, { age: 66, spouseAge: 64, spouse: true, state: 'Texas', years: 3 });
+  Object.assign(oldPlan.income, { wages: 80000, spouseWages: 50000, spouseGrowth: 10 });
+  Object.assign(oldPlan.retirement, { taxable: 12000, nontaxable: 3000 });
+  for (const key of ['contributionMode', 'contributionAmount', 'contributionPercent']) delete oldPlan.retirement[key];
+  const plan = readBackup(serialize(oldPlan), 2026);
+  const baseline = project(plan, releases);
+  assert.deepEqual(baseline.map(row => row.contribution), [0, 0, 0]);
+  assert.deepEqual(baseline.map(row => row.taxableInvestment), [0, 12000, 12000]);
+  assert.deepEqual(baseline.map(row => row.nontaxableInvestment), [0, 3000, 3000]);
+  plan.retirement.investmentOpening = 100000;
+  plan.retirement.contributionPercent = 10;
+  const percentage = project(plan, releases);
+  percentage.forEach((row, i) => {
+    close(row.contribution, [13000, 5500, 6050][i]);
+    close(row.tax, baseline[i].tax);
+    close(row.remainingCash, baseline[i].net - row.contribution);
+  });
+  plan.retirement.contributionMode = 'Fixed amount';
+  plan.retirement.contributionAmount = 4000;
+  assert.deepEqual(project(plan, releases).map(row => row.contribution), [4000, 4000, 4000]);
+});
+
+test('retirement withdrawals reduce investments and stop when the balance is depleted', () => {
+  const plan = emptyPlan(2026);
+  Object.assign(plan.household, { age: 66, state: 'Texas', years: 4 });
+  Object.assign(plan.income, { wages: 80000, other: 5000 });
+  Object.assign(plan.retirement, { taxable: 8000, nontaxable: 2000, investmentOpening: 5000, pension: 20000, social: 10000 });
+  plan.holdings.push(normalize('holdings', { units: 100, price: 100, yield: 10, startAge: 66 }));
+  const rows = project(plan, releases);
+  assert.deepEqual(rows.map(row => row.wages), [80000, 0, 0, 0]);
+  assert.deepEqual(rows.map(row => row.other), [5000, 0, 0, 0]);
+  assert.deepEqual(rows.map(row => row.pension), [0, 20000, 20000, 20000]);
+  assert.deepEqual(rows.map(row => row.investmentBalance), [15000, 5000, 0, 0]);
+  assert.deepEqual(rows.map(row => row.taxableWithdrawal), [0, 8000, 4000, 0]);
+  assert.deepEqual(rows.map(row => row.taxFree), [0, 2000, 1000, 0]);
+  assert.deepEqual(rows.map(row => row.distribution), [1000, 1000, 500, 0]);
+  assert.deepEqual(rows.map(row => row.shortfall), [0, 0, 5000, 10000]);
 });
 
 test('existing workbook-converter entries map to editable plan modules', () => {
