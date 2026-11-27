@@ -1,7 +1,7 @@
-import { readLegacy } from './legacy.mjs?v=2026-10';
-import { project } from './calculations.mjs?v=2026-10';
-import { changeLabels, changeSpec, emptyPlan, normalize, schemas, statuses, valueFor } from './model.mjs?v=2026-10';
-import { openPlanStore, readBackup, serialize } from './storage.mjs?v=2026-10';
+import { readLegacy } from './legacy.mjs?v=2026-11';
+import { project } from './calculations.mjs?v=2026-11';
+import { changeLabels, changeSpec, emptyPlan, normalize, schemas, statuses, valueFor } from './model.mjs?v=2026-11';
+import { openPlanStore, readBackup, serialize } from './storage.mjs?v=2026-11';
 import { loadReleases, releaseFor } from './tax-data.mjs';
 
 const byId = id => document.getElementById(id);
@@ -151,7 +151,9 @@ function buildForms() {
     fieldset('income', 'Other income before primary retirement', [['other', 'Other taxable income ($)'], ['otherGrowth', 'Other income growth (%/yr)']]),
     fieldset('income', 'Pre-tax costs', [['pretax', 'Other pre-tax deductions ($)'], ['pretaxGrowth', 'Deduction growth (%/yr)'],
       ['health', 'Pre-tax health premiums ($)'], ['healthGrowth', 'Premium growth (%/yr)']]),
-    fieldset('income', 'Other credits', [['credits', 'Federal credits ($)'], ['creditGrowth', 'Federal credit growth (%/yr)'],
+    fieldset('income', 'Other credits', [
+      ['credits', 'Other federal credits ($)'], ['creditGrowth', 'Federal credit growth (%/yr)'],
+      ['earnedIncomeCredit', 'Estimated earned income credit ($)'], ['collegeCredit', 'Estimated college credit ($)'],
       ['stateCredits', 'State credits ($)'], ['stateCreditGrowth', 'State credit growth (%/yr)']])
   );
   byId('retirement-fields').replaceChildren(
@@ -247,7 +249,46 @@ const investmentSeries = [
   { key: 'nontaxable-balance', label: 'Non-taxable balance', color: '#794491', amount: row => row.nontaxableBalance, dash: '6 4' }
 ];
 
-function addProjectionHover(chartContainer, svg, guide, hitArea, x, plotWidth, viewWidth, seriesList) {
+function lineSeries(fields) {
+  const colors = ['#087d73', '#965608', '#794491', '#2c60a8', '#a32f53', '#506a1f', '#5e6590', '#495c69'];
+  return fields.map(([key, label, amount], index) => ({
+    key, label, color: colors[index], amount: amount ?? (row => row[key]),
+    dash: [undefined, '6 4', '2 4', '9 4 2 4'][index % 4]
+  }));
+}
+
+const projectionViews = {
+  stacked: { title: 'Stacked Income and Taxes', series: projectionSeries, stacked: true, requiresTax: true },
+  summary: { title: 'Income and Tax Summary', series: lineSeries([
+    ['gross', 'Gross income'], ['tax', 'Total taxes'], ['net', 'Net income']
+  ]) },
+  taxes: { title: 'Taxes', stacked: true, requiresTax: true, series: lineSeries([
+    ['federal', 'Federal income tax'], ['state', 'State income tax'], ['socialTax', 'Social Security tax'], ['medicare', 'Medicare tax']
+  ]) },
+  rates: { title: 'Effective Tax Rates', format: rate, series: lineSeries([
+    ['fedRate', 'Federal effective rate'], ['stateRate', 'State effective rate']
+  ]) },
+  income: { title: 'Income', stacked: true, series: lineSeries([
+    ['wages', 'Primary wages'], ['spouseWages', 'Spouse wages'], ['other', 'Other taxable income'],
+    ['taxableInvestment', 'Taxable investment income'], ['nontaxableInvestment', 'Non-taxable investment income'],
+    ['primarySocial', 'Primary Social Security'], ['spouseSocial', 'Spouse Social Security'], ['pension', 'Pension income']
+  ]) },
+  deductions: { title: 'Deductions and Exemptions', stacked: true, series: lineSeries([
+    ['fedDeduction', 'Federal standard deduction', row => row.stateName === 'Other' ? null : row.fedDeduction],
+    ['federalExemptions', 'Federal personal exemptions', row => row.stateName === 'Other' ? null : 0],
+    ['stateStandardDeduction', 'State standard deduction'], ['stateExemptions', 'State exemptions'],
+    ['pretax', 'Pre-tax costs']
+  ]) },
+  credits: { title: 'Tax Credits', series: lineSeries([
+    ['otherFederalCredits', 'Other federal credits entered'],
+    ['dependentCredit', 'Estimated child and dependent credit', row => row.stateName === 'Other' ? null : row.dependentCredit],
+    ['earnedIncomeCredit', 'Earned income credit entered'], ['collegeCredit', 'College credit entered']
+  ]), note: 'Shows credit amounts before the tax limit. Earned income and college credits use your estimates.' },
+  investments: { title: 'Investment Balances', series: investmentSeries }
+};
+const projectionView = byId('projection-view');
+
+function addProjectionHover(chartContainer, svg, guide, hitArea, x, plotWidth, viewWidth, seriesList, format) {
   const tooltip = node('div', undefined, 'projection-tooltip');
   const title = node('strong');
   tooltip.append(title);
@@ -273,7 +314,7 @@ function addProjectionHover(chartContainer, svg, guide, hitArea, x, plotWidth, v
     hoveredIndex = index;
     const hovered = rows[index];
     title.textContent = hovered.year;
-    seriesList.forEach((series, band) => { amounts[band].textContent = money(series.amount(hovered)); });
+    seriesList.forEach((series, band) => { amounts[band].textContent = format(series.amount(hovered)); });
 
     const position = x(index);
     guide.setAttribute('x1', position);
@@ -292,23 +333,24 @@ function addProjectionHover(chartContainer, svg, guide, hitArea, x, plotWidth, v
   });
 }
 
-function chart(row, chartContainer = byId('chart'), seriesList = projectionSeries, stacked = true) {
+function chart(row, chartContainer, view) {
+  const { title, series: seriesList, stacked = false, requiresTax = false, format = money } = view;
   const width = Math.max(280, chartContainer.clientWidth || 720);
   const height = width < 500 ? 198 : 246;
   const left = 62, right = 12, top = 16, bottom = 33;
   const stacks = rows.map(item => {
-    if (stacked && item.net === null) return null;
     let positiveTotal = 0;
     return seriesList.map(series => {
       const amount = series.amount(item);
+      if (amount === null || (requiresTax && item.net === null)) return null;
       if (!stacked || amount < 0) return { base: 0, edge: amount };
       const base = positiveTotal;
       positiveTotal += amount;
       return { base, edge: positiveTotal };
     });
   });
-  const values = stacks.flatMap(stack => stack?.map(point => point.edge) ?? []);
-  const max = values.some(Boolean) ? Math.max(0, ...values) : 100;
+  const values = stacks.flatMap(stack => stack.filter(Boolean).map(point => point.edge));
+  const max = values.some(Boolean) ? Math.max(0, ...values) : format === rate ? .1 : 100;
   const min = Math.min(0, ...values);
   const unit = 10 ** Math.floor(Math.log10((max - min) / 4));
   const tick = Math.ceil((max - min) / 4 / unit) * unit;
@@ -327,13 +369,12 @@ function chart(row, chartContainer = byId('chart'), seriesList = projectionSerie
   }
   svg.setAttribute('viewBox', [0, 0, width, height].join(' '));
   svg.setAttribute('role', 'img');
-  svg.setAttribute('aria-label', stacked
-    ? 'Stacked annual projection of net income, federal income tax, state income tax, and payroll tax. Exact amounts appear in the selected-year legend and projection table.'
-    : 'Taxable and non-taxable end-of-year investment balances. Exact amounts appear in the annual investment plan table.');
+  svg.setAttribute('aria-label', title + '. Exact values are available on hover and in the annual projection.');
   for (let index = 0; index <= Math.round((upper - lower) / tick); index += 1) {
     const value = lower + tick * index;
     draw('line', { x1: left, x2: width - right, y1: y(value), y2: y(value), stroke: value === 0 ? '#91a7b6' : '#dce5eb' });
-    draw('text', { x: left - 10, y: y(value) + 4, 'text-anchor': 'end' }, (value < 0 ? '−$' : '$') + compact.format(Math.abs(value)));
+    const label = format === rate ? rate(value) : (value < 0 ? '−$' : '$') + compact.format(Math.abs(value));
+    draw('text', { x: left - 10, y: y(value) + 4, 'text-anchor': 'end' }, label);
   }
   const last = rows.length - 1;
   for (const index of new Set([0, Math.round(last / 3), Math.round(last * 2 / 3), last])) {
@@ -341,22 +382,23 @@ function chart(row, chartContainer = byId('chart'), seriesList = projectionSerie
       draw('text', { x: x(index), y: height - 11, 'text-anchor': index === last && last ? 'end' : index === 0 ? 'start' : 'middle' }, rows[index].year);
     }
   }
-  const runs = [];
-  let run = [];
-  for (const [index, stack] of stacks.entries()) {
-    if (stack) {
-      if (!run.length) runs.push(run);
-      run.push({ x: x(index), stack });
-    } else run = [];
-  }
-  const paths = seriesList.map((series, band) => ({
-    ...series,
-    segments: runs.map(points => {
-      const edge = points.map(point => point.x + ' ' + y(point.stack[band].edge)).join(' L');
-      const base = points.toReversed().map(point => point.x + ' ' + y(point.stack[band].base)).join(' L');
-      return { line: 'M' + edge, fill: 'M' + edge + ' L' + base + ' Z' };
-    })
-  }));
+  const paths = seriesList.map((series, band) => {
+    const runs = [];
+    let run = [];
+    for (const [index, stack] of stacks.entries()) {
+      const point = stack[band];
+      if (point) {
+        if (!run.length) runs.push(run);
+        run.push({ ...point, x: x(index) });
+      } else run = [];
+    }
+    const segments = runs.map(points => {
+      const edge = points.map(point => point.x + ' ' + y(point.edge)).join(' L');
+      const base = points.toReversed().map(point => point.x + ' ' + y(point.base)).join(' L');
+      return { line: 'M' + edge, fill: 'M' + edge + ' L' + base + ' Z', lone: points.length === 1 ? points[0] : null };
+    });
+    return { ...series, segments };
+  });
   for (const series of stacked ? paths : []) {
     draw('path', { d: series.segments.map(segment => segment.fill).join(' '), fill: series.color, 'fill-opacity': '.17' });
   }
@@ -367,6 +409,9 @@ function chart(row, chartContainer = byId('chart'), seriesList = projectionSerie
     draw('path', { d: segments.map(segment => segment.line).join(' '), fill: 'none', stroke: color,
       'stroke-width': 2, 'stroke-linejoin': 'round', 'stroke-dasharray': dash ?? 'none', 'data-series': key });
     const point = stacks[selectedIndex]?.[band];
+    for (const { lone } of segments) {
+      if (lone && lone.x !== focus) draw('circle', { cx: lone.x, cy: y(lone.edge), r: 2.5, fill: color });
+    }
     if (point && (!stacked || band === 0 || point.edge !== point.base)) {
       draw('circle', { cx: focus, cy: y(point.edge), r: 3.5, fill: color, stroke: 'white' });
     }
@@ -374,7 +419,7 @@ function chart(row, chartContainer = byId('chart'), seriesList = projectionSerie
   const guide = draw('line', { y1: top, y2: height - bottom, stroke: '#405e70', 'stroke-dasharray': '4 3', visibility: 'hidden' });
   const hitArea = draw('rect', { x: left, y: top, width: plotWidth, height: height - top - bottom, fill: 'transparent', class: 'projection-hit-area' });
   chartContainer.replaceChildren(svg);
-  addProjectionHover(chartContainer, svg, guide, hitArea, x, plotWidth, width, seriesList);
+  addProjectionHover(chartContainer, svg, guide, hitArea, x, plotWidth, width, seriesList, format);
 }
 
 function details(row) {
@@ -416,17 +461,19 @@ function inspect() {
   const description = row.year === row.sourceYear ? 'Published base year' :
     row.year < row.sourceYear ? row.sourceYear + ' baseline used for this earlier year' :
       'Projected from ' + row.sourceYear + ' tax tables';
-  byId('projection-note').textContent = [description, row.warning].filter(Boolean).join(' · ');
+  const view = projectionViews[projectionView.value];
+  const format = view.format ?? money;
+  byId('projection-note').textContent = [description, row.warning, view.note].filter(Boolean).join(' · ');
   const legend = byId('projection-legend');
   legend.setAttribute('aria-label', 'Projection amounts for ' + row.year);
-  legend.replaceChildren(...projectionSeries.map(series => {
+  legend.replaceChildren(...view.series.map(series => {
     const item = node('div', undefined, 'legend-item');
     item.style.setProperty('--series-color', series.color);
-    item.append(node('span', series.label), node('strong', money(series.amount(row))));
+    item.append(node('span', series.label), node('strong', format(series.amount(row))));
     return item;
   }));
-  chart(row);
-  if (!byId('panel-investments').hidden) chart(row, byId('investment-chart'), investmentSeries, false);
+  chart(row, byId('chart'), view);
+  if (!byId('panel-investments').hidden) chart(row, byId('investment-chart'), projectionViews.investments);
   details(row);
   for (const tableRow of byId('schedule-body').rows) {
     tableRow.classList.toggle('selected', Number(tableRow.dataset.year) === row.year);
@@ -638,6 +685,8 @@ function attach() {
     catch (error) { byId('data-status').textContent = 'Could not update the saved plan. ' + error.message; }
   });
   route();
+  projectionView.replaceChildren(...Object.entries(projectionViews).map(([key, view]) => new Option(view.title, key)));
+  projectionView.addEventListener('change', inspect);
   byId('investment-legend').replaceChildren(...investmentSeries.map(series => {
     const item = node('span', series.label, 'investment-legend-item');
     item.style.setProperty('--series-color', series.color);
@@ -647,8 +696,8 @@ function attach() {
   const observer = new ResizeObserver(() => {
     const row = rows.find(item => item.year === selectedYear) ?? rows[0];
     if (!row) return;
-    if (!byId('panel-overview').hidden) chart(row);
-    if (!byId('panel-investments').hidden) chart(row, byId('investment-chart'), investmentSeries, false);
+    if (!byId('panel-overview').hidden) chart(row, byId('chart'), projectionViews[projectionView.value]);
+    if (!byId('panel-investments').hidden) chart(row, byId('investment-chart'), projectionViews.investments);
   });
   observer.observe(byId('outlook-title').closest('.outlook-head'));
   observer.observe(byId('investment-chart-title').parentElement);

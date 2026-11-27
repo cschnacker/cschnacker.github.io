@@ -119,6 +119,20 @@ test('contributions add to the accounts in the selected proportions', () => {
   assert.deepEqual(rows.map(row => row.nontaxableBalance), [2500, 5250]);
 });
 
+test('entered federal credit categories are projected separately and reduce tax up to the tax owed', () => {
+  const plan = emptyPlan(2026);
+  Object.assign(plan.household, { state: 'Colorado', years: 2 });
+  Object.assign(plan.income, { wages: 100000, credits: 250, earnedIncomeCredit: 500, collegeCredit: 1000, creditGrowth: 10 });
+  const rows = project(plan, releases);
+  close(rows[0].federal, 13170 - 1750);
+  close(rows[1].earnedIncomeCredit, 550);
+  close(rows[1].collegeCredit, 1100);
+  close(rows[1].otherFederalCredits, 275);
+  close(rows[0].stateDeduction, rows[0].stateStandardDeduction + rows[0].stateExemptions);
+  plan.income.collegeCredit = 20000;
+  assert.equal(project(plan, releases)[0].federal, 0);
+});
+
 test('existing workbook-converter entries map to editable plan modules', () => {
   const fields = { XLEW_2_2_4: 'N', XLEW_2_3_4: '2025', XLEW_2_4_4: '45', XLEW_2_7_4: 'Y',
     XLEW_2_9_3: '2010', XLEW_2_9_4: '2028', XLEW_2_19_5: '100,000', XLEW_2_25_5: 'New Mexica',

@@ -1,4 +1,4 @@
-import { changeSpec, valueFor } from './model.mjs?v=2026-10';
+import { changeSpec, valueFor } from './model.mjs?v=2026-11';
 import { bracketTax, releaseFor, scheduleFor } from './tax-data.mjs';
 
 const compound = (value, rate, years) => value * (1 + rate / 100) ** years;
@@ -85,8 +85,9 @@ export function project(plan, releases) {
     const contribution = fixedContribution ? r.contributionAmount ?? 0
       : earned * (r.contributionPercent ?? 0) / 100;
     const other = age < income.retireAge ? income.other : 0;
-    const social = startsAt(r.social, age, r.socialAge, r.socialGrowth, offset) +
-      (h.spouse ? startsAt(r.spouseSocial, spouseAge, r.spouseSocialAge, r.spouseSocialGrowth, offset) : 0);
+    const primarySocial = startsAt(r.social, age, r.socialAge, r.socialGrowth, offset);
+    const spouseSocial = h.spouse ? startsAt(r.spouseSocial, spouseAge, r.spouseSocialAge, r.spouseSocialGrowth, offset) : 0;
+    const social = primarySocial + spouseSocial;
     const pension = startsAt(r.pension, age, r.pensionAge, r.pensionGrowth, offset) +
       (h.spouse ? startsAt(r.spousePension, spouseAge, r.spousePensionAge, r.spousePensionGrowth, offset) : 0);
     const requestedTaxable = startsAt(r.taxable, age, r.taxableAge, r.taxableGrowth, offset);
@@ -124,10 +125,13 @@ export function project(plan, releases) {
     const c = rules.childCredit;
     const dependentCredit = dollars(children * c.amount + otherDependents * c.otherDependent -
       Math.ceil(dollars(adjusted - c.threshold[h.status]) / c.phaseoutStep) * c.phaseoutReduction);
+    const federalCredits = income.credits + (income.earnedIncomeCredit ?? 0) + (income.collegeCredit ?? 0);
     let federal = dollars(bracketTax(ordinaryTaxable, scheduleFor(tables.federal, h.status), scale) +
-      gainsTax(gains, ordinaryTaxable, rules.capitalGains[h.status], scale) - income.credits - dependentCredit);
+      gainsTax(gains, ordinaryTaxable, rules.capitalGains[h.status], scale) - federalCredits - dependentCredit);
     let state = 0;
     let stateDeduction = 0;
+    let stateExemptions = null;
+    let stateStandardDeduction = null;
     let stateTaxable = 0;
     let socialTax = (Math.min(wages, wageBase) + Math.min(spouseWages, wageBase)) * rules.payroll.socialSecurity / 100;
     let medicare = earned * rules.payroll.medicare / 100 +
@@ -139,6 +143,8 @@ export function project(plan, releases) {
       const allowance = rules.stateAllowances[h.state][filing];
       const exemptions = (filing === 'Joint' ? allowance.exemption / 2 : allowance.exemption) *
         (h.extraExemptions + children + otherDependents);
+      stateStandardDeduction = allowance.deduction * scale;
+      stateExemptions = (allowance.exemption + exemptions) * scale;
       stateDeduction = (allowance.deduction + allowance.exemption + exemptions) * scale;
       stateTaxable = dollars(ordinary + investments.Qualified - stateDeduction);
       state = bracketTax(stateTaxable, scheduleFor(jurisdiction, h.stateStatus), scale);
@@ -146,7 +152,7 @@ export function project(plan, releases) {
       else state = dollars(state - allowance.credit - income.stateCredits);
     } else if (h.state === 'Other') {
       const customTaxable = gross - pretax - nontaxableInvestment;
-      federal = dollars(customTaxable * h.federalRate / 100 - income.credits);
+      federal = dollars(customTaxable * h.federalRate / 100 - federalCredits);
       state = dollars(customTaxable * h.stateRate / 100 - income.stateCredits);
       socialTax = 0;
       medicare = 0;
@@ -165,10 +171,13 @@ export function project(plan, releases) {
       dependentCredit, children, students, pretax, warning, taxableInvestment, nontaxableInvestment,
       contribution, remainingCash: net === null ? null : net - contribution, shortfall,
       investmentBalance: taxableAccount.balance + nontaxableAccount.balance,
-      taxableBalance: taxableAccount.balance, nontaxableBalance: nontaxableAccount.balance });
+      taxableBalance: taxableAccount.balance, nontaxableBalance: nontaxableAccount.balance,
+      primarySocial, spouseSocial, stateStandardDeduction, stateExemptions, otherFederalCredits: income.credits,
+      earnedIncomeCredit: income.earnedIncomeCredit ?? 0, collegeCredit: income.collegeCredit ?? 0 });
     for (const [amount, growth] of [['wages','wageGrowth'], ['spouseWages','spouseGrowth'], ['other','otherGrowth'],
-      ['pretax','pretaxGrowth'], ['health','healthGrowth'], ['credits','creditGrowth'], ['stateCredits','stateCreditGrowth']]) {
-      income[amount] = compound(income[amount], income[growth], 1);
+      ['pretax','pretaxGrowth'], ['health','healthGrowth'], ['credits','creditGrowth'],
+      ['earnedIncomeCredit','creditGrowth'], ['collegeCredit','creditGrowth'], ['stateCredits','stateCreditGrowth']]) {
+      income[amount] = compound(income[amount] ?? 0, income[growth], 1);
     }
   }
   return rows;

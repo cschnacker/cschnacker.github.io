@@ -76,6 +76,7 @@ input[type=checkbox] { accent-color: var(--teal); width: 18px; height: 18px; mar
 .accent strong, .accent span { color: #075d50; }
 .outlook-head { display: flex; justify-content: space-between; align-items: start; gap: 14px; }
 .year-select { display: grid; gap: 4px; color: var(--muted); font-size: .82rem; font-weight: 650; min-width: 92px; }
+.chart-selectors { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 12px; margin-bottom: 14px; }
 .legend { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; color: var(--muted); font-size: .84rem; }
 .legend-item { display: grid; gap: 4px; padding: 8px 10px; border: 1px solid var(--line); border-top: 3px solid var(--series-color); border-radius: 7px; }
 .legend-item strong { color: var(--text); font-size: .94rem; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
