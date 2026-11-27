@@ -53,7 +53,8 @@ function choose(options, current) {
 
 const amountSteps = {
   wages: 1000, spouseWages: 1000, other: 500,
-  pension: 1000, spousePension: 1000, social: 1000, spouseSocial: 1000
+  pension: 1000, spousePension: 1000, social: 1000, spouseSocial: 1000,
+  taxable: 1000, nontaxable: 1000
 };
 
 function field(module, fields, key, label, settings = {}) {
