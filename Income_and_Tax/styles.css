@@ -68,6 +68,12 @@ input[type=checkbox] { accent-color: var(--teal); width: 18px; height: 18px; mar
 .income-stepper button { min-width: 52px; padding-inline: 8px; }
 .projection { display: grid; gap: 17px; min-width: 0; }
 .summary { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 13px; }
+.funding-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.funding-metric { align-content: start; background: #f2f6f8; border-radius: 8px; }
+.funding-metric strong { font-size: clamp(1rem, 2vw, 1.28rem); letter-spacing: normal; }
+.funding-metric .shortfall { color: #9b292b; }
+.funding-metric .surplus { color: var(--teal); }
+.funding-metric a { font-size: .85rem; }
 .metric { display: grid; gap: 7px; padding: clamp(12px, 2vw, 19px); min-width: 0; font-variant-numeric: tabular-nums; }
 .metric span { color: #435b6d; font-size: .9rem; font-weight: 650; }
 .metric strong { font-size: clamp(1.2rem, 2.5vw, 2.02rem); letter-spacing: -.05em; overflow-wrap: anywhere; line-height: 1.08; }
@@ -152,6 +158,7 @@ dialog p { margin-top: 8px; }
   .metric { padding: 9px; }
   .metric span { font-size: .8rem; }
   .metric small { display: none; }
+  .funding-metric small { display: block; }
   .data-row { flex-wrap: wrap; }
   .footer { flex-direction: column; }
 }

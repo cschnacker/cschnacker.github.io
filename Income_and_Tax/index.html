@@ -8,8 +8,8 @@
   <title>Income &amp; Tax Planner</title>
   <link rel="icon" href="Inc%26Tax.png">
   <link rel="manifest" href="manifest.json">
-  <link rel="stylesheet" href="styles.css?v=2026-11">
-  <script type="module" src="src/app.mjs?v=2026-11"></script>
+  <link rel="stylesheet" href="styles.css?v=2026-12">
+  <script type="module" src="src/app.mjs?v=2026-12"></script>
 </head>
 <body>
   <a class="skip" href="#main">Skip to planner</a>
@@ -42,6 +42,13 @@
             <div class="card metric"><span>Estimated taxes</span><strong id="tax">—</strong><small>Income and payroll taxes</small></div>
             <div class="card metric accent"><span>Net income</span><strong id="net">—</strong><small>After tax and pre-tax costs</small></div>
           </div>
+          <section class="card breakdown" aria-labelledby="funding-title">
+            <div class="section-heading"><h2 id="funding-title">Funding summary</h2><p id="funding-year"></p></div>
+            <div class="funding-grid">
+              <div class="metric funding-metric"><span>Investment withdrawals</span><strong id="investment-funding-status">—</strong><small id="investment-funding-detail"></small></div>
+              <div class="metric funding-metric"><span>Income versus spending</span><strong id="income-funding-status">—</strong><small id="income-funding-detail"></small><a id="spending-setup" href="#income" hidden>Set a spending target</a></div>
+            </div>
+          </section>
           <div class="card outlook">
             <div class="outlook-head"><div class="section-heading"><h2 id="outlook-title">Annual projection</h2><p id="period"></p></div></div>
             <div class="chart-selectors">
@@ -62,7 +69,7 @@
       <section class="card schedule">
         <div class="outlook-head"><div class="section-heading"><h2>Year-by-year projection</h2><p>Amounts are shown in future dollars.</p></div><button id="csv" class="secondary" type="button">Export CSV</button></div>
         <div class="table-scroll" tabindex="0" role="region" aria-label="Scrollable projection table">
-          <table><thead><tr><th scope="col">Year</th><th scope="col">Age</th><th scope="col">Gross income</th><th scope="col">Federal</th><th scope="col">State</th><th scope="col">Payroll</th><th scope="col">Net income</th></tr></thead><tbody id="schedule-body"></tbody></table>
+          <table><thead><tr><th scope="col">Year</th><th scope="col">Age</th><th scope="col">Gross income</th><th scope="col">Federal</th><th scope="col">State</th><th scope="col">Payroll</th><th scope="col">Net income</th><th scope="col" id="schedule-investment-gap" hidden>Unfunded withdrawals</th><th scope="col" id="schedule-spending-gap" hidden>Income surplus or shortfall</th></tr></thead><tbody id="schedule-body"></tbody></table>
         </div>
       </section>
     </div>
@@ -128,6 +135,7 @@
         <details><summary>Enter income and retirement dates</summary><p>Enter annual starting-year amounts and growth rates. The controls step by $1,000 for wages, pensions, Social Security, other taxable income, and taxable or tax-free withdrawals. You can also type an exact amount. Each person's wages stop at their retirement age. Other taxable income stops at the primary retirement age. Retirement income begins at its specified age and uses the entered growth rate from the starting year. Pre-tax payroll deductions are capped at wages and reduce income taxes. Enter Social Security separately from taxable pension income.</p></details>
         <details><summary>Plan investment income and contributions</summary><p>Enter annual withdrawal targets and starting balances for investments outside the holdings you list. Older plans keep their combined starting balance in the taxable field, where you can split it between the two balances. Set withdrawal timing and growth under Optional investment info.</p><p>Percentage contributions use combined gross wages. Fixed contributions apply each year, including years without wages. Contributions use after-tax cash and go to the taxable balance by default. Set the non-taxable share under Optional investment info. The annual balance growth rate applies to both unallocated balances and accumulated contributions.</p><p>Each withdrawal is capped at its own available balance. It draws cash first, then reduces that account's holdings proportionally. The annual table shows any unfunded amount. Taxable withdrawals are treated as ordinary income. Listed holdings with ordinary or qualified distributions count toward the taxable balance, and holdings with tax-free distributions count toward the non-taxable balance. Holdings pay distributions based on value before withdrawals. Enter the expected purchase price for a future holding. Its end age excludes it from that year onward.</p></details>
         <details><summary>Add dependents and future changes</summary><p>A change takes effect at the start of its year and remains in effect. When two changes affect the same field in the same year, the last entry applies.</p></details>
+        <details><summary>Check for shortfalls and surpluses</summary><p>Set a household spending target in Income &amp; retirement. Enter the annual target in starting-year dollars and its growth rate. The funding summary compares it with cash left after taxes, pre-tax costs, and investment contributions. It also reports any withdrawals your balances could not fund and what remains invested. The Income and Tax Summary graph and annual table show these gaps across years.</p></details>
         <details><summary>Read the estimates</summary><p>Choose a graph on the Overview tab. In the stacked view, each band’s thickness shows that category’s amount. Payroll tax combines Social Security and Medicare. Negative net income falls below zero, and incomplete estimates appear as gaps. Hover over a graph for exact amounts, or use Inspect year to update the legend and tax breakdown.</p><p>Federal and state effective rates use gross cash income. Forecast years use the most recent available annual release and apply your indexing assumptions to bracket limits and deductions. Years before the first release use its amounts without indexing.</p><p>The model uses standard deductions and employee payroll taxes on entered wages before pre-tax deductions. It estimates nonrefundable dependent credits assuming otherwise eligible dependents and models qualified distributions at federal 0%, 15%, and 20% rates. Enter earned income and education credit estimates in their named fields. Use Other federal credits only for additional amounts. The planner limits credits to the tax owed. State calculations use the shared filing-status mappings and workbook allowances, exclude Social Security benefits, and omit local taxes and state-specific adjustments. The planner also excludes itemizing, self-employment tax, refundable credits, AMT, NIIT, and special senior or dependent deductions. Use these figures for planning.</p></details>
         <details><summary>Move or erase a plan</summary><p>Download a backup in Plan data, move the JSON file to the other machine, then choose it under Import plan and confirm the replacement. Use Clear plan to remove the browser’s copy. A downloaded backup still contains the data you exported.</p></details>
         <details><summary>Tax data sources</summary><ul id="source-list"></ul><p>State tables are inherited from Effective Tax Rate Fed/State. Some statuses use shared single-filer approximations and the data may lag state releases.</p></details>

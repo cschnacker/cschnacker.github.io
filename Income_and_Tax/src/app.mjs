@@ -1,7 +1,7 @@
-import { readLegacy } from './legacy.mjs?v=2026-11';
-import { project } from './calculations.mjs?v=2026-11';
-import { changeLabels, changeSpec, emptyPlan, normalize, schemas, statuses, valueFor } from './model.mjs?v=2026-11';
-import { openPlanStore, readBackup, serialize } from './storage.mjs?v=2026-11';
+import { readLegacy } from './legacy.mjs?v=2026-12';
+import { project } from './calculations.mjs?v=2026-12';
+import { changeLabels, changeSpec, emptyPlan, normalize, schemas, statuses, valueFor } from './model.mjs?v=2026-12';
+import { openPlanStore, readBackup, serialize } from './storage.mjs?v=2026-12';
 import { loadReleases, releaseFor } from './tax-data.mjs';
 
 const byId = id => document.getElementById(id);
@@ -54,7 +54,8 @@ function choose(options, current) {
 const amountSteps = {
   wages: 1000, spouseWages: 1000, other: 1000,
   pension: 1000, spousePension: 1000, social: 1000, spouseSocial: 1000,
-  taxable: 1000, nontaxable: 1000, contributionAmount: 1000, investmentOpening: 1000, nontaxableInvestmentOpening: 1000
+  taxable: 1000, nontaxable: 1000, contributionAmount: 1000, investmentOpening: 1000, nontaxableInvestmentOpening: 1000,
+  spendingTarget: 1000
 };
 const steppedIncomeFields = new Set(['wages', 'spouseWages', 'other']);
 
@@ -146,6 +147,9 @@ function buildForms() {
     ['federalRate', 'Custom federal rate (%)'], ['stateRate', 'Custom state rate (%)']
   ]), advanced);
   byId('income-fields').replaceChildren(
+    fieldset('income', 'Household spending target', [
+      ['spendingTarget', 'Annual spending target ($)'], ['spendingGrowth', 'Annual spending growth (%)']
+    ]),
     fieldset('income', 'Primary employment', [['wages', 'Annual wages ($)'], ['wageGrowth', 'Wage growth (%/yr)'], ['retireAge', 'Age wages stop']]),
     fieldset('income', 'Spouse employment', [['spouseWages', 'Annual wages ($)'], ['spouseGrowth', 'Wage growth (%/yr)'], ['spouseRetireAge', 'Age wages stop']], true),
     fieldset('income', 'Other income before primary retirement', [['other', 'Other taxable income ($)'], ['otherGrowth', 'Other income growth (%/yr)']]),
@@ -260,7 +264,9 @@ function lineSeries(fields) {
 const projectionViews = {
   stacked: { title: 'Stacked Income and Taxes', series: projectionSeries, stacked: true, requiresTax: true },
   summary: { title: 'Income and Tax Summary', series: lineSeries([
-    ['gross', 'Gross income'], ['tax', 'Total taxes'], ['net', 'Net income']
+    ['gross', 'Gross income'], ['tax', 'Total taxes'], ['net', 'Net income'],
+    ['spendingGap', 'Income surplus or shortfall'],
+    ['investmentGap', 'Unfunded withdrawals', row => -row.shortfall]
   ]) },
   taxes: { title: 'Taxes', stacked: true, requiresTax: true, series: lineSeries([
     ['federal', 'Federal income tax'], ['state', 'State income tax'], ['socialTax', 'Social Security tax'], ['medicare', 'Medicare tax']
@@ -287,6 +293,18 @@ const projectionViews = {
   investments: { title: 'Investment Balances', series: investmentSeries }
 };
 const projectionView = byId('projection-view');
+
+function selectedProjectionView() {
+  const view = projectionViews[projectionView.value];
+  if (projectionView.value !== 'summary') return view;
+  const hasSpendingTarget = rows.some(row => row.spendingTarget !== null);
+  const hasWithdrawalGap = rows.some(row => row.shortfall > 0);
+  return {
+    ...view, series: view.series.filter(series =>
+      (series.key !== 'spendingGap' || hasSpendingTarget) && (series.key !== 'investmentGap' || hasWithdrawalGap)),
+    note: hasWithdrawalGap ? 'Unfunded withdrawals are shown below zero.' : undefined
+  };
+}
 
 function addProjectionHover(chartContainer, svg, guide, hitArea, x, plotWidth, viewWidth, seriesList, format) {
   const tooltip = node('div', undefined, 'projection-tooltip');
@@ -452,16 +470,40 @@ function details(row) {
   byId('year-detail').replaceChildren(...detail.flatMap(([label, value]) => [node('dt', label), node('dd', value)]));
 }
 
+function showFundingSummary(row) {
+  byId('funding-year').textContent = 'Selected year ' + row.year;
+  const investment = byId('investment-funding-status');
+  const funded = row.taxableWithdrawal + row.taxFree;
+  investment.textContent = row.shortfall > 0 ? money(row.shortfall) + ' shortfall'
+    : funded > 0 ? money(funded) + ' funded' : 'No withdrawals planned';
+  investment.classList.toggle('shortfall', row.shortfall > 0);
+  investment.classList.toggle('surplus', row.shortfall === 0 && funded > 0);
+  byId('investment-funding-detail').textContent = (row.shortfall > 0 ? money(funded) + ' funded · ' : '') +
+    money(row.investmentBalance) + ' remains invested';
+
+  const income = byId('income-funding-status');
+  const gap = row.spendingGap;
+  income.textContent = row.spendingTarget === null ? 'Spending target needed'
+    : gap === null ? 'Tax estimate needed'
+      : gap === 0 ? 'On target' : money(Math.abs(gap)) + (gap < 0 ? ' shortfall' : ' surplus');
+  income.classList.toggle('shortfall', gap !== null && gap < 0);
+  income.classList.toggle('surplus', gap !== null && gap > 0);
+  byId('income-funding-detail').textContent = row.spendingTarget === null ? ''
+    : money(row.remainingCash) + ' available · ' + money(row.spendingTarget) + ' target';
+  byId('spending-setup').hidden = row.spendingTarget !== null;
+}
+
 function inspect() {
   const row = rows.find(item => item.year === selectedYear) ?? rows[0];
   selectedYear = row.year;
   projectionYears.value = row.year;
   for (const key of ['gross', 'tax', 'net']) byId(key).textContent = money(row[key]);
+  showFundingSummary(row);
   byId('breakdown-period').textContent = 'Selected year ' + row.year;
   const description = row.year === row.sourceYear ? 'Published base year' :
     row.year < row.sourceYear ? row.sourceYear + ' baseline used for this earlier year' :
       'Projected from ' + row.sourceYear + ' tax tables';
-  const view = projectionViews[projectionView.value];
+  const view = selectedProjectionView();
   const format = view.format ?? money;
   byId('projection-note').textContent = [description, row.warning, view.note].filter(Boolean).join(' · ');
   const legend = byId('projection-legend');
@@ -490,7 +532,10 @@ function recalculate() {
   byId('start-balance').textContent = money(start.balance);
   byId('start-distribution').textContent = money(start.distribution);
   const hasShortfall = rows.some(row => row.shortfall > 0);
+  const hasSpendingTarget = start.spendingTarget !== null;
   byId('withdrawal-shortfall-heading').hidden = !hasShortfall;
+  byId('schedule-investment-gap').hidden = !hasShortfall;
+  byId('schedule-spending-gap').hidden = !hasSpendingTarget;
   byId('investment-schedule').replaceChildren(...rows.map(row => {
     const tr = node('tr');
     const amounts = [row.taxableBalance, row.nontaxableBalance, row.taxableWithdrawal, row.taxFree,
@@ -511,7 +556,10 @@ function recalculate() {
     button.dataset.inspect = row.year;
     button.setAttribute('aria-label', 'Inspect ' + row.year);
     cell.append(button);
-    tr.append(cell, ...[row.age, ...[row.gross, row.federal, row.state, row.socialTax + row.medicare, row.net].map(money)].map(v => node('td', v)));
+    const amounts = [row.gross, row.federal, row.state, row.socialTax + row.medicare, row.net];
+    if (hasShortfall) amounts.push(row.shortfall);
+    if (hasSpendingTarget) amounts.push(row.spendingGap);
+    tr.append(cell, node('td', row.age), ...amounts.map(amount => node('td', money(amount))));
     return tr;
   }));
   const sources = byId('source-list');
@@ -696,7 +744,7 @@ function attach() {
   const observer = new ResizeObserver(() => {
     const row = rows.find(item => item.year === selectedYear) ?? rows[0];
     if (!row) return;
-    if (!byId('panel-overview').hidden) chart(row, byId('chart'), projectionViews[projectionView.value]);
+    if (!byId('panel-overview').hidden) chart(row, byId('chart'), selectedProjectionView());
     if (!byId('panel-investments').hidden) chart(row, byId('investment-chart'), projectionViews.investments);
   });
   observer.observe(byId('outlook-title').closest('.outlook-head'));

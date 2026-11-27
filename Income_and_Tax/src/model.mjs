@@ -18,7 +18,7 @@ export const schemas = {
     spouseWages: amount, spouseGrowth: rate, spouseRetireAge: [67, 0, 121],
     other: amount, otherGrowth: rate, pretax: amount, pretaxGrowth: rate,
     health: amount, healthGrowth: rate, credits: amount, earnedIncomeCredit: amount, collegeCredit: amount, creditGrowth: rate,
-    stateCredits: amount, stateCreditGrowth: rate
+    stateCredits: amount, stateCreditGrowth: rate, spendingTarget: amount, spendingGrowth: rate
   },
   retirement: {
     social: amount, socialAge: [67, 0, 121], socialGrowth: [2.5, -100, 100],

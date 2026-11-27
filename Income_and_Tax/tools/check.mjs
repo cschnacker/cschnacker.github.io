@@ -133,6 +133,23 @@ test('entered federal credit categories are projected separately and reduce tax 
   assert.equal(project(plan, releases)[0].federal, 0);
 });
 
+test('spending surplus and shortfall use after-tax cash after contributions', () => {
+  const plan = emptyPlan(2026);
+  Object.assign(plan.household, { state: 'Texas', age: 66, years: 3 });
+  Object.assign(plan.income, { wages: 80000, spendingTarget: 24000, spendingGrowth: 10 });
+  Object.assign(plan.retirement, { pension: 30000, contributionMode: 'Fixed amount', contributionAmount: 1000 });
+  const rows = project(plan, releases);
+  for (const [index, target] of [24000, 26400, 29040].entries()) {
+    close(rows[index].spendingTarget, target);
+    close(rows[index].spendingGap, rows[index].net - 1000 - target);
+  }
+  assert.ok(rows[0].spendingGap > 0 && rows[2].spendingGap < 0);
+  plan.household.state = '';
+  assert.equal(project(plan, releases)[0].spendingGap, null);
+  plan.income.spendingTarget = 0;
+  assert.equal(project(plan, releases)[0].spendingTarget, null);
+});
+
 test('existing workbook-converter entries map to editable plan modules', () => {
   const fields = { XLEW_2_2_4: 'N', XLEW_2_3_4: '2025', XLEW_2_4_4: '45', XLEW_2_7_4: 'Y',
     XLEW_2_9_3: '2010', XLEW_2_9_4: '2028', XLEW_2_19_5: '100,000', XLEW_2_25_5: 'New Mexica',

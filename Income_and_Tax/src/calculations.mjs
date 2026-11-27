@@ -1,4 +1,4 @@
-import { changeSpec, valueFor } from './model.mjs?v=2026-11';
+import { changeSpec, valueFor } from './model.mjs?v=2026-12';
 import { bracketTax, releaseFor, scheduleFor } from './tax-data.mjs';
 
 const compound = (value, rate, years) => value * (1 + rate / 100) ** years;
@@ -162,6 +162,10 @@ export function project(plan, releases) {
     }
     const tax = state === null ? null : federal + state + socialTax + medicare;
     const net = tax === null ? null : gross - pretax - tax;
+    const remainingCash = net === null ? null : net - contribution;
+    const spendingTarget = income.spendingTarget > 0
+      ? compound(income.spendingTarget, income.spendingGrowth ?? 0, offset) : null;
+    const spendingGap = remainingCash === null || spendingTarget === null ? null : remainingCash - spendingTarget;
     rows.push({ year, age, spouseAge: h.spouse ? spouseAge : null, sourceYear: rules.year, stateName: h.state,
       stateStatus: h.stateStatus, status: h.status, gross, adjusted, federal, state, socialTax, medicare, tax,
       net, fedDeduction, fedTaxable, stateDeduction, stateTaxable,
@@ -169,7 +173,7 @@ export function project(plan, releases) {
       balance: investments.taxable + investments.nontaxable, distribution: investments.Ordinary + investments.Qualified + investments['Tax-free'],
       wages, spouseWages, other, pension, social, taxableSocial, taxableWithdrawal, taxFree,
       dependentCredit, children, students, pretax, warning, taxableInvestment, nontaxableInvestment,
-      contribution, remainingCash: net === null ? null : net - contribution, shortfall,
+      contribution, remainingCash, spendingTarget, spendingGap, shortfall,
       investmentBalance: taxableAccount.balance + nontaxableAccount.balance,
       taxableBalance: taxableAccount.balance, nontaxableBalance: nontaxableAccount.balance,
       primarySocial, spouseSocial, stateStandardDeduction, stateExemptions, otherFederalCredits: income.credits,
