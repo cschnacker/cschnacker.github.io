@@ -52,16 +52,18 @@ function choose(options, current) {
 }
 
 const amountSteps = {
-  wages: 1000, spouseWages: 1000, other: 500,
+  wages: 1000, spouseWages: 1000, other: 1000,
   pension: 1000, spousePension: 1000, social: 1000, spouseSocial: 1000,
   taxable: 1000, nontaxable: 1000, contributionAmount: 1000, investmentOpening: 1000
 };
+const steppedIncomeFields = new Set(['wages', 'spouseWages', 'other']);
 
 function field(module, fields, key, label, settings = {}) {
-  const { index, wide, spouse, spec = schemas[module][key], options, step = amountSteps[key] } = settings;
+  const { index, wide, spouse, spec = schemas[module][key], options, step = amountSteps[key],
+    stepButtons = steppedIncomeFields.has(key) } = settings;
   const current = fields[key];
-  const container = node('label', undefined, 'field');
-  if (wide) container.classList.add('wide');
+  const container = node(stepButtons ? 'div' : 'label', undefined, 'field');
+  if (wide || stepButtons) container.classList.add('wide');
   if (spouse) container.dataset.spouse = '';
   let input;
   if (options || Array.isArray(spec) && typeof spec[0] === 'string') {
@@ -89,7 +91,27 @@ function field(module, fields, key, label, settings = {}) {
   input.dataset.module = module;
   input.dataset.key = key;
   if (index !== undefined) input.dataset.index = index;
-  if (typeof spec === 'boolean') container.append(input, node('span', label));
+  if (stepButtons) {
+    input.id = [module, key, index].filter(part => part !== undefined).join('-');
+    const caption = node('label', label);
+    caption.htmlFor = input.id;
+    const controls = node('div', undefined, 'income-stepper');
+    for (const direction of [-1, 1]) {
+      const button = node('button', direction < 0 ? '−$1K' : '+$1K', 'secondary');
+      button.type = 'button';
+      button.setAttribute('aria-label', (direction < 0 ? 'Decrease' : 'Increase') + ' ' + label.replace(/ \(\$\)$| value$/g, '').toLowerCase() + ' by $1,000');
+      button.addEventListener('click', () => {
+        const currentAmount = input.valueAsNumber || 0;
+        const newAmount = Math.min(Number(input.max), Math.max(Number(input.min), currentAmount + direction * step));
+        if (newAmount === currentAmount) return;
+        input.value = newAmount;
+        input.dispatchEvent(new Event('input', { bubbles: true }));
+      });
+      controls.append(button);
+    }
+    controls.insertBefore(input, controls.lastElementChild);
+    container.append(caption, controls);
+  } else if (typeof spec === 'boolean') container.append(input, node('span', label));
   else container.append(node('span', label), input);
   return container;
 }
@@ -187,7 +209,7 @@ function buildRecords(module) {
       const spec = changeSpec(record.field);
       const value = record.value === '' ? '' : valueFor(record.field, spec, record.value);
       const control = field(module, { value }, 'value', changeLabels[record.field] + ' value', {
-        index, spec, options, step: amountSteps[record.field]
+        index, spec, options, step: amountSteps[record.field], stepButtons: steppedIncomeFields.has(record.field)
       });
       if (value === '' && !options) control.querySelector('input').placeholder = 'Enter new value';
       group.append(control);

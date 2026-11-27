@@ -64,6 +64,8 @@ h1 { letter-spacing: -.05em; font-size: clamp(2rem, 5vw, 3.25rem); line-height: 
 select { appearance: none; background: white url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='14'%20height='14'%20viewBox='0%200%2024%2024'%3E%3Cpath%20d='m6%209%206%206%206-6'%20fill='none'%20stroke='%23334c5e'%20stroke-width='2'/%3E%3C/svg%3E") no-repeat right 8px center !important; padding-right: 27px !important; }
 input[type=checkbox] { accent-color: var(--teal); width: 18px; height: 18px; margin: 0 3px 0 0; }
 .field input:disabled { background: #eef3f5; }
+.income-stepper { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 6px; }
+.income-stepper button { min-width: 52px; padding-inline: 8px; }
 .projection { display: grid; gap: 17px; min-width: 0; }
 .summary { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 13px; }
 .metric { display: grid; gap: 7px; padding: clamp(12px, 2vw, 19px); min-width: 0; font-variant-numeric: tabular-nums; }
