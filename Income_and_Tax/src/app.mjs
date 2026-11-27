@@ -1,7 +1,7 @@
-import { readLegacy } from './legacy.mjs?v=2026-8';
-import { project } from './calculations.mjs?v=2026-8';
-import { changeLabels, changeSpec, emptyPlan, normalize, schemas, statuses, valueFor } from './model.mjs?v=2026-8';
-import { openPlanStore, readBackup, serialize } from './storage.mjs?v=2026-8';
+import { readLegacy } from './legacy.mjs?v=2026-10';
+import { project } from './calculations.mjs?v=2026-10';
+import { changeLabels, changeSpec, emptyPlan, normalize, schemas, statuses, valueFor } from './model.mjs?v=2026-10';
+import { openPlanStore, readBackup, serialize } from './storage.mjs?v=2026-10';
 import { loadReleases, releaseFor } from './tax-data.mjs';
 
 const byId = id => document.getElementById(id);
@@ -54,7 +54,7 @@ function choose(options, current) {
 const amountSteps = {
   wages: 1000, spouseWages: 1000, other: 1000,
   pension: 1000, spousePension: 1000, social: 1000, spouseSocial: 1000,
-  taxable: 1000, nontaxable: 1000, contributionAmount: 1000, investmentOpening: 1000
+  taxable: 1000, nontaxable: 1000, contributionAmount: 1000, investmentOpening: 1000, nontaxableInvestmentOpening: 1000
 };
 const steppedIncomeFields = new Set(['wages', 'spouseWages', 'other']);
 
@@ -161,7 +161,8 @@ function buildForms() {
       ['spousePension', 'Annual taxable pension ($)'], ['spousePensionAge', 'Pension start age'], ['spousePensionGrowth', 'Pension growth (%/yr)']], true)
   );
   byId('investment-income-fields').replaceChildren(fieldsFor('retirement', plan.retirement, [
-    ['taxable', 'Annual taxable income ($)'], ['nontaxable', 'Annual non-taxable income ($)']
+    ['investmentOpening', 'Starting taxable balance ($)'], ['nontaxableInvestmentOpening', 'Starting non-taxable balance ($)'],
+    ['taxable', 'Annual taxable withdrawal ($)'], ['nontaxable', 'Annual non-taxable withdrawal ($)']
   ]));
   byId('contribution-fields').replaceChildren(fieldsFor('retirement', plan.retirement, [
     ['contributionMode', 'Contribution method', { wide: true }],
@@ -174,7 +175,7 @@ function buildForms() {
       ['nontaxableAge', 'Non-taxable withdrawal start age'], ['nontaxableGrowth', 'Non-taxable withdrawal growth (%/yr)']
     ]),
     fieldset('retirement', 'Balance outside individual holdings', [
-      ['investmentOpening', 'Starting investment balance ($)'], ['investmentGrowth', 'Annual balance growth (%)']
+      ['investmentGrowth', 'Annual balance growth (%)'], ['nontaxableContributionShare', 'Contributions to non-taxable balance (%)']
     ])
   );
   for (const name of Object.keys(collectionNames)) buildRecords(name);
@@ -241,12 +242,16 @@ const projectionSeries = [
   { key: 'state', label: 'State income tax', color: '#794491', amount: row => row.state },
   { key: 'payroll', label: 'Payroll tax', color: '#2c60a8', amount: row => row.socialTax + row.medicare }
 ];
+const investmentSeries = [
+  { key: 'taxable-balance', label: 'Taxable balance', color: '#087d73', amount: row => row.taxableBalance },
+  { key: 'nontaxable-balance', label: 'Non-taxable balance', color: '#794491', amount: row => row.nontaxableBalance, dash: '6 4' }
+];
 
-function addProjectionHover(chartContainer, svg, guide, hitArea, x, plotWidth, viewWidth) {
+function addProjectionHover(chartContainer, svg, guide, hitArea, x, plotWidth, viewWidth, seriesList) {
   const tooltip = node('div', undefined, 'projection-tooltip');
   const title = node('strong');
   tooltip.append(title);
-  const amounts = projectionSeries.map(series => {
+  const amounts = seriesList.map(series => {
     const entry = node('div', undefined, 'projection-tooltip-entry');
     entry.style.setProperty('--series-color', series.color);
     const amount = node('strong');
@@ -268,7 +273,7 @@ function addProjectionHover(chartContainer, svg, guide, hitArea, x, plotWidth, v
     hoveredIndex = index;
     const hovered = rows[index];
     title.textContent = hovered.year;
-    projectionSeries.forEach((series, band) => { amounts[band].textContent = money(series.amount(hovered)); });
+    seriesList.forEach((series, band) => { amounts[band].textContent = money(series.amount(hovered)); });
 
     const position = x(index);
     guide.setAttribute('x1', position);
@@ -287,17 +292,16 @@ function addProjectionHover(chartContainer, svg, guide, hitArea, x, plotWidth, v
   });
 }
 
-function chart(row) {
-  const chartContainer = byId('chart');
+function chart(row, chartContainer = byId('chart'), seriesList = projectionSeries, stacked = true) {
   const width = Math.max(280, chartContainer.clientWidth || 720);
   const height = width < 500 ? 198 : 246;
   const left = 62, right = 12, top = 16, bottom = 33;
   const stacks = rows.map(item => {
-    if (item.net === null) return null;
+    if (stacked && item.net === null) return null;
     let positiveTotal = 0;
-    return projectionSeries.map(series => {
+    return seriesList.map(series => {
       const amount = series.amount(item);
-      if (amount < 0) return { base: 0, edge: amount };
+      if (!stacked || amount < 0) return { base: 0, edge: amount };
       const base = positiveTotal;
       positiveTotal += amount;
       return { base, edge: positiveTotal };
@@ -323,7 +327,9 @@ function chart(row) {
   }
   svg.setAttribute('viewBox', [0, 0, width, height].join(' '));
   svg.setAttribute('role', 'img');
-  svg.setAttribute('aria-label', 'Stacked annual projection of net income, federal income tax, state income tax, and payroll tax. Exact amounts appear in the selected-year legend and projection table.');
+  svg.setAttribute('aria-label', stacked
+    ? 'Stacked annual projection of net income, federal income tax, state income tax, and payroll tax. Exact amounts appear in the selected-year legend and projection table.'
+    : 'Taxable and non-taxable end-of-year investment balances. Exact amounts appear in the annual investment plan table.');
   for (let index = 0; index <= Math.round((upper - lower) / tick); index += 1) {
     const value = lower + tick * index;
     draw('line', { x1: left, x2: width - right, y1: y(value), y2: y(value), stroke: value === 0 ? '#91a7b6' : '#dce5eb' });
@@ -343,7 +349,7 @@ function chart(row) {
       run.push({ x: x(index), stack });
     } else run = [];
   }
-  const paths = projectionSeries.map((series, band) => ({
+  const paths = seriesList.map((series, band) => ({
     ...series,
     segments: runs.map(points => {
       const edge = points.map(point => point.x + ' ' + y(point.stack[band].edge)).join(' L');
@@ -351,24 +357,24 @@ function chart(row) {
       return { line: 'M' + edge, fill: 'M' + edge + ' L' + base + ' Z' };
     })
   }));
-  for (const series of paths) {
+  for (const series of stacked ? paths : []) {
     draw('path', { d: series.segments.map(segment => segment.fill).join(' '), fill: series.color, 'fill-opacity': '.17' });
   }
   const selectedIndex = row.year - rows[0].year;
   const focus = x(selectedIndex);
   draw('line', { x1: focus, x2: focus, y1: top, y2: height - bottom, stroke: '#78909f', 'stroke-dasharray': '3 4' });
-  paths.forEach(({ key, color, segments }, band) => {
+  paths.forEach(({ key, color, dash, segments }, band) => {
     draw('path', { d: segments.map(segment => segment.line).join(' '), fill: 'none', stroke: color,
-      'stroke-width': 2, 'stroke-linejoin': 'round', 'data-series': key });
+      'stroke-width': 2, 'stroke-linejoin': 'round', 'stroke-dasharray': dash ?? 'none', 'data-series': key });
     const point = stacks[selectedIndex]?.[band];
-    if (point && (band === 0 || point.edge !== point.base)) {
+    if (point && (!stacked || band === 0 || point.edge !== point.base)) {
       draw('circle', { cx: focus, cy: y(point.edge), r: 3.5, fill: color, stroke: 'white' });
     }
   });
   const guide = draw('line', { y1: top, y2: height - bottom, stroke: '#405e70', 'stroke-dasharray': '4 3', visibility: 'hidden' });
   const hitArea = draw('rect', { x: left, y: top, width: plotWidth, height: height - top - bottom, fill: 'transparent', class: 'projection-hit-area' });
   chartContainer.replaceChildren(svg);
-  addProjectionHover(chartContainer, svg, guide, hitArea, x, plotWidth, width);
+  addProjectionHover(chartContainer, svg, guide, hitArea, x, plotWidth, width, seriesList);
 }
 
 function details(row) {
@@ -395,11 +401,9 @@ function details(row) {
     ['Children under 17', row.children], ['Dependents in college', row.students]
   ];
   if (row.stateName === 'Other') detail.splice(12, 4);
-  if (row.investmentBalance !== null) {
-    detail.push(['Amount invested', money(row.contribution)], ['Cash after investing', money(row.remainingCash)],
-      ['End-of-year investment balance', money(row.investmentBalance)]);
-    if (row.shortfall > 0) detail.push(['Unfunded withdrawals', money(row.shortfall)]);
-  }
+  detail.push(['Amount invested', money(row.contribution)], ['Cash after investing', money(row.remainingCash)],
+    ['End-of-year taxable balance', money(row.taxableBalance)], ['End-of-year non-taxable balance', money(row.nontaxableBalance)]);
+  if (row.shortfall > 0) detail.push(['Unfunded withdrawals', money(row.shortfall)]);
   byId('year-detail').replaceChildren(...detail.flatMap(([label, value]) => [node('dt', label), node('dd', value)]));
 }
 
@@ -422,6 +426,7 @@ function inspect() {
     return item;
   }));
   chart(row);
+  if (!byId('panel-investments').hidden) chart(row, byId('investment-chart'), investmentSeries, false);
   details(row);
   for (const tableRow of byId('schedule-body').rows) {
     tableRow.classList.toggle('selected', Number(tableRow.dataset.year) === row.year);
@@ -437,14 +442,13 @@ function recalculate() {
   byId('period').textContent = start.year === end.year ? String(start.year) : start.year + '–' + end.year;
   byId('start-balance').textContent = money(start.balance);
   byId('start-distribution').textContent = money(start.distribution);
-  const trackBalance = start.investmentBalance !== null;
   const hasShortfall = rows.some(row => row.shortfall > 0);
-  byId('investment-balance-note').hidden = trackBalance;
   byId('withdrawal-shortfall-heading').hidden = !hasShortfall;
   byId('investment-schedule').replaceChildren(...rows.map(row => {
     const tr = node('tr');
-    const amounts = [row.wages, row.spouseAge === null ? null : row.spouseWages, row.taxableInvestment,
-      row.nontaxableInvestment, row.contribution, row.remainingCash, row.investmentBalance];
+    const amounts = [row.taxableBalance, row.nontaxableBalance, row.taxableWithdrawal, row.taxFree,
+      row.wages, row.spouseAge === null ? null : row.spouseWages, row.taxableInvestment,
+      row.nontaxableInvestment, row.contribution, row.remainingCash];
     if (hasShortfall) amounts.push(row.shortfall);
     tr.append(node('th', row.year), ...amounts.map(amount => node('td', money(amount))));
     tr.cells[0].scope = 'row';
@@ -634,12 +638,20 @@ function attach() {
     catch (error) { byId('data-status').textContent = 'Could not update the saved plan. ' + error.message; }
   });
   route();
+  byId('investment-legend').replaceChildren(...investmentSeries.map(series => {
+    const item = node('span', series.label, 'investment-legend-item');
+    item.style.setProperty('--series-color', series.color);
+    if (series.dash) item.classList.add('dashed');
+    return item;
+  }));
   const observer = new ResizeObserver(() => {
-    if (!byId('panel-overview').hidden && rows.length) {
-      chart(rows.find(row => row.year === selectedYear) ?? rows[0]);
-    }
+    const row = rows.find(item => item.year === selectedYear) ?? rows[0];
+    if (!row) return;
+    if (!byId('panel-overview').hidden) chart(row);
+    if (!byId('panel-investments').hidden) chart(row, byId('investment-chart'), investmentSeries, false);
   });
   observer.observe(byId('outlook-title').closest('.outlook-head'));
+  observer.observe(byId('investment-chart-title').parentElement);
 }
 
 async function init() {

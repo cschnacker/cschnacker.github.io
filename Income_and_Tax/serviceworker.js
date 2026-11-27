@@ -1,9 +1,9 @@
 const prefix = 'schnacker-income-tax-';
-const version = '2026-9';
+const version = '2026-10';
 const cacheName = prefix + version;
 const assets = ['./index.html', './styles.css?v=' + version, './manifest.json', './Inc%26Tax.png',
-  './src/app.mjs?v=' + version, './src/model.mjs?v=2026-8', './src/storage.mjs?v=2026-8', './src/legacy.mjs?v=2026-8',
-  './src/tax-data.mjs', './src/calculations.mjs?v=2026-8', './data/releases.json'];
+  './src/app.mjs?v=' + version, './src/model.mjs?v=2026-10', './src/storage.mjs?v=2026-10', './src/legacy.mjs?v=2026-10',
+  './src/tax-data.mjs', './src/calculations.mjs?v=2026-10', './data/releases.json'];
 
 self.addEventListener('install', event => {
   event.waitUntil((async () => {

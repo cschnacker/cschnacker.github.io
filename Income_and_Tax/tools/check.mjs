@@ -70,15 +70,18 @@ test('investment contributions use household wages or a fixed amount without cha
   const plan = readBackup(serialize(oldPlan), 2026);
   const baseline = project(plan, releases);
   assert.deepEqual(baseline.map(row => row.contribution), [0, 0, 0]);
-  assert.deepEqual(baseline.map(row => row.taxableInvestment), [0, 12000, 12000]);
-  assert.deepEqual(baseline.map(row => row.nontaxableInvestment), [0, 3000, 3000]);
+  assert.deepEqual(baseline.map(row => row.taxableInvestment), [0, 0, 0]);
+  assert.deepEqual(baseline.map(row => row.nontaxableInvestment), [0, 0, 0]);
+  assert.deepEqual(baseline.map(row => row.shortfall), [0, 15000, 15000]);
   plan.retirement.investmentOpening = 100000;
+  plan.retirement.nontaxableInvestmentOpening = 10000;
+  const funded = project(plan, releases);
   plan.retirement.contributionPercent = 10;
   const percentage = project(plan, releases);
   percentage.forEach((row, i) => {
     close(row.contribution, [13000, 5500, 6050][i]);
-    close(row.tax, baseline[i].tax);
-    close(row.remainingCash, baseline[i].net - row.contribution);
+    close(row.tax, funded[i].tax);
+    close(row.remainingCash, funded[i].net - row.contribution);
   });
   plan.retirement.contributionMode = 'Fixed amount';
   plan.retirement.contributionAmount = 4000;
@@ -89,17 +92,31 @@ test('retirement withdrawals reduce investments and stop when the balance is dep
   const plan = emptyPlan(2026);
   Object.assign(plan.household, { age: 66, state: 'Texas', years: 4 });
   Object.assign(plan.income, { wages: 80000, other: 5000 });
-  Object.assign(plan.retirement, { taxable: 8000, nontaxable: 2000, investmentOpening: 5000, pension: 20000, social: 10000 });
+  Object.assign(plan.retirement, { taxable: 8000, nontaxable: 2000, investmentOpening: 5000,
+    nontaxableInvestmentOpening: 5000, pension: 20000, social: 10000 });
   plan.holdings.push(normalize('holdings', { units: 100, price: 100, yield: 10, startAge: 66 }));
+  plan.holdings.push(normalize('holdings', { units: 20, price: 100, startAge: 66, tax: 'Tax-free' }));
   const rows = project(plan, releases);
   assert.deepEqual(rows.map(row => row.wages), [80000, 0, 0, 0]);
   assert.deepEqual(rows.map(row => row.other), [5000, 0, 0, 0]);
   assert.deepEqual(rows.map(row => row.pension), [0, 20000, 20000, 20000]);
-  assert.deepEqual(rows.map(row => row.investmentBalance), [15000, 5000, 0, 0]);
-  assert.deepEqual(rows.map(row => row.taxableWithdrawal), [0, 8000, 4000, 0]);
-  assert.deepEqual(rows.map(row => row.taxFree), [0, 2000, 1000, 0]);
-  assert.deepEqual(rows.map(row => row.distribution), [1000, 1000, 500, 0]);
-  assert.deepEqual(rows.map(row => row.shortfall), [0, 0, 5000, 10000]);
+  assert.deepEqual(rows.map(row => row.taxableBalance), [15000, 7000, 0, 0]);
+  assert.deepEqual(rows.map(row => row.nontaxableBalance), [7000, 5000, 3000, 1000]);
+  assert.deepEqual(rows.map(row => row.taxableWithdrawal), [0, 8000, 7000, 0]);
+  assert.deepEqual(rows.map(row => row.taxFree), [0, 2000, 2000, 2000]);
+  assert.deepEqual(rows.map(row => row.distribution), [1000, 1000, 700, 0]);
+  assert.deepEqual(rows.map(row => row.shortfall), [0, 0, 1000, 8000]);
+  close(rows[3].gross, rows[3].social + rows[3].pension + 2000);
+});
+
+test('contributions add to the accounts in the selected proportions', () => {
+  const plan = emptyPlan(2026);
+  plan.household.years = 2;
+  Object.assign(plan.retirement, { contributionMode: 'Fixed amount', contributionAmount: 10000,
+    nontaxableContributionShare: 25, investmentGrowth: 10 });
+  const rows = project(plan, releases);
+  assert.deepEqual(rows.map(row => row.taxableBalance), [7500, 15750]);
+  assert.deepEqual(rows.map(row => row.nontaxableBalance), [2500, 5250]);
 });
 
 test('existing workbook-converter entries map to editable plan modules', () => {

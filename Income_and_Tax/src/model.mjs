@@ -29,7 +29,8 @@ export const schemas = {
     nontaxable: amount, nontaxableAge: [67, 0, 121], nontaxableGrowth: rate,
     contributionMode: ['Salary percentage', 'Fixed amount'],
     contributionPercent: taxRate, contributionAmount: amount,
-    investmentOpening: amount, investmentGrowth: rate
+    investmentOpening: amount, nontaxableInvestmentOpening: amount, investmentGrowth: rate,
+    nontaxableContributionShare: taxRate
   },
   holdings: {
     name: '', type: ['Stock', 'Fund', 'Bond', 'Cash', 'Other'],

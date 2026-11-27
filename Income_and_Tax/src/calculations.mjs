@@ -1,4 +1,4 @@
-import { changeSpec, valueFor } from './model.mjs?v=2026-8';
+import { changeSpec, valueFor } from './model.mjs?v=2026-10';
 import { bracketTax, releaseFor, scheduleFor } from './tax-data.mjs';
 
 const compound = (value, rate, years) => value * (1 + rate / 100) ** years;
@@ -20,8 +20,10 @@ function gainsTax(gains, ordinary, limits, scale) {
   return inMiddle * 0.15 + (gains - belowZero - inMiddle) * 0.20;
 }
 
+const holdingAccount = holding => holding.tax === 'Tax-free' ? 'nontaxable' : 'taxable';
+
 function investmentIncome(holdings, balances, age, startingAge) {
-  const total = { balance: 0, Ordinary: 0, Qualified: 0, 'Tax-free': 0 };
+  const total = { taxable: 0, nontaxable: 0, Ordinary: 0, Qualified: 0, 'Tax-free': 0 };
   for (const [index, holding] of holdings.entries()) {
     const start = Math.max(holding.startAge, startingAge);
     if (age < start || age >= holding.endAge) {
@@ -30,10 +32,23 @@ function investmentIncome(holdings, balances, age, startingAge) {
     }
     const value = age === start ? holding.units * holding.price : compound(balances[index], holding.growth, 1);
     balances[index] = value;
-    total.balance += value;
+    total[holdingAccount(holding)] += value;
     total[holding.tax] += value * holding.yield / 100;
   }
   return total;
+}
+
+function drawFromAccount(requested, cash, holdingsValue, holdings, balances, account) {
+  const available = cash + holdingsValue;
+  const withdrawal = Math.min(requested, available);
+  const fromHoldings = dollars(withdrawal - cash);
+  if (fromHoldings > 0 && holdingsValue > 0) {
+    const remaining = dollars(1 - fromHoldings / holdingsValue);
+    holdings.forEach((holding, index) => {
+      if (holdingAccount(holding) === account) balances[index] *= remaining;
+    });
+  }
+  return { withdrawal, cash: dollars(cash - withdrawal), balance: dollars(available - withdrawal) };
 }
 
 export function project(plan, releases) {
@@ -41,10 +56,9 @@ export function project(plan, releases) {
   const income = { ...plan.income };
   const r = plan.retirement;
   const holdingBalances = plan.holdings.map(() => 0);
-  let investmentCash = r.investmentOpening ?? 0;
+  let taxableCash = r.investmentOpening ?? 0;
+  let nontaxableCash = r.nontaxableInvestmentOpening ?? 0;
   const fixedContribution = r.contributionMode === 'Fixed amount';
-  const trackInvestments = investmentCash > 0 || plan.holdings.some(holding => holding.units > 0 && holding.price > 0) ||
-    (fixedContribution ? r.contributionAmount : r.contributionPercent) > 0;
   const rows = [];
   const changes = new Map();
   for (const change of plan.changes) {
@@ -77,25 +91,18 @@ export function project(plan, releases) {
       (h.spouse ? startsAt(r.spousePension, spouseAge, r.spousePensionAge, r.spousePensionGrowth, offset) : 0);
     const requestedTaxable = startsAt(r.taxable, age, r.taxableAge, r.taxableGrowth, offset);
     const requestedNontaxable = startsAt(r.nontaxable, age, r.nontaxableAge, r.nontaxableGrowth, offset);
-    const requested = requestedTaxable + requestedNontaxable;
     const investments = investmentIncome(plan.holdings, holdingBalances, age, h.age);
-    investmentCash = compound(investmentCash, r.investmentGrowth ?? 0, offset === 0 ? 0 : 1) + contribution;
-    const available = investmentCash + investments.balance;
-    const fulfilled = trackInvestments ? Math.min(requested, available) : requested;
-    const withdrawalFraction = requested > 0 ? fulfilled / requested : 1;
-    const taxableWithdrawal = requestedTaxable * withdrawalFraction;
-    const taxFree = requestedNontaxable * withdrawalFraction;
-    const shortfall = requested - fulfilled;
-    if (trackInvestments && fulfilled > 0) {
-      const fromCash = Math.min(fulfilled, investmentCash);
-      investmentCash -= fromCash;
-      const fromHoldings = fulfilled - fromCash;
-      if (fromHoldings > 0 && investments.balance > 0) {
-        const remainingFraction = dollars(1 - fromHoldings / investments.balance);
-        for (const [index, balance] of holdingBalances.entries()) holdingBalances[index] = balance * remainingFraction;
-      }
-    }
-    const investmentBalance = trackInvestments ? dollars(available - fulfilled) : null;
+    const nontaxableContribution = contribution * (r.nontaxableContributionShare ?? 0) / 100;
+    const growth = offset === 0 ? 1 : 1 + (r.investmentGrowth ?? 0) / 100;
+    const taxableAccount = drawFromAccount(requestedTaxable,
+      taxableCash * growth + (contribution - nontaxableContribution), investments.taxable, plan.holdings, holdingBalances, 'taxable');
+    const nontaxableAccount = drawFromAccount(requestedNontaxable,
+      nontaxableCash * growth + nontaxableContribution, investments.nontaxable, plan.holdings, holdingBalances, 'nontaxable');
+    taxableCash = taxableAccount.cash;
+    nontaxableCash = nontaxableAccount.cash;
+    const taxableWithdrawal = taxableAccount.withdrawal;
+    const taxFree = nontaxableAccount.withdrawal;
+    const shortfall = (requestedTaxable - taxableWithdrawal) + (requestedNontaxable - taxFree);
     const taxableInvestment = taxableWithdrawal + investments.Ordinary + investments.Qualified;
     const nontaxableInvestment = taxFree + investments['Tax-free'];
     const pretax = Math.min(earned, income.pretax + income.health);
@@ -153,10 +160,12 @@ export function project(plan, releases) {
       stateStatus: h.stateStatus, status: h.status, gross, adjusted, federal, state, socialTax, medicare, tax,
       net, fedDeduction, fedTaxable, stateDeduction, stateTaxable,
       fedRate: gross ? federal / gross : 0, stateRate: state === null ? null : gross ? state / gross : 0,
-      balance: investments.balance, distribution: investments.Ordinary + investments.Qualified + investments['Tax-free'],
+      balance: investments.taxable + investments.nontaxable, distribution: investments.Ordinary + investments.Qualified + investments['Tax-free'],
       wages, spouseWages, other, pension, social, taxableSocial, taxableWithdrawal, taxFree,
       dependentCredit, children, students, pretax, warning, taxableInvestment, nontaxableInvestment,
-      contribution, remainingCash: net === null ? null : net - contribution, investmentBalance, shortfall });
+      contribution, remainingCash: net === null ? null : net - contribution, shortfall,
+      investmentBalance: taxableAccount.balance + nontaxableAccount.balance,
+      taxableBalance: taxableAccount.balance, nontaxableBalance: nontaxableAccount.balance });
     for (const [amount, growth] of [['wages','wageGrowth'], ['spouseWages','spouseGrowth'], ['other','otherGrowth'],
       ['pretax','pretaxGrowth'], ['health','healthGrowth'], ['credits','creditGrowth'], ['stateCredits','stateCreditGrowth']]) {
       income[amount] = compound(income[amount], income[growth], 1);
