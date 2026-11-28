@@ -150,6 +150,25 @@ test('spending surplus and shortfall use after-tax cash after contributions', ()
   assert.equal(project(plan, releases)[0].spendingTarget, null);
 });
 
+test('calendar start years and one-time withdrawals and expenses affect only their scheduled years', () => {
+  const plan = emptyPlan(2026);
+  Object.assign(plan.household, { state: 'Texas', age: 65, years: 4 });
+  Object.assign(plan.retirement, { taxable: 8000, nontaxable: 2000, taxableStartYear: 2029, nontaxableStartYear: 2026,
+    investmentOpening: 20000, nontaxableInvestmentOpening: 15000 });
+  for (const [field, value] of [['taxableOneTime', '12000'], ['taxableOneTime', '3000'],
+    ['nontaxableOneTime', '3000'], ['purchaseOneTime', '21000']]) {
+    plan.changes.push(normalize('changes', { year: 2027, field, value }));
+  }
+  const restored = readBackup(serialize(plan), 2026);
+  const rows = project(restored, releases);
+  assert.deepEqual(rows.map(row => row.taxableWithdrawal), [0, 15000, 0, 5000]);
+  assert.deepEqual(rows.map(row => row.taxFree), [2000, 5000, 2000, 2000]);
+  assert.deepEqual(rows.map(row => row.spendingTarget), [null, 21000, null, null]);
+  assert.deepEqual(rows.map(row => row.shortfall), [0, 0, 0, 3000]);
+  close(rows[1].spendingGap, rows[1].remainingCash - 21000);
+  assert.equal(normalize('retirement', { taxableStartYear: 0 }).taxableStartYear, 0);
+});
+
 test('existing workbook-converter entries map to editable plan modules', () => {
   const fields = { XLEW_2_2_4: 'N', XLEW_2_3_4: '2025', XLEW_2_4_4: '45', XLEW_2_7_4: 'Y',
     XLEW_2_9_3: '2010', XLEW_2_9_4: '2028', XLEW_2_19_5: '100,000', XLEW_2_25_5: 'New Mexica',

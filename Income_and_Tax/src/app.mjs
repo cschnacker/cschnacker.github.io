@@ -1,7 +1,7 @@
-import { readLegacy } from './legacy.mjs?v=2026-12';
-import { project } from './calculations.mjs?v=2026-12';
-import { changeLabels, changeSpec, emptyPlan, normalize, schemas, statuses, valueFor } from './model.mjs?v=2026-12';
-import { openPlanStore, readBackup, serialize } from './storage.mjs?v=2026-12';
+import { readLegacy } from './legacy.mjs?v=2026-13';
+import { project } from './calculations.mjs?v=2026-13';
+import { changeLabels, changeSpec, emptyPlan, normalize, oneTimeLabels, schemas, statuses, valueFor, withdrawalStartYear } from './model.mjs?v=2026-13';
+import { openPlanStore, readBackup, serialize } from './storage.mjs?v=2026-13';
 import { loadReleases, releaseFor } from './tax-data.mjs';
 
 const byId = id => document.getElementById(id);
@@ -15,7 +15,7 @@ const dialog = byId('confirm');
 const collectionNames = { holdings: 'Holding', changes: 'Change', dependents: 'Dependent' };
 const collectionDescriptions = {
   holdings: 'Add a stock, fund, bond, or cash holding to include its distributions.',
-  changes: 'Add a change to model a future move, raise, or filing change.',
+  changes: 'Add a recurring change or schedule a one-time withdrawal or expense.',
   dependents: 'Add dependents to track ages and college years.'
 };
 
@@ -168,7 +168,8 @@ function buildForms() {
   );
   byId('investment-income-fields').replaceChildren(fieldsFor('retirement', plan.retirement, [
     ['investmentOpening', 'Starting taxable balance ($)'], ['nontaxableInvestmentOpening', 'Starting non-taxable balance ($)'],
-    ['taxable', 'Annual taxable withdrawal ($)'], ['nontaxable', 'Annual non-taxable withdrawal ($)']
+    ['taxable', 'Annual taxable withdrawal ($)'], ['nontaxable', 'Annual non-taxable withdrawal ($)'],
+    ['taxableStartYear', 'Taxable withdrawal start year'], ['nontaxableStartYear', 'Non-taxable withdrawal start year']
   ]));
   byId('contribution-fields').replaceChildren(fieldsFor('retirement', plan.retirement, [
     ['contributionMode', 'Contribution method', { wide: true }],
@@ -215,8 +216,10 @@ function buildRecords(module) {
         ['status', 'stateStatus'].includes(record.field) ? { '': 'Choose status', ...statuses } : undefined;
       const spec = changeSpec(record.field);
       const value = record.value === '' ? '' : valueFor(record.field, spec, record.value);
-      const control = field(module, { value }, 'value', changeLabels[record.field] + ' value', {
-        index, spec, options, step: amountSteps[record.field], stepButtons: steppedIncomeFields.has(record.field)
+      const oneTime = Object.hasOwn(oneTimeLabels, record.field);
+      const label = oneTime ? 'Amount in scheduled-year dollars ($)' : changeLabels[record.field] + ' value';
+      const control = field(module, { value }, 'value', label, {
+        index, spec, options, step: oneTime ? 1000 : amountSteps[record.field], stepButtons: steppedIncomeFields.has(record.field)
       });
       if (value === '' && !options) control.querySelector('input').placeholder = 'Enter new value';
       group.append(control);
@@ -466,6 +469,9 @@ function details(row) {
   if (row.stateName === 'Other') detail.splice(12, 4);
   detail.push(['Amount invested', money(row.contribution)], ['Cash after investing', money(row.remainingCash)],
     ['End-of-year taxable balance', money(row.taxableBalance)], ['End-of-year non-taxable balance', money(row.nontaxableBalance)]);
+  if (row.taxableOneTime > 0) detail.push(['One-time taxable withdrawal requested', money(row.taxableOneTime)]);
+  if (row.nontaxableOneTime > 0) detail.push(['One-time non-taxable withdrawal requested', money(row.nontaxableOneTime)]);
+  if (row.purchaseOneTime > 0) detail.push(['One-time purchase or expense', money(row.purchaseOneTime)]);
   if (row.shortfall > 0) detail.push(['Unfunded withdrawals', money(row.shortfall)]);
   byId('year-detail').replaceChildren(...detail.flatMap(([label, value]) => [node('dt', label), node('dd', value)]));
 }
@@ -523,6 +529,10 @@ function inspect() {
 }
 
 function recalculate() {
+  for (const key of ['taxable', 'nontaxable']) {
+    const yearInput = document.querySelector('[data-key="' + key + 'StartYear"]');
+    yearInput.placeholder = withdrawalStartYear(plan.household, plan.retirement, key);
+  }
   rows = project(plan, releases);
   const start = rows[0];
   const end = rows.at(-1);
@@ -532,7 +542,7 @@ function recalculate() {
   byId('start-balance').textContent = money(start.balance);
   byId('start-distribution').textContent = money(start.distribution);
   const hasShortfall = rows.some(row => row.shortfall > 0);
-  const hasSpendingTarget = start.spendingTarget !== null;
+  const hasSpendingTarget = rows.some(row => row.spendingTarget !== null);
   byId('withdrawal-shortfall-heading').hidden = !hasShortfall;
   byId('schedule-investment-gap').hidden = !hasShortfall;
   byId('schedule-spending-gap').hidden = !hasSpendingTarget;

@@ -1,4 +1,4 @@
-import { changeSpec, valueFor } from './model.mjs?v=2026-12';
+import { changeSpec, oneTimeLabels, valueFor, withdrawalStartYear } from './model.mjs?v=2026-13';
 import { bracketTax, releaseFor, scheduleFor } from './tax-data.mjs';
 
 const compound = (value, rate, years) => value * (1 + rate / 100) ** years;
@@ -59,6 +59,8 @@ export function project(plan, releases) {
   let taxableCash = r.investmentOpening ?? 0;
   let nontaxableCash = r.nontaxableInvestmentOpening ?? 0;
   const fixedContribution = r.contributionMode === 'Fixed amount';
+  const taxableStart = withdrawalStartYear(h, r, 'taxable');
+  const nontaxableStart = withdrawalStartYear(h, r, 'nontaxable');
   const rows = [];
   const changes = new Map();
   for (const change of plan.changes) {
@@ -71,9 +73,13 @@ export function project(plan, releases) {
     const year = h.year + offset;
     const age = h.age + offset;
     const spouseAge = h.spouseAge + offset;
+    const oneTime = { taxableOneTime: 0, nontaxableOneTime: 0, purchaseOneTime: 0 };
     for (const [key, value] of changes.get(year) ?? []) {
-      const target = Object.hasOwn(income, key) ? income : h;
-      target[key] = value;
+      if (Object.hasOwn(oneTimeLabels, key)) oneTime[key] += value;
+      else {
+        const target = Object.hasOwn(income, key) ? income : h;
+        target[key] = value;
+      }
     }
     const { tables, rules } = releaseFor(releases, year);
     const ageOfData = Math.max(0, year - rules.year);
@@ -90,8 +96,8 @@ export function project(plan, releases) {
     const social = primarySocial + spouseSocial;
     const pension = startsAt(r.pension, age, r.pensionAge, r.pensionGrowth, offset) +
       (h.spouse ? startsAt(r.spousePension, spouseAge, r.spousePensionAge, r.spousePensionGrowth, offset) : 0);
-    const requestedTaxable = startsAt(r.taxable, age, r.taxableAge, r.taxableGrowth, offset);
-    const requestedNontaxable = startsAt(r.nontaxable, age, r.nontaxableAge, r.nontaxableGrowth, offset);
+    const requestedTaxable = startsAt(r.taxable, year, taxableStart, r.taxableGrowth, offset) + oneTime.taxableOneTime;
+    const requestedNontaxable = startsAt(r.nontaxable, year, nontaxableStart, r.nontaxableGrowth, offset) + oneTime.nontaxableOneTime;
     const investments = investmentIncome(plan.holdings, holdingBalances, age, h.age);
     const nontaxableContribution = contribution * (r.nontaxableContributionShare ?? 0) / 100;
     const growth = offset === 0 ? 1 : 1 + (r.investmentGrowth ?? 0) / 100;
@@ -163,8 +169,8 @@ export function project(plan, releases) {
     const tax = state === null ? null : federal + state + socialTax + medicare;
     const net = tax === null ? null : gross - pretax - tax;
     const remainingCash = net === null ? null : net - contribution;
-    const spendingTarget = income.spendingTarget > 0
-      ? compound(income.spendingTarget, income.spendingGrowth ?? 0, offset) : null;
+    const spendingTarget = income.spendingTarget > 0 || oneTime.purchaseOneTime > 0
+      ? compound(income.spendingTarget ?? 0, income.spendingGrowth ?? 0, offset) + oneTime.purchaseOneTime : null;
     const spendingGap = remainingCash === null || spendingTarget === null ? null : remainingCash - spendingTarget;
     rows.push({ year, age, spouseAge: h.spouse ? spouseAge : null, sourceYear: rules.year, stateName: h.state,
       stateStatus: h.stateStatus, status: h.status, gross, adjusted, federal, state, socialTax, medicare, tax,
@@ -173,7 +179,7 @@ export function project(plan, releases) {
       balance: investments.taxable + investments.nontaxable, distribution: investments.Ordinary + investments.Qualified + investments['Tax-free'],
       wages, spouseWages, other, pension, social, taxableSocial, taxableWithdrawal, taxFree,
       dependentCredit, children, students, pretax, warning, taxableInvestment, nontaxableInvestment,
-      contribution, remainingCash, spendingTarget, spendingGap, shortfall,
+      contribution, remainingCash, spendingTarget, spendingGap, shortfall, ...oneTime,
       investmentBalance: taxableAccount.balance + nontaxableAccount.balance,
       taxableBalance: taxableAccount.balance, nontaxableBalance: nontaxableAccount.balance,
       primarySocial, spouseSocial, stateStandardDeduction, stateExemptions, otherFederalCredits: income.credits,

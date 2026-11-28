@@ -1,4 +1,4 @@
-import { collections, emptyPlan, modules, normalize, singleton } from './model.mjs?v=2026-12';
+import { collections, emptyPlan, modules, normalize, singleton } from './model.mjs?v=2026-13';
 
 const format = 'schnacker-income-tax-plan';
 const version = 1;
