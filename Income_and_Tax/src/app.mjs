@@ -153,8 +153,9 @@ function buildForms() {
     fieldset('income', 'Primary employment', [['wages', 'Annual wages ($)'], ['wageGrowth', 'Wage growth (%/yr)'], ['retireAge', 'Age wages stop']]),
     fieldset('income', 'Spouse employment', [['spouseWages', 'Annual wages ($)'], ['spouseGrowth', 'Wage growth (%/yr)'], ['spouseRetireAge', 'Age wages stop']], true),
     fieldset('income', 'Other income before primary retirement', [['other', 'Other taxable income ($)'], ['otherGrowth', 'Other income growth (%/yr)']]),
-    fieldset('income', 'Pre-tax costs', [['pretax', 'Other pre-tax deductions ($)'], ['pretaxGrowth', 'Deduction growth (%/yr)'],
-      ['health', 'Pre-tax health premiums ($)'], ['healthGrowth', 'Premium growth (%/yr)']]),
+    fieldset('income', 'Pre-tax costs per year', [
+      ['pretax', 'Other pre-tax deductions ($/yr)'], ['pretaxGrowth', 'Deduction growth (%/yr)'],
+      ['health', 'Pre-tax health premiums ($/yr)'], ['healthGrowth', 'Premium growth (%/yr)']]),
     fieldset('income', 'Other credits', [
       ['credits', 'Other federal credits ($)'], ['creditGrowth', 'Federal credit growth (%/yr)'],
       ['earnedIncomeCredit', 'Estimated earned income credit ($)'], ['collegeCredit', 'Estimated college credit ($)'],
@@ -166,10 +167,16 @@ function buildForms() {
     fieldset('retirement', 'Spouse benefits', [['spouseSocial', 'Annual Social Security ($)'], ['spouseSocialAge', 'Social Security start age'], ['spouseSocialGrowth', 'Social Security COLA (%)'],
       ['spousePension', 'Annual taxable pension ($)'], ['spousePensionAge', 'Pension start age'], ['spousePensionGrowth', 'Pension growth (%/yr)']], true)
   );
-  byId('investment-income-fields').replaceChildren(fieldsFor('retirement', plan.retirement, [
-    ['investmentOpening', 'Starting taxable balance ($)'], ['nontaxableInvestmentOpening', 'Starting non-taxable balance ($)'],
+  byId('retirement-withdrawal-fields').replaceChildren(fieldsFor('retirement', plan.retirement, [
     ['taxable', 'Annual taxable withdrawal ($)'], ['nontaxable', 'Annual non-taxable withdrawal ($)'],
     ['taxableStartYear', 'Taxable withdrawal start year'], ['nontaxableStartYear', 'Non-taxable withdrawal start year']
+  ]));
+  byId('retirement-withdrawal-timing').replaceChildren(fieldsFor('retirement', plan.retirement, [
+    ['taxableAge', 'Taxable withdrawal start age'], ['taxableGrowth', 'Taxable withdrawal growth (%/yr)'],
+    ['nontaxableAge', 'Non-taxable withdrawal start age'], ['nontaxableGrowth', 'Non-taxable withdrawal growth (%/yr)']
+  ]));
+  byId('investment-balance-fields').replaceChildren(fieldsFor('retirement', plan.retirement, [
+    ['investmentOpening', 'Starting taxable balance ($)'], ['nontaxableInvestmentOpening', 'Starting non-taxable balance ($)']
   ]));
   byId('contribution-fields').replaceChildren(fieldsFor('retirement', plan.retirement, [
     ['contributionMode', 'Contribution method', { wide: true }]
@@ -190,11 +197,7 @@ function buildForms() {
   byId('fixed-contribution-fields').replaceChildren(fieldset('retirement', 'Fixed annual contribution', [
     ['contributionAmount', 'Annual contribution ($)'], ['nontaxableContributionShare', 'Share to non-taxable balance (%)']
   ]));
-  byId('investment-timing-fields').replaceChildren(
-    fieldset('retirement', 'Withdrawal timing and growth', [
-      ['taxableAge', 'Taxable withdrawal start age'], ['taxableGrowth', 'Taxable withdrawal growth (%/yr)'],
-      ['nontaxableAge', 'Non-taxable withdrawal start age'], ['nontaxableGrowth', 'Non-taxable withdrawal growth (%/yr)']
-    ]),
+  byId('investment-growth-fields').replaceChildren(
     fieldset('retirement', 'Balance outside individual holdings', [
       ['investmentGrowth', 'Annual balance growth (%)']
     ])
