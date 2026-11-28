@@ -66,7 +66,8 @@ test('investment contributions use household wages or a fixed amount without cha
   Object.assign(oldPlan.household, { age: 66, spouseAge: 64, spouse: true, state: 'Texas', years: 3 });
   Object.assign(oldPlan.income, { wages: 80000, spouseWages: 50000, spouseGrowth: 10 });
   Object.assign(oldPlan.retirement, { taxable: 12000, nontaxable: 3000 });
-  for (const key of ['contributionMode', 'contributionAmount', 'contributionPercent']) delete oldPlan.retirement[key];
+  for (const key of ['contributionMode', 'contributionAmount', 'taxableContributionPercent', 'nontaxableContributionPercent',
+    'spouseTaxableContributionPercent', 'spouseNontaxableContributionPercent', 'separateSpouseContributions']) delete oldPlan.retirement[key];
   const plan = readBackup(serialize(oldPlan), 2026);
   const baseline = project(plan, releases);
   assert.deepEqual(baseline.map(row => row.contribution), [0, 0, 0]);
@@ -76,7 +77,7 @@ test('investment contributions use household wages or a fixed amount without cha
   plan.retirement.investmentOpening = 100000;
   plan.retirement.nontaxableInvestmentOpening = 10000;
   const funded = project(plan, releases);
-  plan.retirement.contributionPercent = 10;
+  plan.retirement.taxableContributionPercent = 10;
   const percentage = project(plan, releases);
   percentage.forEach((row, i) => {
     close(row.contribution, [13000, 5500, 6050][i]);
@@ -117,6 +118,24 @@ test('contributions add to the accounts in the selected proportions', () => {
   const rows = project(plan, releases);
   assert.deepEqual(rows.map(row => row.taxableBalance), [7500, 15750]);
   assert.deepEqual(rows.map(row => row.nontaxableBalance), [2500, 5250]);
+});
+
+test('existing percentage splits migrate and separate spouse rates follow each salary', () => {
+  const plan = emptyPlan(2026);
+  Object.assign(plan.household, { state: 'Texas', spouse: true, age: 65, spouseAge: 66, years: 2 });
+  Object.assign(plan.income, { wages: 80000, spouseWages: 50000 });
+  plan.retirement = normalize('retirement', { contributionPercent: 10, nontaxableContributionShare: 25 });
+  assert.equal(plan.retirement.taxableContributionPercent, 7.5);
+  assert.equal(plan.retirement.nontaxableContributionPercent, 2.5);
+  close(project(plan, releases)[0].contribution, 13000);
+  Object.assign(plan.retirement, { separateSpouseContributions: true, spouseTaxableContributionPercent: 4,
+    spouseNontaxableContributionPercent: 6 });
+  const projected = project(plan, releases);
+  assert.deepEqual(projected.map(row => row.taxableContribution), [8000, 6000]);
+  assert.deepEqual(projected.map(row => row.nontaxableContribution), [5000, 2000]);
+  Object.assign(plan.retirement, { taxableContributionPercent: 80, nontaxableContributionPercent: 80 });
+  close(project(plan, releases)[1].contribution, 80000);
+  close(project(plan, releases)[1].taxableContribution, 40000);
 });
 
 test('entered federal credit categories are projected separately and reduce tax up to the tax owed', () => {

@@ -1,7 +1,7 @@
-import { readLegacy } from './legacy.mjs?v=2026-13';
-import { project } from './calculations.mjs?v=2026-13';
-import { changeLabels, changeSpec, emptyPlan, normalize, oneTimeLabels, schemas, statuses, valueFor, withdrawalStartYear } from './model.mjs?v=2026-13';
-import { openPlanStore, readBackup, serialize } from './storage.mjs?v=2026-13';
+import { readLegacy } from './legacy.mjs?v=2026-14';
+import { project } from './calculations.mjs?v=2026-14';
+import { changeLabels, changeSpec, emptyPlan, normalize, oneTimeLabels, schemas, statuses, valueFor, withdrawalStartYear } from './model.mjs?v=2026-14';
+import { openPlanStore, readBackup, serialize } from './storage.mjs?v=2026-14';
 import { loadReleases, releaseFor } from './tax-data.mjs';
 
 const byId = id => document.getElementById(id);
@@ -172,9 +172,23 @@ function buildForms() {
     ['taxableStartYear', 'Taxable withdrawal start year'], ['nontaxableStartYear', 'Non-taxable withdrawal start year']
   ]));
   byId('contribution-fields').replaceChildren(fieldsFor('retirement', plan.retirement, [
-    ['contributionMode', 'Contribution method', { wide: true }],
-    ['contributionPercent', 'Combined salary (%)', { wide: true }],
-    ['contributionAmount', 'Fixed annual contribution ($)', { wide: true }]
+    ['contributionMode', 'Contribution method', { wide: true }]
+  ]));
+  byId('salary-contribution-fields').replaceChildren(
+    fieldset('retirement', 'Salary contribution rates', [
+      ['taxableContributionPercent', 'Taxable (% of salary)'],
+      ['nontaxableContributionPercent', 'Non-taxable (% of salary)'],
+      ['separateSpouseContributions', 'Use separate spouse rates', { wide: true, spouse: true }]
+    ])
+  );
+  byId('spouse-contribution-fields').replaceChildren(
+    fieldset('retirement', 'Spouse salary contribution rates', [
+      ['spouseTaxableContributionPercent', 'Taxable (% of spouse salary)'],
+      ['spouseNontaxableContributionPercent', 'Non-taxable (% of spouse salary)']
+    ])
+  );
+  byId('fixed-contribution-fields').replaceChildren(fieldset('retirement', 'Fixed annual contribution', [
+    ['contributionAmount', 'Annual contribution ($)'], ['nontaxableContributionShare', 'Share to non-taxable balance (%)']
   ]));
   byId('investment-timing-fields').replaceChildren(
     fieldset('retirement', 'Withdrawal timing and growth', [
@@ -182,7 +196,7 @@ function buildForms() {
       ['nontaxableAge', 'Non-taxable withdrawal start age'], ['nontaxableGrowth', 'Non-taxable withdrawal growth (%/yr)']
     ]),
     fieldset('retirement', 'Balance outside individual holdings', [
-      ['investmentGrowth', 'Annual balance growth (%)'], ['nontaxableContributionShare', 'Contributions to non-taxable balance (%)']
+      ['investmentGrowth', 'Annual balance growth (%)']
     ])
   );
   for (const name of Object.keys(collectionNames)) buildRecords(name);
@@ -240,9 +254,15 @@ function updateConditionalFields() {
 }
 
 function updateContributionFields() {
-  const fixed = plan.retirement.contributionMode === 'Fixed amount';
-  document.querySelector('[data-key="contributionPercent"]').closest('label').hidden = fixed;
-  document.querySelector('[data-key="contributionAmount"]').closest('label').hidden = !fixed;
+  const r = plan.retirement;
+  const fixed = r.contributionMode === 'Fixed amount';
+  const separate = plan.household.spouse && r.separateSpouseContributions;
+  byId('salary-contribution-fields').hidden = fixed;
+  byId('spouse-contribution-fields').hidden = fixed || !separate;
+  byId('fixed-contribution-fields').hidden = !fixed;
+  byId('salary-contribution-cap').hidden = fixed ||
+    (r.taxableContributionPercent + r.nontaxableContributionPercent <= 100 &&
+      (!separate || r.spouseTaxableContributionPercent + r.spouseNontaxableContributionPercent <= 100));
 }
 
 const projectionSeries = [
@@ -550,7 +570,7 @@ function recalculate() {
     const tr = node('tr');
     const amounts = [row.taxableBalance, row.nontaxableBalance, row.taxableWithdrawal, row.taxFree,
       row.wages, row.spouseAge === null ? null : row.spouseWages, row.taxableInvestment,
-      row.nontaxableInvestment, row.contribution, row.remainingCash];
+      row.nontaxableInvestment, row.contribution, row.taxableContribution, row.nontaxableContribution, row.remainingCash];
     if (hasShortfall) amounts.push(row.shortfall);
     tr.append(node('th', row.year), ...amounts.map(amount => node('td', money(amount))));
     tr.cells[0].scope = 'row';
@@ -629,7 +649,7 @@ function setInput(event) {
     document.querySelector('[data-module="changes"][data-key="field"][data-index="' + index + '"]')?.focus();
   }
   if (module === 'household') updateConditionalFields();
-  if (key === 'contributionMode') updateContributionFields();
+  if (module === 'household' || module === 'retirement') updateContributionFields();
   recalculate();
   save(module);
 }

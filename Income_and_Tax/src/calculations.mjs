@@ -1,4 +1,4 @@
-import { changeSpec, oneTimeLabels, valueFor, withdrawalStartYear } from './model.mjs?v=2026-13';
+import { changeSpec, oneTimeLabels, valueFor, withdrawalStartYear } from './model.mjs?v=2026-14';
 import { bracketTax, releaseFor, scheduleFor } from './tax-data.mjs';
 
 const compound = (value, rate, years) => value * (1 + rate / 100) ** years;
@@ -51,6 +51,22 @@ function drawFromAccount(requested, cash, holdingsValue, holdings, balances, acc
   return { withdrawal, cash: dollars(cash - withdrawal), balance: dollars(available - withdrawal) };
 }
 
+function plannedContributions(retirement, wages, spouseWages) {
+  if (retirement.contributionMode === 'Fixed amount') {
+    const amount = retirement.contributionAmount ?? 0;
+    const nonTaxable = amount * (retirement.nontaxableContributionShare ?? 0) / 100;
+    return [amount - nonTaxable, nonTaxable];
+  }
+  const taxableRate = retirement.taxableContributionPercent ?? 0;
+  const nontaxableRate = retirement.nontaxableContributionPercent ?? 0;
+  const spouseTaxableRate = retirement.separateSpouseContributions ? retirement.spouseTaxableContributionPercent ?? 0 : taxableRate;
+  const spouseNontaxableRate = retirement.separateSpouseContributions ? retirement.spouseNontaxableContributionPercent ?? 0 : nontaxableRate;
+  const primaryBase = wages / Math.max(100, taxableRate + nontaxableRate);
+  const spouseBase = spouseWages / Math.max(100, spouseTaxableRate + spouseNontaxableRate);
+  return [primaryBase * taxableRate + spouseBase * spouseTaxableRate,
+    primaryBase * nontaxableRate + spouseBase * spouseNontaxableRate];
+}
+
 export function project(plan, releases) {
   const h = { ...plan.household };
   const income = { ...plan.income };
@@ -58,7 +74,6 @@ export function project(plan, releases) {
   const holdingBalances = plan.holdings.map(() => 0);
   let taxableCash = r.investmentOpening ?? 0;
   let nontaxableCash = r.nontaxableInvestmentOpening ?? 0;
-  const fixedContribution = r.contributionMode === 'Fixed amount';
   const taxableStart = withdrawalStartYear(h, r, 'taxable');
   const nontaxableStart = withdrawalStartYear(h, r, 'nontaxable');
   const rows = [];
@@ -88,8 +103,8 @@ export function project(plan, releases) {
     const wages = age < income.retireAge ? income.wages : 0;
     const spouseWages = h.spouse && spouseAge < income.spouseRetireAge ? income.spouseWages : 0;
     const earned = wages + spouseWages;
-    const contribution = fixedContribution ? r.contributionAmount ?? 0
-      : earned * (r.contributionPercent ?? 0) / 100;
+    const [taxableContribution, nontaxableContribution] = plannedContributions(r, wages, spouseWages);
+    const contribution = taxableContribution + nontaxableContribution;
     const other = age < income.retireAge ? income.other : 0;
     const primarySocial = startsAt(r.social, age, r.socialAge, r.socialGrowth, offset);
     const spouseSocial = h.spouse ? startsAt(r.spouseSocial, spouseAge, r.spouseSocialAge, r.spouseSocialGrowth, offset) : 0;
@@ -99,10 +114,9 @@ export function project(plan, releases) {
     const requestedTaxable = startsAt(r.taxable, year, taxableStart, r.taxableGrowth, offset) + oneTime.taxableOneTime;
     const requestedNontaxable = startsAt(r.nontaxable, year, nontaxableStart, r.nontaxableGrowth, offset) + oneTime.nontaxableOneTime;
     const investments = investmentIncome(plan.holdings, holdingBalances, age, h.age);
-    const nontaxableContribution = contribution * (r.nontaxableContributionShare ?? 0) / 100;
     const growth = offset === 0 ? 1 : 1 + (r.investmentGrowth ?? 0) / 100;
     const taxableAccount = drawFromAccount(requestedTaxable,
-      taxableCash * growth + (contribution - nontaxableContribution), investments.taxable, plan.holdings, holdingBalances, 'taxable');
+      taxableCash * growth + taxableContribution, investments.taxable, plan.holdings, holdingBalances, 'taxable');
     const nontaxableAccount = drawFromAccount(requestedNontaxable,
       nontaxableCash * growth + nontaxableContribution, investments.nontaxable, plan.holdings, holdingBalances, 'nontaxable');
     taxableCash = taxableAccount.cash;
@@ -179,7 +193,7 @@ export function project(plan, releases) {
       balance: investments.taxable + investments.nontaxable, distribution: investments.Ordinary + investments.Qualified + investments['Tax-free'],
       wages, spouseWages, other, pension, social, taxableSocial, taxableWithdrawal, taxFree,
       dependentCredit, children, students, pretax, warning, taxableInvestment, nontaxableInvestment,
-      contribution, remainingCash, spendingTarget, spendingGap, shortfall, ...oneTime,
+      contribution, taxableContribution, nontaxableContribution, remainingCash, spendingTarget, spendingGap, shortfall, ...oneTime,
       investmentBalance: taxableAccount.balance + nontaxableAccount.balance,
       taxableBalance: taxableAccount.balance, nontaxableBalance: nontaxableAccount.balance,
       primarySocial, spouseSocial, stateStandardDeduction, stateExemptions, otherFederalCredits: income.credits,
