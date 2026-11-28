@@ -147,11 +147,11 @@ function buildForms() {
     ['federalRate', 'Custom federal rate (%)'], ['stateRate', 'Custom state rate (%)']
   ]), advanced);
   byId('income-fields').replaceChildren(
+    fieldset('income', 'Primary employment', [['wages', 'Annual wages ($)'], ['wageGrowth', 'Wage growth (%/yr)'], ['retireAge', 'Age wages stop']]),
+    fieldset('income', 'Spouse employment', [['spouseWages', 'Annual wages ($)'], ['spouseGrowth', 'Wage growth (%/yr)'], ['spouseRetireAge', 'Age wages stop']], true),
     fieldset('income', 'Household spending target', [
       ['spendingTarget', 'Annual spending target ($)'], ['spendingGrowth', 'Annual spending growth (%)']
     ]),
-    fieldset('income', 'Primary employment', [['wages', 'Annual wages ($)'], ['wageGrowth', 'Wage growth (%/yr)'], ['retireAge', 'Age wages stop']]),
-    fieldset('income', 'Spouse employment', [['spouseWages', 'Annual wages ($)'], ['spouseGrowth', 'Wage growth (%/yr)'], ['spouseRetireAge', 'Age wages stop']], true),
     fieldset('income', 'Other income before primary retirement', [['other', 'Other taxable income ($)'], ['otherGrowth', 'Other income growth (%/yr)']]),
     fieldset('income', 'Pre-tax costs per year', [
       ['pretax', 'Other pre-tax deductions ($/yr)'], ['pretaxGrowth', 'Deduction growth (%/yr)'],
