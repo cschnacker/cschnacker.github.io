@@ -1,4 +1,4 @@
-import { changeSpec, oneTimeLabels, valueFor, withdrawalStartYear } from './model.mjs?v=2026-14';
+import { changeSpec, oneTimeLabels, valueFor, withdrawalStartYear } from './model.mjs?v=2026-17';
 import { bracketTax, releaseFor, scheduleFor } from './tax-data.mjs';
 
 const compound = (value, rate, years) => value * (1 + rate / 100) ** years;
@@ -59,8 +59,8 @@ function plannedContributions(retirement, wages, spouseWages) {
   }
   const taxableRate = retirement.taxableContributionPercent ?? 0;
   const nontaxableRate = retirement.nontaxableContributionPercent ?? 0;
-  const spouseTaxableRate = retirement.separateSpouseContributions ? retirement.spouseTaxableContributionPercent ?? 0 : taxableRate;
-  const spouseNontaxableRate = retirement.separateSpouseContributions ? retirement.spouseNontaxableContributionPercent ?? 0 : nontaxableRate;
+  const spouseTaxableRate = retirement.spouseTaxableContributionPercent ?? 0;
+  const spouseNontaxableRate = retirement.spouseNontaxableContributionPercent ?? 0;
   const primaryBase = wages / Math.max(100, taxableRate + nontaxableRate);
   const spouseBase = spouseWages / Math.max(100, spouseTaxableRate + spouseNontaxableRate);
   return [primaryBase * taxableRate + spouseBase * spouseTaxableRate,
@@ -116,11 +116,12 @@ export function project(plan, releases) {
     const requestedTaxable = retirementTaxable + oneTime.taxableOneTime;
     const requestedNontaxable = retirementNontaxable + oneTime.nontaxableOneTime;
     const investments = investmentIncome(plan.holdings, holdingBalances, age, h.age);
-    const growth = offset === 0 ? 1 : 1 + (r.investmentGrowth ?? 0) / 100;
+    const taxableGrowth = offset === 0 ? 1 : 1 + (r.investmentGrowth ?? 0) / 100;
+    const nontaxableGrowth = offset === 0 ? 1 : 1 + (r.nontaxableInvestmentGrowth ?? r.investmentGrowth ?? 0) / 100;
     const taxableAccount = drawFromAccount(requestedTaxable,
-      taxableCash * growth + taxableContribution, investments.taxable, plan.holdings, holdingBalances, 'taxable');
+      taxableCash * taxableGrowth + taxableContribution, investments.taxable, plan.holdings, holdingBalances, 'taxable');
     const nontaxableAccount = drawFromAccount(requestedNontaxable,
-      nontaxableCash * growth + nontaxableContribution, investments.nontaxable, plan.holdings, holdingBalances, 'nontaxable');
+      nontaxableCash * nontaxableGrowth + nontaxableContribution, investments.nontaxable, plan.holdings, holdingBalances, 'nontaxable');
     taxableCash = taxableAccount.cash;
     nontaxableCash = nontaxableAccount.cash;
     const taxableWithdrawal = taxableAccount.withdrawal;

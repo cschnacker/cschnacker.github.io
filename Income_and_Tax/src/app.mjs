@@ -1,7 +1,7 @@
-import { readLegacy } from './legacy.mjs?v=2026-14';
-import { project } from './calculations.mjs?v=2026-16';
-import { changeLabels, changeSpec, emptyPlan, normalize, oneTimeLabels, schemas, statuses, valueFor, withdrawalStartYear } from './model.mjs?v=2026-14';
-import { openPlanStore, readBackup, serialize } from './storage.mjs?v=2026-14';
+import { readLegacy } from './legacy.mjs?v=2026-17';
+import { project } from './calculations.mjs?v=2026-17';
+import { changeLabels, changeSpec, emptyPlan, normalize, oneTimeLabels, schemas, statuses, valueFor, withdrawalStartYear } from './model.mjs?v=2026-17';
+import { openPlanStore, readBackup, serialize } from './storage.mjs?v=2026-17';
 import { loadReleases, releaseFor } from './tax-data.mjs';
 
 const byId = id => document.getElementById(id);
@@ -176,20 +176,20 @@ function buildForms() {
     ['nontaxableAge', 'Non-taxable withdrawal start age'], ['nontaxableGrowth', 'Non-taxable withdrawal growth (%/yr)']
   ]));
   byId('investment-balance-fields').replaceChildren(fieldsFor('retirement', plan.retirement, [
-    ['investmentOpening', 'Starting taxable balance ($)'], ['nontaxableInvestmentOpening', 'Starting non-taxable balance ($)']
+    ['investmentOpening', 'Starting taxable balance ($)'], ['nontaxableInvestmentOpening', 'Starting non-taxable balance ($)'],
+    ['investmentGrowth', 'Taxable balance growth (%/yr)'], ['nontaxableInvestmentGrowth', 'Non-taxable balance growth (%/yr)']
   ]));
   byId('contribution-fields').replaceChildren(fieldsFor('retirement', plan.retirement, [
     ['contributionMode', 'Contribution method', { wide: true }]
   ]));
   byId('salary-contribution-fields').replaceChildren(
-    fieldset('retirement', 'Salary contribution rates', [
-      ['taxableContributionPercent', 'Taxable (% of salary)'],
-      ['nontaxableContributionPercent', 'Non-taxable (% of salary)'],
-      ['separateSpouseContributions', 'Use separate spouse rates', { wide: true, spouse: true }]
+    fieldset('retirement', 'Primary salary contributions', [
+      ['taxableContributionPercent', 'Taxable (% of primary salary)'],
+      ['nontaxableContributionPercent', 'Non-taxable (% of primary salary)']
     ])
   );
   byId('spouse-contribution-fields').replaceChildren(
-    fieldset('retirement', 'Spouse salary contribution rates', [
+    fieldset('retirement', 'Spouse salary contributions', [
       ['spouseTaxableContributionPercent', 'Taxable (% of spouse salary)'],
       ['spouseNontaxableContributionPercent', 'Non-taxable (% of spouse salary)']
     ])
@@ -197,11 +197,6 @@ function buildForms() {
   byId('fixed-contribution-fields').replaceChildren(fieldset('retirement', 'Fixed annual contribution', [
     ['contributionAmount', 'Annual contribution ($)'], ['nontaxableContributionShare', 'Share to non-taxable balance (%)']
   ]));
-  byId('investment-growth-fields').replaceChildren(
-    fieldset('retirement', 'Balance outside individual holdings', [
-      ['investmentGrowth', 'Annual balance growth (%)']
-    ])
-  );
   for (const name of Object.keys(collectionNames)) buildRecords(name);
   updateConditionalFields();
   updateContributionFields();
@@ -272,13 +267,18 @@ function updateConditionalFields() {
 function updateContributionFields() {
   const r = plan.retirement;
   const fixed = r.contributionMode === 'Fixed amount';
-  const separate = plan.household.spouse && r.separateSpouseContributions;
+  const hasSpouse = plan.household.spouse;
+  const primaryTotal = r.taxableContributionPercent + r.nontaxableContributionPercent;
+  const spouseTotal = r.spouseTaxableContributionPercent + r.spouseNontaxableContributionPercent;
   byId('salary-contribution-fields').hidden = fixed;
-  byId('spouse-contribution-fields').hidden = fixed || !separate;
+  byId('primary-contribution-total').hidden = fixed;
+  byId('spouse-contribution-fields').hidden = fixed || !hasSpouse;
+  byId('spouse-contribution-total').hidden = fixed || !hasSpouse;
+  byId('spouse-contribution-setup').hidden = fixed || hasSpouse;
   byId('fixed-contribution-fields').hidden = !fixed;
-  byId('salary-contribution-cap').hidden = fixed ||
-    (r.taxableContributionPercent + r.nontaxableContributionPercent <= 100 &&
-      (!separate || r.spouseTaxableContributionPercent + r.spouseNontaxableContributionPercent <= 100));
+  byId('primary-contribution-total').textContent = 'Total of primary salary invested · ' + rate(Math.min(100, primaryTotal) / 100);
+  byId('spouse-contribution-total').textContent = 'Total of spouse salary invested · ' + rate(Math.min(100, spouseTotal) / 100);
+  byId('salary-contribution-cap').hidden = fixed || (primaryTotal <= 100 && (!hasSpouse || spouseTotal <= 100));
 }
 
 const projectionSeries = [

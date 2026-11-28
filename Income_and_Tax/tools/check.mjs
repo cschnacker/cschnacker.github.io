@@ -78,6 +78,7 @@ test('investment contributions use household wages or a fixed amount without cha
   plan.retirement.nontaxableInvestmentOpening = 10000;
   const funded = project(plan, releases);
   plan.retirement.taxableContributionPercent = 10;
+  plan.retirement.spouseTaxableContributionPercent = 10;
   const percentage = project(plan, releases);
   percentage.forEach((row, i) => {
     close(row.contribution, [13000, 5500, 6050][i]);
@@ -114,10 +115,10 @@ test('contributions add to the accounts in the selected proportions', () => {
   const plan = emptyPlan(2026);
   plan.household.years = 2;
   Object.assign(plan.retirement, { contributionMode: 'Fixed amount', contributionAmount: 10000,
-    nontaxableContributionShare: 25, investmentGrowth: 10 });
+    nontaxableContributionShare: 25, investmentGrowth: 10, nontaxableInvestmentGrowth: 20 });
   const rows = project(plan, releases);
   assert.deepEqual(rows.map(row => row.taxableBalance), [7500, 15750]);
-  assert.deepEqual(rows.map(row => row.nontaxableBalance), [2500, 5250]);
+  assert.deepEqual(rows.map(row => row.nontaxableBalance), [2500, 5500]);
 });
 
 test('existing percentage splits migrate and separate spouse rates follow each salary', () => {
@@ -128,8 +129,13 @@ test('existing percentage splits migrate and separate spouse rates follow each s
   assert.equal(plan.retirement.taxableContributionPercent, 7.5);
   assert.equal(plan.retirement.nontaxableContributionPercent, 2.5);
   close(project(plan, releases)[0].contribution, 13000);
-  Object.assign(plan.retirement, { separateSpouseContributions: true, spouseTaxableContributionPercent: 4,
-    spouseNontaxableContributionPercent: 6 });
+  const legacyShared = normalize('retirement', { ...plan.retirement, separateSpouseContributions: false,
+    spouseTaxableContributionPercent: 4, spouseNontaxableContributionPercent: 6, investmentGrowth: 5,
+    nontaxableInvestmentGrowth: undefined });
+  assert.equal(legacyShared.spouseTaxableContributionPercent, 7.5);
+  assert.equal(legacyShared.spouseNontaxableContributionPercent, 2.5);
+  assert.equal(legacyShared.nontaxableInvestmentGrowth, 5);
+  Object.assign(plan.retirement, { spouseTaxableContributionPercent: 4, spouseNontaxableContributionPercent: 6 });
   const projected = project(plan, releases);
   assert.deepEqual(projected.map(row => row.taxableContribution), [8000, 6000]);
   assert.deepEqual(projected.map(row => row.nontaxableContribution), [5000, 2000]);

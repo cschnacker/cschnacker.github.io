@@ -36,8 +36,8 @@ export const schemas = {
     nontaxable: amount, nontaxableAge: [67, 0, 121], nontaxableGrowth: rate, nontaxableStartYear: optionalYear,
     contributionMode: ['Salary percentage', 'Fixed amount'],
     taxableContributionPercent: taxRate, nontaxableContributionPercent: taxRate, contributionAmount: amount,
-    separateSpouseContributions: false, spouseTaxableContributionPercent: taxRate, spouseNontaxableContributionPercent: taxRate,
-    investmentOpening: amount, nontaxableInvestmentOpening: amount, investmentGrowth: rate,
+    spouseTaxableContributionPercent: taxRate, spouseNontaxableContributionPercent: taxRate,
+    investmentOpening: amount, nontaxableInvestmentOpening: amount, investmentGrowth: rate, nontaxableInvestmentGrowth: rate,
     nontaxableContributionShare: taxRate
   },
   holdings: {
@@ -95,12 +95,13 @@ export function normalize(module, record = {}, defaultYear = 2026) {
     const oldShare = normalized.nontaxableContributionShare / 100;
     if (record?.taxableContributionPercent === undefined) normalized.taxableContributionPercent = oldRate * (1 - oldShare);
     if (record?.nontaxableContributionPercent === undefined) normalized.nontaxableContributionPercent = oldRate * oldShare;
-    if (record?.spouseTaxableContributionPercent === undefined) {
+    if (record?.separateSpouseContributions === false || record?.spouseTaxableContributionPercent === undefined) {
       normalized.spouseTaxableContributionPercent = normalized.taxableContributionPercent;
     }
-    if (record?.spouseNontaxableContributionPercent === undefined) {
+    if (record?.separateSpouseContributions === false || record?.spouseNontaxableContributionPercent === undefined) {
       normalized.spouseNontaxableContributionPercent = normalized.nontaxableContributionPercent;
     }
+    if (record?.nontaxableInvestmentGrowth === undefined) normalized.nontaxableInvestmentGrowth = normalized.investmentGrowth;
   }
   return normalized;
 }
