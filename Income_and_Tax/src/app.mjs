@@ -1,5 +1,5 @@
 import { readLegacy } from './legacy.mjs?v=2026-14';
-import { project } from './calculations.mjs?v=2026-14';
+import { project } from './calculations.mjs?v=2026-16';
 import { changeLabels, changeSpec, emptyPlan, normalize, oneTimeLabels, schemas, statuses, valueFor, withdrawalStartYear } from './model.mjs?v=2026-14';
 import { openPlanStore, readBackup, serialize } from './storage.mjs?v=2026-14';
 import { loadReleases, releaseFor } from './tax-data.mjs';
@@ -15,7 +15,7 @@ const dialog = byId('confirm');
 const collectionNames = { holdings: 'Holding', changes: 'Change', dependents: 'Dependent' };
 const collectionDescriptions = {
   holdings: 'Add a stock, fund, bond, or cash holding to include its distributions.',
-  changes: 'Add a recurring change or schedule a one-time withdrawal or expense.',
+  changes: 'Add a recurring change to model a future raise, move, or filing change.',
   dependents: 'Add dependents to track ages and college years.'
 };
 
@@ -209,15 +209,21 @@ function buildForms() {
 
 function buildRecords(module) {
   const list = byId(module + '-records');
+  const recurringLabels = Object.fromEntries(Object.entries(changeLabels).filter(([key]) => !Object.hasOwn(oneTimeLabels, key)));
+  let regularCount = 0;
+  let scheduledCount = 0;
   const records = plan[module].map((record, index) => {
     const card = node('article', undefined, 'record');
+    const oneTime = module === 'changes' && Object.hasOwn(oneTimeLabels, record.field);
+    if (oneTime) card.dataset.oneTime = '';
+    const title = oneTime ? 'One-time entry ' + ++scheduledCount : collectionNames[module] + ' ' + ++regularCount;
     const header = node('div', undefined, 'record-head');
     const remove = node('button', 'Remove', 'danger');
     remove.type = 'button';
     remove.dataset.remove = module;
     remove.dataset.index = index;
-    remove.setAttribute('aria-label', 'Remove ' + collectionNames[module].toLowerCase() + ' ' + (index + 1));
-    header.append(node('h3', collectionNames[module] + ' ' + (index + 1)), remove);
+    remove.setAttribute('aria-label', 'Remove ' + title.toLowerCase());
+    header.append(node('h3', title), remove);
     const inputs = {
       holdings: [
         ['name', 'Name or ticker'], ['type', 'Asset type'], ['units', 'Shares or units'], ['price', 'Price per unit ($)'],
@@ -225,7 +231,8 @@ function buildRecords(module) {
         ['startAge', 'Primary start age'], ['endAge', 'Primary end age']
       ],
       dependents: [['name', 'Name (optional)'], ['birth', 'Birth year'], ['college', 'College start year']],
-      changes: [['year', 'Effective year'], ['field', 'Field to change', { options: changeLabels }]]
+      changes: [['year', oneTime ? 'Scheduled year' : 'Effective year'],
+        ['field', oneTime ? 'One-time type' : 'Field to change', { options: oneTime ? oneTimeLabels : recurringLabels }]]
     }[module];
     const group = fieldsFor(module, record, inputs, { index });
     if (module === 'changes') {
@@ -233,7 +240,6 @@ function buildRecords(module) {
         ['status', 'stateStatus'].includes(record.field) ? { '': 'Choose status', ...statuses } : undefined;
       const spec = changeSpec(record.field);
       const value = record.value === '' ? '' : valueFor(record.field, spec, record.value);
-      const oneTime = Object.hasOwn(oneTimeLabels, record.field);
       const label = oneTime ? 'Amount in scheduled-year dollars ($)' : changeLabels[record.field] + ' value';
       const control = field(module, { value }, 'value', label, {
         index, spec, options, step: oneTime ? 1000 : amountSteps[record.field], stepButtons: steppedIncomeFields.has(record.field)
@@ -244,7 +250,14 @@ function buildRecords(module) {
     card.append(header, group);
     return card;
   });
-  list.replaceChildren(...(records.length ? records : [node('p', collectionDescriptions[module], 'chart-note')]));
+  const regular = records.filter(card => !card.hasAttribute('data-one-time'));
+  list.replaceChildren(...(regular.length ? regular : [node('p', collectionDescriptions[module], 'chart-note')]));
+  if (module === 'changes') {
+    const scheduled = records.filter(card => card.hasAttribute('data-one-time'));
+    byId('one-time-records').replaceChildren(...(scheduled.length ? scheduled : [
+      node('p', 'Schedule a withdrawal or expense for a specific year.', 'chart-note')
+    ]));
+  }
 }
 
 function updateConditionalFields() {
@@ -564,6 +577,16 @@ function recalculate() {
   byId('period').textContent = start.year === end.year ? String(start.year) : start.year + '–' + end.year;
   byId('start-balance').textContent = money(start.balance);
   byId('start-distribution').textContent = money(start.distribution);
+  const scheduledYears = rows.filter(row => row.taxableOneTime > 0 || row.nontaxableOneTime > 0 || row.purchaseOneTime > 0);
+  byId('non-retirement-withdrawals').hidden = scheduledYears.length === 0;
+  byId('non-retirement-schedule').replaceChildren(...scheduledYears.map(row => {
+    const tr = node('tr');
+    const amounts = [row.taxableOneTime, row.fundedTaxableOneTime, row.nontaxableOneTime,
+      row.fundedNontaxableOneTime, row.nonRetirementShortfall, row.purchaseOneTime];
+    tr.append(node('th', row.year), ...amounts.map(amount => node('td', money(amount))));
+    tr.cells[0].scope = 'row';
+    return tr;
+  }));
   const hasShortfall = rows.some(row => row.shortfall > 0);
   const hasSpendingTarget = rows.some(row => row.spendingTarget !== null);
   byId('withdrawal-shortfall-heading').hidden = !hasShortfall;
@@ -710,17 +733,20 @@ function attach() {
   document.addEventListener('change', setInput);
   projectionYears.addEventListener('change', () => { selectedYear = Number(projectionYears.value); inspect(); });
   document.addEventListener('click', event => {
-    const { add, remove, index, inspect: year } = event.target.closest('button')?.dataset ?? {};
+    const button = event.target.closest('button');
+    const { add, remove, index, inspect: year } = button?.dataset ?? {};
     const module = add || remove;
     if (module) {
+      const oneTime = module === 'changes' && (add ? button.hasAttribute('data-add-one-time') :
+        Object.hasOwn(oneTimeLabels, plan[module][Number(index)]?.field));
       if (add) {
         if (plan[module].length >= 500) return;
-        const initial = module === 'holdings' ? { startAge: plan.household.age } : {};
+        const initial = module === 'holdings' ? { startAge: plan.household.age } : oneTime ? { field: 'taxableOneTime' } : {};
         plan[module].push(normalize(module, initial, plan.household.year));
       } else plan[module].splice(Number(index), 1);
       buildRecords(module);
-      if (add) byId(module + '-records').lastElementChild.querySelector('input,select')?.focus();
-      else document.querySelector('[data-add="' + module + '"]')?.focus();
+      if (add) byId(oneTime ? 'one-time-records' : module + '-records').lastElementChild.querySelector('input,select')?.focus();
+      else document.querySelector('[data-add="' + module + '"]' + (oneTime ? '[data-add-one-time]' : ':not([data-add-one-time])'))?.focus();
       recalculate();
       save(module);
     }

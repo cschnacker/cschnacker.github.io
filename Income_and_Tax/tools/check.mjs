@@ -184,8 +184,24 @@ test('calendar start years and one-time withdrawals and expenses affect only the
   assert.deepEqual(rows.map(row => row.taxFree), [2000, 5000, 2000, 2000]);
   assert.deepEqual(rows.map(row => row.spendingTarget), [null, 21000, null, null]);
   assert.deepEqual(rows.map(row => row.shortfall), [0, 0, 0, 3000]);
+  assert.deepEqual(rows.map(row => row.fundedTaxableOneTime), [0, 15000, 0, 0]);
+  assert.deepEqual(rows.map(row => row.fundedNontaxableOneTime), [0, 3000, 0, 0]);
   close(rows[1].spendingGap, rows[1].remainingCash - 21000);
   assert.equal(normalize('retirement', { taxableStartYear: 0 }).taxableStartYear, 0);
+});
+
+test('non-retirement withdrawals report their own shortfall after retirement withdrawals', () => {
+  const plan = emptyPlan(2026);
+  Object.assign(plan.household, { age: 67, years: 1 });
+  Object.assign(plan.retirement, { taxable: 8000, nontaxable: 2000, investmentOpening: 12000, nontaxableInvestmentOpening: 3000 });
+  plan.changes.push(normalize('changes', { year: 2026, field: 'taxableOneTime', value: '10000' }));
+  plan.changes.push(normalize('changes', { year: 2026, field: 'nontaxableOneTime', value: '2000' }));
+  const [row] = project(plan, releases);
+  assert.equal(row.taxableWithdrawal, 12000);
+  assert.equal(row.taxFree, 3000);
+  assert.equal(row.fundedTaxableOneTime, 4000);
+  assert.equal(row.fundedNontaxableOneTime, 1000);
+  assert.equal(row.nonRetirementShortfall, 7000);
 });
 
 test('existing workbook-converter entries map to editable plan modules', () => {

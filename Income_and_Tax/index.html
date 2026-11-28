@@ -8,8 +8,8 @@
   <title>Income &amp; Tax Planner</title>
   <link rel="icon" href="Inc%26Tax.png">
   <link rel="manifest" href="manifest.json">
-  <link rel="stylesheet" href="styles.css?v=2026-15">
-  <script type="module" src="src/app.mjs?v=2026-15"></script>
+  <link rel="stylesheet" href="styles.css?v=2026-16">
+  <script type="module" src="src/app.mjs?v=2026-16"></script>
 </head>
 <body>
   <a class="skip" href="#main">Skip to planner</a>
@@ -87,7 +87,7 @@
               <summary>Withdrawal ages and growth</summary>
               <div id="retirement-withdrawal-timing"></div>
             </details>
-            <p class="chart-note"><a href="#investments">Manage investment balances</a> · <a href="#changes">Schedule a one-time withdrawal or purchase</a></p>
+            <p class="chart-note"><a href="#investments">Manage investment balances</a></p>
           </fieldset>
         </section>
       </div>
@@ -113,6 +113,16 @@
         </section>
       </div>
       <section class="card editor records">
+        <div class="outlook-head"><div class="section-heading"><h2>One-time withdrawals and purchases</h2><p>Schedule withdrawals or expenses for a single year, such as a home purchase.</p></div><button type="button" class="secondary" data-add="changes" data-add-one-time>Add one-time entry</button></div>
+        <div id="one-time-records"></div>
+      </section>
+      <section class="card editor records" id="non-retirement-withdrawals" hidden>
+        <div class="section-heading"><h2>Non-retirement withdrawals by year</h2><p>Retirement withdrawals are funded first when both use the same account in the same year.</p></div>
+        <div class="table-scroll" tabindex="0" role="region" aria-label="Non-retirement withdrawals by year">
+          <table><thead><tr><th scope="col">Year</th><th scope="col">Taxable requested</th><th scope="col">Taxable funded</th><th scope="col">Non-taxable requested</th><th scope="col">Non-taxable funded</th><th scope="col">Unfunded withdrawals</th><th scope="col">Scheduled purchases</th></tr></thead><tbody id="non-retirement-schedule"></tbody></table>
+        </div>
+      </section>
+      <section class="card editor records">
         <div class="section-heading"><h2 id="investment-chart-title">Investment balances over time</h2><p>End-of-year values after growth, contributions, and withdrawals.</p></div>
         <div id="investment-legend" class="investment-legend"></div>
         <div id="investment-chart"></div>
@@ -133,7 +143,7 @@
     </div>
     <div id="panel-changes" class="panel" hidden>
       <section class="card editor">
-        <div class="outlook-head"><div class="section-heading"><h2>Future changes</h2><p>Schedule recurring changes such as a raise or move, or enter a one-time withdrawal or purchase.</p></div><button type="button" class="secondary" data-add="changes">Add change</button></div>
+        <div class="outlook-head"><div class="section-heading"><h2>Future changes</h2><p>Schedule recurring changes such as a raise or move.</p></div><button type="button" class="secondary" data-add="changes">Add change</button></div>
         <div id="changes-records"></div>
       </section>
     </div>
@@ -152,7 +162,7 @@
         <details open><summary>Set up your household</summary><p>In Overview, choose a start year, projection length, your age, and the federal and state filing statuses. Enable a spouse to enter both sets of work and retirement income. For a separate return, enter only the income covered by that return. Choose Other to use your own effective income tax rates and turn off U.S. payroll taxes.</p></details>
         <details><summary>Enter income and retirement dates</summary><p>Enter annual starting-year amounts and growth rates. The controls step by $1,000 for wages, pensions, Social Security, other taxable income, and taxable or tax-free withdrawals. You can also type an exact amount. Each person's wages stop at their retirement age. Other taxable income stops at the primary retirement age. Retirement income begins at its specified age and uses the entered growth rate from the starting year. Pre-tax payroll deductions are capped at wages and reduce income taxes. Enter Social Security separately from taxable pension income.</p></details>
         <details><summary>Plan investment income and contributions</summary><p>Enter annual withdrawal targets and start years under Retirement income. Enter starting balances for investments outside the holdings you list under Investments. Older plans keep their combined starting balance in the taxable field, where you can split it between the two balances. To use start ages or add growth rates, open Withdrawal ages and growth under Retirement income.</p><p>Set separate taxable and non-taxable percentages of gross salary. Use the same rates for both spouses or enter separate spouse rates. The planner caps combined rates at 100% of each salary, keeping the split proportional. Fixed contributions apply each year, including years without wages, and use the separate non-taxable share. Contributions use after-tax cash. The annual balance growth rate applies to both unallocated balances and accumulated contributions.</p><p>Each withdrawal is capped at its own available balance. It draws cash first, then reduces that account's holdings proportionally. The annual table shows any unfunded amount. Taxable withdrawals are treated as ordinary income. Listed holdings with ordinary or qualified distributions count toward the taxable balance, and holdings with tax-free distributions count toward the non-taxable balance. Holdings pay distributions based on value before withdrawals. Enter the expected purchase price for a future holding. Its end age excludes it from that year onward.</p></details>
-        <details><summary>Add dependents and future changes</summary><p>Recurring changes take effect in the specified year and remain in effect. The last entry wins when two recurring changes affect the same field in the same year.</p><p>One-time withdrawals increase the requested withdrawal from the chosen account for that year only. The available balance still caps what you can withdraw. To budget for a purchase, add a one-time purchase or expense in the same year. The full cost goes into that year’s spending target. Enter one-time amounts in dollars for the scheduled year. Multiple one-time entries add together.</p></details>
+        <details><summary>Schedule future changes and one-time expenses</summary><p>Recurring changes take effect in the specified year and remain in effect. The last entry wins when two recurring changes affect the same field in the same year.</p><p>Schedule one-time withdrawals and purchases under Investments. Each withdrawal is capped at the chosen account’s available balance. To budget for a purchase, add its full cost in the same year. Enter one-time amounts in dollars for the scheduled year. Multiple one-time entries add together.</p></details>
         <details><summary>Check for shortfalls and surpluses</summary><p>Set a household spending target in Income &amp; retirement. Enter the annual target in starting-year dollars and its growth rate. The funding summary compares it with cash left after taxes, pre-tax costs, and investment contributions. It also reports any withdrawals your balances could not fund and what remains invested. The Income and Tax Summary graph and annual table show these gaps across years.</p></details>
         <details><summary>Read the estimates</summary><p>Choose a graph on the Overview tab. In the stacked view, each band’s thickness shows that category’s amount. Payroll tax combines Social Security and Medicare. Negative net income falls below zero, and incomplete estimates appear as gaps. Hover over a graph for exact amounts, or use Inspect year to update the legend and tax breakdown.</p><p>Federal and state effective rates use gross cash income. Forecast years use the most recent available annual release and apply your indexing assumptions to bracket limits and deductions. Years before the first release use its amounts without indexing.</p><p>The model uses standard deductions and employee payroll taxes on entered wages before pre-tax deductions. It estimates nonrefundable dependent credits assuming otherwise eligible dependents and models qualified distributions at federal 0%, 15%, and 20% rates. Enter earned income and education credit estimates in their named fields. Use Other federal credits only for additional amounts. The planner limits credits to the tax owed. State calculations use the shared filing-status mappings and workbook allowances, exclude Social Security benefits, and omit local taxes and state-specific adjustments. The planner also excludes itemizing, self-employment tax, refundable credits, AMT, NIIT, and special senior or dependent deductions. Use these figures for planning.</p></details>
         <details><summary>Move or erase a plan</summary><p>Download a backup in Plan data, move the JSON file to the other machine, then choose it under Import plan and confirm the replacement. Use Clear plan to remove the browser’s copy. A downloaded backup still contains the data you exported.</p></details>

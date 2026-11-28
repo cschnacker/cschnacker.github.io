@@ -111,8 +111,10 @@ export function project(plan, releases) {
     const social = primarySocial + spouseSocial;
     const pension = startsAt(r.pension, age, r.pensionAge, r.pensionGrowth, offset) +
       (h.spouse ? startsAt(r.spousePension, spouseAge, r.spousePensionAge, r.spousePensionGrowth, offset) : 0);
-    const requestedTaxable = startsAt(r.taxable, year, taxableStart, r.taxableGrowth, offset) + oneTime.taxableOneTime;
-    const requestedNontaxable = startsAt(r.nontaxable, year, nontaxableStart, r.nontaxableGrowth, offset) + oneTime.nontaxableOneTime;
+    const retirementTaxable = startsAt(r.taxable, year, taxableStart, r.taxableGrowth, offset);
+    const retirementNontaxable = startsAt(r.nontaxable, year, nontaxableStart, r.nontaxableGrowth, offset);
+    const requestedTaxable = retirementTaxable + oneTime.taxableOneTime;
+    const requestedNontaxable = retirementNontaxable + oneTime.nontaxableOneTime;
     const investments = investmentIncome(plan.holdings, holdingBalances, age, h.age);
     const growth = offset === 0 ? 1 : 1 + (r.investmentGrowth ?? 0) / 100;
     const taxableAccount = drawFromAccount(requestedTaxable,
@@ -124,6 +126,9 @@ export function project(plan, releases) {
     const taxableWithdrawal = taxableAccount.withdrawal;
     const taxFree = nontaxableAccount.withdrawal;
     const shortfall = (requestedTaxable - taxableWithdrawal) + (requestedNontaxable - taxFree);
+    const fundedTaxableOneTime = Math.min(oneTime.taxableOneTime, dollars(taxableWithdrawal - retirementTaxable));
+    const fundedNontaxableOneTime = Math.min(oneTime.nontaxableOneTime, dollars(taxFree - retirementNontaxable));
+    const nonRetirementShortfall = oneTime.taxableOneTime - fundedTaxableOneTime + oneTime.nontaxableOneTime - fundedNontaxableOneTime;
     const taxableInvestment = taxableWithdrawal + investments.Ordinary + investments.Qualified;
     const nontaxableInvestment = taxFree + investments['Tax-free'];
     const pretax = Math.min(earned, income.pretax + income.health);
@@ -194,6 +199,7 @@ export function project(plan, releases) {
       wages, spouseWages, other, pension, social, taxableSocial, taxableWithdrawal, taxFree,
       dependentCredit, children, students, pretax, warning, taxableInvestment, nontaxableInvestment,
       contribution, taxableContribution, nontaxableContribution, remainingCash, spendingTarget, spendingGap, shortfall, ...oneTime,
+      fundedTaxableOneTime, fundedNontaxableOneTime, nonRetirementShortfall,
       investmentBalance: taxableAccount.balance + nontaxableAccount.balance,
       taxableBalance: taxableAccount.balance, nontaxableBalance: nontaxableAccount.balance,
       primarySocial, spouseSocial, stateStandardDeduction, stateExemptions, otherFederalCredits: income.credits,
